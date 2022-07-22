@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">러닝 트립</string>
     <string name="action_back">뒤로 가기</string>
+    <string name="action_search">검색</string>
+    <string name="hint_search">키워드를 입력해보세요</string>
+    <string name="action_delete">삭제</string>
 </resources>

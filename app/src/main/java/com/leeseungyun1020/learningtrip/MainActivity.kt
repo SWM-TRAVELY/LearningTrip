@@ -3,13 +3,28 @@ package com.leeseungyun1020.learningtrip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
+import com.leeseungyun1020.learningtrip.ui.theme.Primary
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,16 +46,66 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
+    var searchText by rememberSaveable { mutableStateOf("") }
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.app_name))
-                }
-            )
+            Column(
+                modifier = Modifier.background(
+                    color = Primary,
+                    shape = RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp)
+                ),
+            ) {
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+                TextField(
+                    value = searchText,
+                    onValueChange = { searchText = it },
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .padding(
+                            top = 8.dp
+                        )
+                        .fillMaxWidth(),
+                    placeholder = {
+                        Row {
+                            Icon(Icons.Filled.Search, stringResource(id = R.string.action_search))
+                            Spacer(modifier = Modifier.padding(start = 4.dp))
+                            Text(text = stringResource(id = R.string.hint_search))
+                        }
+                    },
+                    singleLine = true,
+                    trailingIcon = {
+                        if (searchText.isNotEmpty()) {
+                            IconButton(onClick = { searchText = "" }) {
+                                Icon(
+                                    Icons.Filled.Clear,
+                                    stringResource(id = R.string.action_delete)
+                                )
+                            }
+                        }
+                    },
+                    colors = TextFieldDefaults.textFieldColors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        containerColor = Color.White,
+                        placeholderColor = Gray3
+                    ),
+                    shape = RoundedCornerShape(10.dp)
+                )
+            }
         },
         content = { innerPadding ->
-            innerPadding
+            Column {
+                Spacer(modifier = Modifier.padding(innerPadding))
+            }
+
 //            LazyColumn(
 //                contentPadding = innerPadding,
 //                verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -56,6 +121,7 @@ fun HomeScreen() {
 //                    )
 //                }
 //            }
+
         }
     )
 }
