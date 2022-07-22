@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">러닝 트립</string>
+    <string name="action_back">뒤로 가기</string>
+</resources>
