@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -15,7 +16,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -102,26 +105,38 @@ fun HomeScreen() {
             }
         },
         content = { innerPadding ->
-            Column {
-                Spacer(modifier = Modifier.padding(innerPadding))
+
+            LazyRow(
+                contentPadding = PaddingValues(
+                    top = innerPadding.calculateTopPadding() + 16.dp,
+                    start = 16.dp
+                ),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                val list = (0..75).map { it.toString() }
+                items(count = list.size) {
+                    Box(
+                        modifier = Modifier
+                            .width(136.dp)
+                            .height(136.dp)
+                            .clip(RoundedCornerShape(5.dp))
+                            .background(color = Color.Black),
+                    ) {
+                        // Keyword Image
+                        Text(
+                            text = list[it],
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .align(Alignment.BottomEnd),
+                            color = Color.White,
+                        )
+                    }
+
+                }
             }
 
-//            LazyColumn(
-//                contentPadding = innerPadding,
-//                verticalArrangement = Arrangement.spacedBy(8.dp)
-//            ) {
-//                val list = (0..75).map { it.toString() }
-//                items(count = list.size) {
-//                    Text(
-//                        text = list[it],
-//                        style = MaterialTheme.typography.bodyLarge,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(horizontal = 16.dp)
-//                    )
-//                }
-//            }
-
+            // AD Image
         }
     )
 }
