@@ -105,38 +105,51 @@ fun HomeScreen() {
             }
         },
         content = { innerPadding ->
-
-            LazyRow(
-                contentPadding = PaddingValues(
-                    top = innerPadding.calculateTopPadding() + 16.dp,
-                    start = 16.dp
-                ),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                val list = (0..75).map { it.toString() }
-                items(count = list.size) {
-                    Box(
-                        modifier = Modifier
-                            .width(136.dp)
-                            .height(136.dp)
-                            .clip(RoundedCornerShape(5.dp))
-                            .background(color = Color.Black),
-                    ) {
-                        // Keyword Image
-                        Text(
-                            text = list[it],
-                            style = MaterialTheme.typography.titleMedium,
+            Column(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
+                LazyRow(
+                    contentPadding = PaddingValues(
+                        top = 16.dp,
+                        start = 16.dp
+                    ),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    val list = (0..75).map { it.toString() }
+                    items(count = list.size) {
+                        Box(
                             modifier = Modifier
-                                .padding(8.dp)
-                                .align(Alignment.BottomEnd),
-                            color = Color.White,
-                        )
-                    }
+                                .width(136.dp)
+                                .height(136.dp)
+                                .clip(RoundedCornerShape(5.dp))
+                                .background(color = Color.Black),
+                        ) {
+                            // Keyword Image
+                            Text(
+                                text = list[it],
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .align(Alignment.BottomEnd),
+                                color = Color.White,
+                            )
+                        }
 
+                    }
+                }
+
+                // Introduce(Banner) Image
+                Box(
+                    modifier = Modifier
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                        .fillMaxWidth()
+                        .height(104.dp)
+                        .background(color = Gray3),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        modifier = Modifier.align(Alignment.Center),
+                    )
                 }
             }
-
-            // AD Image
         }
     )
 }
