@@ -6,6 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.Primary
@@ -106,6 +110,7 @@ fun HomeScreen() {
         },
         content = { innerPadding ->
             Column(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
+                // Keyword List
                 LazyRow(
                     contentPadding = PaddingValues(
                         top = 16.dp,
@@ -148,6 +153,37 @@ fun HomeScreen() {
                         text = stringResource(id = R.string.app_name),
                         modifier = Modifier.align(Alignment.Center),
                     )
+                }
+
+                // Place List
+                Text(
+                    text = "주변", modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                    fontSize = 16.sp, color = Gray2
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    items(listOf<String>("a", "b", "c", "d", "e")) { char ->
+                        Box(
+                            modifier = Modifier
+                                .height(128.dp)
+                                .clip(RoundedCornerShape(5.dp))
+                                .background(color = Color.Black),
+                        ) {
+                            Text(
+                                text = char,
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .align(Alignment.BottomEnd),
+                                color = Color.White,
+                            )
+                        }
+
+                    }
                 }
             }
         }
