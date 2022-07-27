@@ -4,4 +4,7 @@
     <string name="action_search">Search</string>
     <string name="hint_search">Enter a keyword</string>
     <string name="action_delete">Delete</string>
+    <string name="title_recommend_keyword">Recommend Keywords</string>
+    <string name="title_recommend_place">Recommend Places</string>
+    <string name="title_recommend_route">Recommend Routes</string>
 </resources>
