@@ -3,6 +3,7 @@ package com.leeseungyun1020.learningtrip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -26,12 +27,16 @@ import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.Primary
 import com.leeseungyun1020.learningtrip.ui.theme.Secondary
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int) {
-    object Home : Screen("home", R.string.nav_home)
-    object Story : Screen("story", R.string.nav_story)
-    object Category : Screen("category", R.string.nav_category)
-    object Nearby : Screen("nearby", R.string.nav_nearby)
-    object My : Screen("my", R.string.nav_my)
+sealed class Screen(
+    val route: String,
+    @StringRes val resourceId: Int,
+    @DrawableRes val iconId: Int
+) {
+    object Home : Screen("home", R.string.nav_home, R.drawable.ic_home)
+    object Story : Screen("story", R.string.nav_story, R.drawable.ic_story)
+    object Category : Screen("category", R.string.nav_category, R.drawable.ic_category)
+    object Nearby : Screen("nearby", R.string.nav_nearby, R.drawable.ic_nearby)
+    object My : Screen("my", R.string.nav_my, R.drawable.ic_my)
 }
 
 class MainActivity : ComponentActivity() {
@@ -61,7 +66,7 @@ class MainActivity : ComponentActivity() {
                                     NavigationBarItem(
                                         icon = {
                                             Icon(
-                                                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_image_24),
+                                                imageVector = ImageVector.vectorResource(id = screen.iconId),
                                                 contentDescription = null
                                             )
                                         },
