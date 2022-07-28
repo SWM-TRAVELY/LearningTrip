@@ -8,4 +8,9 @@
     <string name="title_recommend_keyword">추천 키워드</string>
     <string name="title_recommend_place">추천 관광지</string>
     <string name="title_recommend_route">추천 경로</string>
+    <string name="nav_home">홈</string>
+    <string name="nav_category">카테고리</string>
+    <string name="nav_story">스토리</string>
+    <string name="nav_nearby">주변</string>
+    <string name="nav_my">마이</string>
 </resources>

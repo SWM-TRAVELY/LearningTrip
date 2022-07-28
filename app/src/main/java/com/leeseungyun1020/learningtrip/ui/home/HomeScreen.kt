@@ -23,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Keyword
 import com.leeseungyun1020.learningtrip.model.Route
@@ -35,7 +37,7 @@ import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     var searchText by rememberSaveable { mutableStateOf("") }
 
     LearningTripScaffold(topBarExtraContent = {
@@ -273,6 +275,6 @@ fun RouteListView(modifier: Modifier, routeList: List<Route>) {
 @Composable
 fun HomeScreenPreview() {
     LearningTripTheme {
-        HomeScreen()
+        HomeScreen(navController = rememberNavController())
     }
 }
