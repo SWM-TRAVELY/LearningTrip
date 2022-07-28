@@ -123,7 +123,7 @@ fun HomeScreen(navController: NavController) {
 
         RouteListView(
             modifier = Modifier
-                .padding(top = 8.dp),
+                .padding(vertical = 8.dp),
             routeList = listOf(
                 Route(
                     "1", "코스1", listOf(
