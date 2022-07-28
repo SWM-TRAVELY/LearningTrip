@@ -22,21 +22,41 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.Primary
 import com.leeseungyun1020.learningtrip.ui.theme.Secondary
 
-sealed class Screen(
+sealed class NavigationScreen(
     val route: String,
     @StringRes val resourceId: Int,
     @DrawableRes val iconId: Int
 ) {
-    object Home : Screen("home", R.string.nav_home, R.drawable.ic_home)
-    object Story : Screen("story", R.string.nav_story, R.drawable.ic_story)
-    object Category : Screen("category", R.string.nav_category, R.drawable.ic_category)
-    object Nearby : Screen("nearby", R.string.nav_nearby, R.drawable.ic_nearby)
-    object My : Screen("my", R.string.nav_my, R.drawable.ic_my)
+    object Home : NavigationScreen("home", R.string.nav_home, R.drawable.ic_home)
+    object Story : NavigationScreen("story", R.string.nav_story, R.drawable.ic_story)
+    object Category : NavigationScreen("category", R.string.nav_category, R.drawable.ic_category)
+    object Nearby : NavigationScreen("nearby", R.string.nav_nearby, R.drawable.ic_nearby)
+    object My : NavigationScreen("my", R.string.nav_my, R.drawable.ic_my)
+}
+
+sealed class Screen(val route: String) {
+    object SignIn : Screen("signIn")
+    object SignUp : Screen("SingUp")
+    object Permission : Screen("permission")
+    object Place : Screen("place")
+    object AddReview : Screen("addReview")
+    object Heritage : Screen("heritage")
+    object Search : Screen("search")
+    object AddPath : Screen("addPath")
+    object Path : Screen("path")
+    object Account : Screen("account")
+    object MyReview : Screen("myReview")
+    object Collection : Screen("collection")
+    object Achievement : Screen("achievement")
+    object Sticker : Screen("sticker")
+    object NoticeList : Screen("noticeList")
+    object Notice : Screen("notice")
 }
 
 class MainActivity : ComponentActivity() {
@@ -53,11 +73,11 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         bottomBar = {
                             val items = listOf(
-                                Screen.Category,
-                                Screen.Story,
-                                Screen.Home,
-                                Screen.Nearby,
-                                Screen.My
+                                NavigationScreen.Category,
+                                NavigationScreen.Story,
+                                NavigationScreen.Home,
+                                NavigationScreen.Nearby,
+                                NavigationScreen.My
                             )
                             NavigationBar {
                                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -101,23 +121,94 @@ class MainActivity : ComponentActivity() {
                     ) { innerPadding ->
                         NavHost(
                             navController,
-                            startDestination = Screen.Home.route,
+                            startDestination = NavigationScreen.Home.route,
                             Modifier.padding(innerPadding)
                         ) {
-                            composable(Screen.Home.route) {
+                            composable(NavigationScreen.Home.route) {
                                 HomeScreen(navController)
                             }
-                            composable(Screen.Category.route) {
+                            composable(NavigationScreen.Category.route) {
                                 CategoryScreen(navController)
                             }
-                            composable(Screen.Story.route) {
+                            composable(NavigationScreen.Story.route) {
                                 StoryScreen(navController)
                             }
-                            composable(Screen.Nearby.route) {
+                            composable(NavigationScreen.Nearby.route) {
                                 NearbyScreen(navController)
                             }
-                            composable(Screen.My.route) {
+                            composable(NavigationScreen.My.route) {
                                 MyScreen(navController)
+                            }
+
+                            navigation(
+                                startDestination = Screen.SignIn.route,
+                                route = Screen.SignIn.route
+                            ) {
+                                composable(Screen.SignIn.route) {
+                                    SignInScreen(navController)
+                                }
+                                composable(Screen.SignUp.route) {
+                                    SignUpScreen(navController)
+                                }
+                            }
+
+                            composable(Screen.Permission.route) {
+                                PermissionScreen(navController)
+                            }
+
+                            composable("${Screen.Place.route}/{id}") {
+                                PlaceScreen(navController, it.arguments?.getString("id") ?: "0")
+                            }
+
+                            composable("${Screen.AddReview.route}/{placeId}") {
+                                AddReviewScreen(
+                                    navController,
+                                    placeId = it.arguments?.getString("placeId") ?: "0"
+                                )
+                            }
+
+                            composable("${Screen.Heritage.route}/{id}") {
+                                HeritageScreen(navController, it.arguments?.getString("id") ?: "0")
+                            }
+
+                            composable("${Screen.Search.route}/{key}") {
+                                SearchScreen(navController, it.arguments?.getString("key") ?: "")
+                            }
+
+                            composable("${Screen.AddPath.route}/{id}") {
+                                AddPathScreen(navController, it.arguments?.getString("id") ?: "0")
+                            }
+
+                            composable("${Screen.Path.route}/{id}") {
+                                PathScreen(navController, it.arguments?.getString("id") ?: "0")
+                            }
+
+                            composable(Screen.Account.route) {
+                                AccountScreen(navController)
+                            }
+
+                            composable(Screen.MyReview.route) {
+                                MyReviewScreen(navController)
+                            }
+
+                            composable(Screen.Collection.route) {
+                                CollectionScreen(navController)
+                            }
+
+                            composable(Screen.Achievement.route) {
+                                AchievementScreen(navController)
+                            }
+
+                            composable(Screen.Sticker.route) {
+                                StickerScreen(navController)
+                            }
+
+                            composable(Screen.NoticeList.route) {
+                                NoticeListScreen(navController)
+                            }
+
+                            composable("${Screen.Notice.route}/{id}") {
+                                NoticeScreen(navController, it.arguments?.getString("id") ?: "0")
                             }
                         }
                     }
@@ -153,4 +244,84 @@ fun NearbyScreen(navController: NavController) {
 @Composable
 fun MyScreen(navController: NavController) {
     Text(text = "My")
+}
+
+@Composable
+fun SignInScreen(navController: NavController) {
+    Text(text = "SignIn")
+}
+
+@Composable
+fun SignUpScreen(navController: NavController) {
+    Text(text = "SignUp")
+}
+
+@Composable
+fun PermissionScreen(navController: NavController) {
+    Text(text = "permission")
+}
+
+@Composable
+fun PlaceScreen(navController: NavController, id: String) {
+    Text(text = "place")
+}
+
+@Composable
+fun AddReviewScreen(navController: NavController, placeId: String) {
+    Text(text = "add review")
+}
+
+@Composable
+fun HeritageScreen(navController: NavController, id: String) {
+    Text(text = "heritage")
+}
+
+@Composable
+fun SearchScreen(navController: NavController, key: String) {
+    Text(text = "search")
+}
+
+@Composable
+fun AddPathScreen(navController: NavController, id: String) {
+    Text(text = "add path")
+}
+
+@Composable
+fun PathScreen(navController: NavController, id: String) {
+    Text(text = "path")
+}
+
+@Composable
+fun AccountScreen(navController: NavController) {
+    Text(text = "account")
+}
+
+@Composable
+fun MyReviewScreen(navController: NavController) {
+    Text(text = "myReview")
+}
+
+@Composable
+fun CollectionScreen(navController: NavController) {
+    Text(text = "collection")
+}
+
+@Composable
+fun AchievementScreen(navController: NavController) {
+    Text(text = "achievement")
+}
+
+@Composable
+fun StickerScreen(navController: NavController) {
+    Text(text = "sticker")
+}
+
+@Composable
+fun NoticeListScreen(navController: NavController) {
+    Text(text = "noticeList")
+}
+
+@Composable
+fun NoticeScreen(navController: NavController, id: String) {
+    Text(text = "notice")
 }
