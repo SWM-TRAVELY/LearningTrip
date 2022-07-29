@@ -1,10 +1,12 @@
 package com.leeseungyun1020.learningtrip
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
@@ -82,6 +84,7 @@ class MainActivity : ComponentActivity() {
                             NavigationBar {
                                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                                 val currentDestination = navBackStackEntry?.destination
+                                Log.e("LSY", "onCreate: ${currentDestination?.route}")
                                 items.forEach { screen ->
                                     NavigationBarItem(
                                         icon = {
@@ -142,7 +145,7 @@ class MainActivity : ComponentActivity() {
 
                             navigation(
                                 startDestination = Screen.SignIn.route,
-                                route = Screen.SignIn.route
+                                route = "sign"
                             ) {
                                 composable(Screen.SignIn.route) {
                                     SignInScreen(navController)
@@ -233,7 +236,15 @@ fun CategoryScreen(navController: NavController) {
 
 @Composable
 fun StoryScreen(navController: NavController) {
-    Text(text = "Story")
+    Column {
+        Text(text = "Story")
+        Button(onClick = { navController.navigate("${Screen.AddPath.route}/1") }) {
+            Text(text = "Add Path 1")
+        }
+        Button(onClick = { navController.navigate("${Screen.Path.route}/11") }) {
+            Text(text = "Path 11")
+        }
+    }
 }
 
 @Composable
@@ -283,12 +294,23 @@ fun SearchScreen(navController: NavController, key: String) {
 
 @Composable
 fun AddPathScreen(navController: NavController, id: String) {
-    Text(text = "add path")
+    Column {
+        Text(text = "add path $id")
+        Button(onClick = { navController.navigate("${Screen.Path.route}/${id}") }) {
+            Text(text = "Save Path $id")
+        }
+    }
 }
 
 @Composable
 fun PathScreen(navController: NavController, id: String) {
-    Text(text = "path")
+    Column {
+        Text(text = "path $id")
+        Button(onClick = { navController.navigate("${Screen.AddPath.route}/${id}") }) {
+            Text(text = "Add Path $id")
+        }
+    }
+
 }
 
 @Composable
