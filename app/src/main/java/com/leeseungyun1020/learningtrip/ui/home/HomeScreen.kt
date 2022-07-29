@@ -1,6 +1,7 @@
 package com.leeseungyun1020.learningtrip.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
@@ -26,6 +27,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.Screen
 import com.leeseungyun1020.learningtrip.model.Keyword
 import com.leeseungyun1020.learningtrip.model.Route
 import com.leeseungyun1020.learningtrip.model.SimplePlace
@@ -95,7 +97,9 @@ fun HomeScreen(navController: NavController) {
                     Keyword("", "키워드5"),
                     Keyword("", "키워드6"),
                 )
-            )
+            ) {
+                navController.navigate("${Screen.Search.root}/${it.name}")
+            }
 
             // Introduce(Banner) Image
             BannerView(
@@ -113,8 +117,16 @@ fun HomeScreen(navController: NavController) {
                 fontSize = 16.sp, color = Gray2
             )
             PlaceListView(
-                modifier = Modifier.padding(top = 8.dp, start = 16.dp)
-            )
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                listOf(
+                    SimplePlace("1", "관광지1", "14", "image1"),
+                    SimplePlace("2", "관광지2", "14", "image2"),
+                    SimplePlace("3", "관광지3", "14", "image3"),
+                    SimplePlace("4", "관광지4", "14", "image4"),
+                )
+            ) {
+                navController.navigate("${Screen.Place.root}/${it.id}")
+            }
 
             // Route List
             Text(
@@ -142,12 +154,18 @@ fun HomeScreen(navController: NavController) {
                         )
                     )
                 )
-            )
+            ) {
+                navController.navigate("${Screen.Path.root}/${it.id}")
+            }
         })
 }
 
 @Composable
-fun KeywordListView(modifier: Modifier = Modifier, keywordList: List<Keyword>) {
+fun KeywordListView(
+    modifier: Modifier = Modifier,
+    keywordList: List<Keyword>,
+    onKeywordClicked: (Keyword) -> Unit
+) {
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -158,7 +176,8 @@ fun KeywordListView(modifier: Modifier = Modifier, keywordList: List<Keyword>) {
                     .width(86.dp)
                     .height(86.dp)
                     .clip(CircleShape)
-                    .background(color = Color.Black),
+                    .background(color = Color.Black)
+                    .clickable(onClick = { onKeywordClicked(keywordList[it]) })
             ) {
                 // Keyword Image
                 Text(
@@ -186,34 +205,29 @@ fun BannerView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PlaceListView(modifier: Modifier = Modifier) {
+fun PlaceListView(
+    modifier: Modifier = Modifier,
+    placeList: List<SimplePlace>,
+    onPlaceClicked: (SimplePlace) -> Unit
+) {
     Column(modifier = modifier) {
-        Row {
-            PlaceBox(
-                modifier = Modifier.weight(1f),
-                simplePlace = SimplePlace("1", "관광지1", "14", "image1")
-            )
-            PlaceBox(
-                modifier = Modifier.weight(1f),
-                simplePlace = SimplePlace("2", "관광지2", "14", "image2")
-            )
-        }
-        Row {
-            PlaceBox(
-                modifier = Modifier.weight(1f),
-                simplePlace = SimplePlace("3", "관광지3", "14", "image3")
-            )
-            PlaceBox(
-                modifier = Modifier.weight(1f),
-                simplePlace = SimplePlace("4", "관광지4", "14", "image4")
-            )
+        for (i in 0..placeList.lastIndex step 2) {
+            Row {
+                for (place in listOf(placeList[i], placeList.getOrNull(i + 1) ?: placeList.last()))
+                    PlaceBox(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { onPlaceClicked(place) },
+                        simplePlace = place
+                    )
+            }
         }
     }
 }
 
 
 @Composable
-fun RouteListView(modifier: Modifier, routeList: List<Route>) {
+fun RouteListView(modifier: Modifier, routeList: List<Route>, onRouteClicked: (Route) -> Unit) {
     var lastTime by remember { mutableStateOf(System.currentTimeMillis()) }
     var centerIndex by remember { mutableStateOf(0) }
 
@@ -247,11 +261,13 @@ fun RouteListView(modifier: Modifier, routeList: List<Route>) {
         )
     ) {
         val (startBox, centerBox, endBox) = createRefs()
-        RouteBox(route = startRoute, modifier = Modifier.constrainAs(startBox) {
-            top.linkTo(parent.top)
-            bottom.linkTo(parent.bottom)
-            end.linkTo(centerBox.start)
-        })
+        RouteBox(route = startRoute, modifier = Modifier
+            .constrainAs(startBox) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                end.linkTo(centerBox.start)
+            }
+            .clickable { onRouteClicked(startRoute) })
 
         RouteBox(route = centerRoute, modifier = Modifier
             .constrainAs(centerBox) {
@@ -262,13 +278,16 @@ fun RouteListView(modifier: Modifier, routeList: List<Route>) {
             }
             .width(310.dp)
             .padding(horizontal = 8.dp)
+            .clickable { onRouteClicked(centerRoute) }
         )
 
-        RouteBox(route = endRoute, modifier = Modifier.constrainAs(endBox) {
-            top.linkTo(parent.top)
-            bottom.linkTo(parent.bottom)
-            start.linkTo(centerBox.end)
-        })
+        RouteBox(route = endRoute, modifier = Modifier
+            .constrainAs(endBox) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(centerBox.end)
+            }
+            .clickable { onRouteClicked(endRoute) })
     }
 //    }
 }
