@@ -40,108 +40,110 @@ import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 fun HomeScreen(navController: NavController) {
     var searchText by rememberSaveable { mutableStateOf("") }
 
-    LearningTripScaffold(topBarExtraContent = {
-        TextField(
-            value = searchText,
-            onValueChange = { searchText = it },
-            modifier = Modifier
-                .padding(16.dp)
-                .padding(
-                    top = 8.dp
-                )
-                .fillMaxWidth(),
-            placeholder = {
-                Row {
-                    Icon(Icons.Filled.Search, stringResource(id = R.string.action_search))
-                    Spacer(modifier = Modifier.padding(start = 4.dp))
-                    Text(text = stringResource(id = R.string.hint_search))
-                }
-            },
-            singleLine = true,
-            trailingIcon = {
-                if (searchText.isNotEmpty()) {
-                    IconButton(onClick = { searchText = "" }) {
-                        Icon(
-                            Icons.Filled.Clear,
-                            stringResource(id = R.string.action_delete)
-                        )
+    LearningTripScaffold(
+        title = stringResource(id = R.string.app_name),
+        topBarExtraContent = {
+            TextField(
+                value = searchText,
+                onValueChange = { searchText = it },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .padding(
+                        top = 8.dp
+                    )
+                    .fillMaxWidth(),
+                placeholder = {
+                    Row {
+                        Icon(Icons.Filled.Search, stringResource(id = R.string.action_search))
+                        Spacer(modifier = Modifier.padding(start = 4.dp))
+                        Text(text = stringResource(id = R.string.hint_search))
                     }
-                }
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                containerColor = Color.White,
-                placeholderColor = Gray3
-            ),
-            shape = RoundedCornerShape(10.dp)
-        )
-    }, bodyContent = {
-        // Keyword List
-        Text(
-            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-            text = stringResource(id = R.string.title_recommend_keyword),
-            color = Gray2, fontSize = 16.sp
-        )
-        KeywordListView(
-            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-            listOf(
-                Keyword("", "키워드1"),
-                Keyword("", "키워드2"),
-                Keyword("", "키워드3"),
-                Keyword("", "키워드4"),
-                Keyword("", "키워드5"),
-                Keyword("", "키워드6"),
-            )
-        )
-
-        // Introduce(Banner) Image
-        BannerView(
-            modifier = Modifier
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                .fillMaxWidth()
-                .height(104.dp)
-                .background(color = Gray3)
-        )
-
-        // Place List
-        Text(
-            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-            text = stringResource(id = R.string.title_recommend_place),
-            fontSize = 16.sp, color = Gray2
-        )
-        PlaceListView(
-            modifier = Modifier.padding(top = 8.dp, start = 16.dp)
-        )
-
-        // Route List
-        Text(
-            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-            text = stringResource(id = R.string.title_recommend_route),
-            fontSize = 16.sp, color = Gray2
-        )
-
-        RouteListView(
-            modifier = Modifier
-                .padding(vertical = 8.dp),
-            routeList = listOf(
-                Route(
-                    "1", "코스1", listOf(
-                        SimplePlace("1", "관광지1", "14", "image1"),
-                        SimplePlace("2", "관광지2", "14", "image2"),
-                    )
+                },
+                singleLine = true,
+                trailingIcon = {
+                    if (searchText.isNotEmpty()) {
+                        IconButton(onClick = { searchText = "" }) {
+                            Icon(
+                                Icons.Filled.Clear,
+                                stringResource(id = R.string.action_delete)
+                            )
+                        }
+                    }
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    containerColor = Color.White,
+                    placeholderColor = Gray3
                 ),
-                Route(
-                    "2", "코스2", listOf(
-                        SimplePlace("3", "관광지3", "14", "image3"),
-                        SimplePlace("4", "관광지4", "14", "image4"),
-                        SimplePlace("5", "관광지5", "14", "image5"),
-                        SimplePlace("6", "관광지6", "14", "image6"),
+                shape = RoundedCornerShape(10.dp)
+            )
+        }, bodyContent = {
+            // Keyword List
+            Text(
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                text = stringResource(id = R.string.title_recommend_keyword),
+                color = Gray2, fontSize = 16.sp
+            )
+            KeywordListView(
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                listOf(
+                    Keyword("", "키워드1"),
+                    Keyword("", "키워드2"),
+                    Keyword("", "키워드3"),
+                    Keyword("", "키워드4"),
+                    Keyword("", "키워드5"),
+                    Keyword("", "키워드6"),
+                )
+            )
+
+            // Introduce(Banner) Image
+            BannerView(
+                modifier = Modifier
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                    .fillMaxWidth()
+                    .height(104.dp)
+                    .background(color = Gray3)
+            )
+
+            // Place List
+            Text(
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                text = stringResource(id = R.string.title_recommend_place),
+                fontSize = 16.sp, color = Gray2
+            )
+            PlaceListView(
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp)
+            )
+
+            // Route List
+            Text(
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                text = stringResource(id = R.string.title_recommend_route),
+                fontSize = 16.sp, color = Gray2
+            )
+
+            RouteListView(
+                modifier = Modifier
+                    .padding(vertical = 8.dp),
+                routeList = listOf(
+                    Route(
+                        "1", "코스1", listOf(
+                            SimplePlace("1", "관광지1", "14", "image1"),
+                            SimplePlace("2", "관광지2", "14", "image2"),
+                        )
+                    ),
+                    Route(
+                        "2", "코스2", listOf(
+                            SimplePlace("3", "관광지3", "14", "image3"),
+                            SimplePlace("4", "관광지4", "14", "image4"),
+                            SimplePlace("5", "관광지5", "14", "image5"),
+                            SimplePlace("6", "관광지6", "14", "image6"),
+                        )
                     )
                 )
             )
-        )
-    })
+        })
 }
 
 @Composable
