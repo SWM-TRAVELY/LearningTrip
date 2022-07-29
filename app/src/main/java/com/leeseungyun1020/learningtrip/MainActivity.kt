@@ -32,32 +32,83 @@ import com.leeseungyun1020.learningtrip.ui.theme.Secondary
 sealed class NavigationScreen(
     val route: String,
     @StringRes val resourceId: Int,
-    @DrawableRes val iconId: Int
+    @DrawableRes val iconId: Int,
+    val screenRoutes: List<String>,
 ) {
-    object Home : NavigationScreen("home", R.string.nav_home, R.drawable.ic_home)
-    object Story : NavigationScreen("story", R.string.nav_story, R.drawable.ic_story)
-    object Category : NavigationScreen("category", R.string.nav_category, R.drawable.ic_category)
-    object Nearby : NavigationScreen("nearby", R.string.nav_nearby, R.drawable.ic_nearby)
-    object My : NavigationScreen("my", R.string.nav_my, R.drawable.ic_my)
+    object Home : NavigationScreen(
+        "home",
+        R.string.nav_home,
+        R.drawable.ic_home,
+        listOf("home")
+    )
+
+    object Story :
+        NavigationScreen(
+            "story",
+            R.string.nav_story,
+            R.drawable.ic_story,
+            listOf(
+                "story",
+                Screen.AddPath.route,
+                Screen.Path.route
+            )
+        )
+
+    object Category : NavigationScreen(
+        "category",
+        R.string.nav_category,
+        R.drawable.ic_category,
+        listOf(
+            "category",
+            Screen.Place.route,
+            Screen.AddReview.route,
+            Screen.Heritage.route,
+            Screen.Search.route
+        )
+    )
+
+    object Nearby :
+        NavigationScreen(
+            "nearby",
+            R.string.nav_nearby,
+            R.drawable.ic_nearby,
+            listOf("nearby")
+        )
+
+    object My : NavigationScreen(
+        "my",
+        R.string.nav_my,
+        R.drawable.ic_my,
+        listOf(
+            "my",
+            Screen.Account.route,
+            Screen.MyReview.route,
+            Screen.Collection.route,
+            Screen.Achievement.route,
+            Screen.Sticker.route,
+            Screen.NoticeList.route,
+            Screen.Notice.route
+        )
+    )
 }
 
-sealed class Screen(val route: String) {
-    object SignIn : Screen("signIn")
-    object SignUp : Screen("SingUp")
-    object Permission : Screen("permission")
-    object Place : Screen("place")
-    object AddReview : Screen("addReview")
-    object Heritage : Screen("heritage")
-    object Search : Screen("search")
-    object AddPath : Screen("addPath")
-    object Path : Screen("path")
-    object Account : Screen("account")
-    object MyReview : Screen("myReview")
-    object Collection : Screen("collection")
-    object Achievement : Screen("achievement")
-    object Sticker : Screen("sticker")
-    object NoticeList : Screen("noticeList")
-    object Notice : Screen("notice")
+sealed class Screen(val route: String, val root: String) {
+    object SignIn : Screen("signIn", "signIn")
+    object SignUp : Screen("SingUp", "signUp")
+    object Permission : Screen("permission", "permission")
+    object Place : Screen("place/{id}", "place")
+    object AddReview : Screen("addReview/{placeId}", "addReview")
+    object Heritage : Screen("heritage/{id}", "heritage")
+    object Search : Screen("search/{key}", "search")
+    object AddPath : Screen("addPath/{id}", "addPath")
+    object Path : Screen("path/{id}", "path")
+    object Account : Screen("account", "account")
+    object MyReview : Screen("myReview", "myReview")
+    object Collection : Screen("collection", "collection")
+    object Achievement : Screen("achievement", "achievement")
+    object Sticker : Screen("sticker", "sticker")
+    object NoticeList : Screen("noticeList", "noticeList")
+    object Notice : Screen("notice/{id}", "notice")
 }
 
 class MainActivity : ComponentActivity() {
@@ -93,7 +144,7 @@ class MainActivity : ComponentActivity() {
                                             )
                                         },
                                         label = { Text(stringResource(screen.resourceId)) },
-                                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                        selected = currentDestination?.hierarchy?.any { it.route in screen.screenRoutes } == true,
                                         onClick = {
                                             navController.navigate(screen.route) {
                                                 popUpTo(navController.graph.findStartDestination().id) {
@@ -152,30 +203,30 @@ class MainActivity : ComponentActivity() {
                                 PermissionScreen(navController)
                             }
 
-                            composable("${Screen.Place.route}/{id}") {
+                            composable(Screen.Place.route) {
                                 PlaceScreen(navController, it.arguments?.getString("id") ?: "0")
                             }
 
-                            composable("${Screen.AddReview.route}/{placeId}") {
+                            composable(Screen.AddReview.route) {
                                 AddReviewScreen(
                                     navController,
                                     placeId = it.arguments?.getString("placeId") ?: "0"
                                 )
                             }
 
-                            composable("${Screen.Heritage.route}/{id}") {
+                            composable(Screen.Heritage.route) {
                                 HeritageScreen(navController, it.arguments?.getString("id") ?: "0")
                             }
 
-                            composable("${Screen.Search.route}/{key}") {
+                            composable(Screen.Search.route) {
                                 SearchScreen(navController, it.arguments?.getString("key") ?: "")
                             }
 
-                            composable("${Screen.AddPath.route}/{id}") {
+                            composable(Screen.AddPath.route) {
                                 AddPathScreen(navController, it.arguments?.getString("id") ?: "0")
                             }
 
-                            composable("${Screen.Path.route}/{id}") {
+                            composable(Screen.Path.route) {
                                 PathScreen(navController, it.arguments?.getString("id") ?: "0")
                             }
 
@@ -203,7 +254,7 @@ class MainActivity : ComponentActivity() {
                                 NoticeListScreen(navController)
                             }
 
-                            composable("${Screen.Notice.route}/{id}") {
+                            composable(Screen.Notice.route) {
                                 NoticeScreen(navController, it.arguments?.getString("id") ?: "0")
                             }
                         }
@@ -226,7 +277,7 @@ fun DefaultPreview() {
 fun CategoryScreen(navController: NavController) {
     Column {
         Text(text = "Category")
-        Button(onClick = { navController.navigate("${Screen.Search.route}/keyword") }) {
+        Button(onClick = { navController.navigate("${Screen.Search.root}/keyword") }) {
             Text(text = "Search keyword")
         }
     }
@@ -236,10 +287,10 @@ fun CategoryScreen(navController: NavController) {
 fun StoryScreen(navController: NavController) {
     Column {
         Text(text = "Story")
-        Button(onClick = { navController.navigate("${Screen.AddPath.route}/1") }) {
+        Button(onClick = { navController.navigate("${Screen.AddPath.root}/1") }) {
             Text(text = "Add Path 1")
         }
-        Button(onClick = { navController.navigate("${Screen.Path.route}/11") }) {
+        Button(onClick = { navController.navigate("${Screen.Path.root}/11") }) {
             Text(text = "Path 11")
         }
     }
@@ -289,7 +340,7 @@ fun PermissionScreen(navController: NavController) {
 fun PlaceScreen(navController: NavController, id: String) {
     Column {
         Text(text = "place $id")
-        Button(onClick = { navController.navigate("${Screen.Heritage.route}/100") }) {
+        Button(onClick = { navController.navigate("${Screen.Heritage.root}/100") }) {
             Text(text = "Heritage 100")
         }
     }
@@ -310,10 +361,10 @@ fun HeritageScreen(navController: NavController, id: String) {
 fun SearchScreen(navController: NavController, key: String) {
     Column {
         Text(text = "search '$key'")
-        Button(onClick = { navController.navigate("${Screen.Place.route}/100") }) {
+        Button(onClick = { navController.navigate("${Screen.Place.root}/100") }) {
             Text(text = "Place 100")
         }
-        Button(onClick = { navController.navigate("${Screen.Path.route}/200") }) {
+        Button(onClick = { navController.navigate("${Screen.Path.root}/200") }) {
             Text(text = "Path 200")
         }
     }
@@ -335,7 +386,7 @@ fun AddPathScreen(navController: NavController, id: String) {
 fun PathScreen(navController: NavController, id: String) {
     Column {
         Text(text = "path $id")
-        Button(onClick = { navController.navigate("${Screen.AddPath.route}/${id}") }) {
+        Button(onClick = { navController.navigate("${Screen.AddPath.root}/${id}") }) {
             Text(text = "Add Path $id")
         }
     }
@@ -351,7 +402,7 @@ fun AccountScreen(navController: NavController) {
 fun MyReviewScreen(navController: NavController) {
     Column {
         Text(text = "myReview")
-        Button(onClick = { navController.navigate("${Screen.Place.route}/101") }) {
+        Button(onClick = { navController.navigate("${Screen.Place.root}/101") }) {
             Text(text = "Place 101 Review")
         }
     }
@@ -386,7 +437,7 @@ fun StickerScreen(navController: NavController) {
 fun NoticeListScreen(navController: NavController) {
     Column {
         Text(text = "noticeList")
-        Button(onClick = { navController.navigate("${Screen.Notice.route}/1") }) {
+        Button(onClick = { navController.navigate("${Screen.Notice.root}/1") }) {
             Text(text = "Notice 1")
         }
     }
