@@ -1,7 +1,6 @@
 package com.leeseungyun1020.learningtrip
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
@@ -84,7 +83,7 @@ class MainActivity : ComponentActivity() {
                             NavigationBar {
                                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                                 val currentDestination = navBackStackEntry?.destination
-                                Log.e("LSY", "onCreate: ${currentDestination?.route}")
+
                                 items.forEach { screen ->
                                     NavigationBarItem(
                                         icon = {
@@ -97,16 +96,10 @@ class MainActivity : ComponentActivity() {
                                         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                         onClick = {
                                             navController.navigate(screen.route) {
-                                                // Pop up to the start destination of the graph to
-                                                // avoid building up a large stack of destinations
-                                                // on the back stack as users select items
                                                 popUpTo(navController.graph.findStartDestination().id) {
-                                                    saveState = true
+                                                    saveState = false
                                                 }
-                                                // Avoid multiple copies of the same destination when
-                                                // reselecting the same item
                                                 launchSingleTop = true
-                                                // Restore state when reselecting a previously selected item
                                                 restoreState = true
                                             }
                                         },
@@ -231,7 +224,12 @@ fun DefaultPreview() {
 
 @Composable
 fun CategoryScreen(navController: NavController) {
-    Text(text = "Category")
+    Column {
+        Text(text = "Category")
+        Button(onClick = { navController.navigate("${Screen.Search.route}/keyword") }) {
+            Text(text = "Search keyword")
+        }
+    }
 }
 
 @Composable
@@ -289,7 +287,13 @@ fun PermissionScreen(navController: NavController) {
 
 @Composable
 fun PlaceScreen(navController: NavController, id: String) {
-    Text(text = "place")
+    Column {
+        Text(text = "place $id")
+        Button(onClick = { navController.navigate("${Screen.Heritage.route}/100") }) {
+            Text(text = "Heritage 100")
+        }
+    }
+
 }
 
 @Composable
@@ -299,12 +303,20 @@ fun AddReviewScreen(navController: NavController, placeId: String) {
 
 @Composable
 fun HeritageScreen(navController: NavController, id: String) {
-    Text(text = "heritage")
+    Text(text = "heritage $id")
 }
 
 @Composable
 fun SearchScreen(navController: NavController, key: String) {
-    Text(text = "search")
+    Column {
+        Text(text = "search '$key'")
+        Button(onClick = { navController.navigate("${Screen.Place.route}/100") }) {
+            Text(text = "Place 100")
+        }
+        Button(onClick = { navController.navigate("${Screen.Path.route}/200") }) {
+            Text(text = "Path 200")
+        }
+    }
 }
 
 @Composable
@@ -312,9 +324,7 @@ fun AddPathScreen(navController: NavController, id: String) {
     Column {
         Text(text = "add path $id")
         Button(onClick = {
-            navController.navigate("${Screen.Path.route}/${id}") {
-                popUpTo(NavigationScreen.Story.route)
-            }
+            navController.popBackStack()
         }) {
             Text(text = "Save Path $id")
         }
