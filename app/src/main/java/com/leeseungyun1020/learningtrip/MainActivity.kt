@@ -254,7 +254,22 @@ fun NearbyScreen(navController: NavController) {
 
 @Composable
 fun MyScreen(navController: NavController) {
-    Text(text = "My")
+
+    Column {
+        Text(text = "My")
+        Button(onClick = { navController.navigate(Screen.Account.route) }) {
+            Text(text = "Account")
+        }
+        Button(onClick = { navController.navigate(Screen.MyReview.route) }) {
+            Text(text = "My Review")
+        }
+        Button(onClick = { navController.navigate(Screen.Collection.route) }) {
+            Text(text = "Collection")
+        }
+        Button(onClick = { navController.navigate(Screen.NoticeList.route) }) {
+            Text(text = "Notice List")
+        }
+    }
 }
 
 @Composable
@@ -296,7 +311,11 @@ fun SearchScreen(navController: NavController, key: String) {
 fun AddPathScreen(navController: NavController, id: String) {
     Column {
         Text(text = "add path $id")
-        Button(onClick = { navController.navigate("${Screen.Path.route}/${id}") }) {
+        Button(onClick = {
+            navController.navigate("${Screen.Path.route}/${id}") {
+                popUpTo(NavigationScreen.Story.route)
+            }
+        }) {
             Text(text = "Save Path $id")
         }
     }
@@ -320,12 +339,27 @@ fun AccountScreen(navController: NavController) {
 
 @Composable
 fun MyReviewScreen(navController: NavController) {
-    Text(text = "myReview")
+    Column {
+        Text(text = "myReview")
+        Button(onClick = { navController.navigate("${Screen.Place.route}/101") }) {
+            Text(text = "Place 101 Review")
+        }
+    }
+
 }
 
 @Composable
 fun CollectionScreen(navController: NavController) {
-    Text(text = "collection")
+    Column {
+        Text(text = "collection")
+        Button(onClick = { navController.navigate(Screen.Achievement.route) }) {
+            Text(text = "Achievement")
+        }
+        Button(onClick = { navController.navigate(Screen.Sticker.route) }) {
+            Text(text = "Sticker")
+        }
+    }
+
 }
 
 @Composable
@@ -340,10 +374,16 @@ fun StickerScreen(navController: NavController) {
 
 @Composable
 fun NoticeListScreen(navController: NavController) {
-    Text(text = "noticeList")
+    Column {
+        Text(text = "noticeList")
+        Button(onClick = { navController.navigate("${Screen.Notice.route}/1") }) {
+            Text(text = "Notice 1")
+        }
+    }
+
 }
 
 @Composable
 fun NoticeScreen(navController: NavController, id: String) {
-    Text(text = "notice")
+    Text(text = "notice $id")
 }
