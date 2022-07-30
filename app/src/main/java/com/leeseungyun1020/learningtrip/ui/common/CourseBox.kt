@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.common
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -7,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +41,21 @@ fun CourseBox(modifier: Modifier = Modifier, course: Course) {
                 .height(100.dp)
                 .clip(RoundedCornerShape(5.dp))
         )
+
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(60.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(
+                    brush = Brush.verticalGradient(
+                        listOf(Color.Black.copy(alpha = 0f), Color.Black.copy(alpha = 0.8f))
+                    )
+                )
+        ) {
+
+        }
 
         Column(
             modifier = Modifier
