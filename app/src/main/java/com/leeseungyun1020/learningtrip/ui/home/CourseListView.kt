@@ -60,7 +60,7 @@ fun CourseListView(
                 bottom.linkTo(parent.bottom)
                 end.linkTo(centerBox.start)
             }
-            .clickable { onCourseClicked(startRoute) })
+            .clickable { centerIndex-- })
 
         CourseBox(course = centerRoute, modifier = Modifier
             .constrainAs(centerBox) {
@@ -80,7 +80,7 @@ fun CourseListView(
                 bottom.linkTo(parent.bottom)
                 start.linkTo(centerBox.end)
             }
-            .clickable { onCourseClicked(endRoute) })
+            .clickable { centerIndex++ })
     }
 }
 
