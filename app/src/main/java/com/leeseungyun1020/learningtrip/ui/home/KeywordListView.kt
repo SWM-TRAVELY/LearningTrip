@@ -2,10 +2,7 @@ package com.leeseungyun1020.learningtrip.ui.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -18,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -28,6 +26,7 @@ import com.leeseungyun1020.learningtrip.model.Keyword
 @Composable
 fun KeywordListView(
     modifier: Modifier = Modifier,
+    innerStartPadding: Dp = 0.dp,
     keywordList: List<Keyword>,
     onKeywordClicked: (Keyword) -> Unit
 ) {
@@ -36,8 +35,14 @@ fun KeywordListView(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         items(count = keywordList.size) {
+            val innerModifier = when (it) {
+                0 -> Modifier.padding(start = innerStartPadding)
+                keywordList.lastIndex -> Modifier.padding(end = innerStartPadding)
+                else -> Modifier
+            }
+
             Box(
-                modifier = Modifier
+                modifier = innerModifier
                     .width(86.dp)
                     .height(86.dp)
                     .clip(CircleShape)

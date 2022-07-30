@@ -80,8 +80,9 @@ fun HomeScreen(navController: NavController) {
                 color = Gray2, fontSize = 16.sp
             )
             KeywordListView(
-                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                listOf(
+                modifier = Modifier.padding(top = 8.dp),
+                innerStartPadding = 16.dp,
+                keywordList = listOf(
                     Keyword(
                         "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
                         "키워드1"
