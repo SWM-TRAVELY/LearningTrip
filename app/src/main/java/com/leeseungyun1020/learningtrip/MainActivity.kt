@@ -47,8 +47,8 @@ sealed class NavigationScreen(
             R.drawable.ic_story,
             listOf(
                 "story",
-                Screen.AddPath.route,
-                Screen.Path.route
+                Screen.AddCourse.route,
+                Screen.Course.route
             )
         )
 
@@ -98,8 +98,8 @@ sealed class Screen(val route: String, val root: String) {
     object AddReview : Screen("addReview/{placeId}", "addReview")
     object Heritage : Screen("heritage/{id}", "heritage")
     object Search : Screen("search/{key}", "search")
-    object AddPath : Screen("addPath/{id}", "addPath")
-    object Path : Screen("path/{id}", "path")
+    object AddCourse : Screen("addCourse/{id}", "addCourse")
+    object Course : Screen("course/{id}", "course")
     object Account : Screen("account", "account")
     object MyReview : Screen("myReview", "myReview")
     object Collection : Screen("collection", "collection")
@@ -200,11 +200,11 @@ fun CategoryScreen(navController: NavController) {
 fun StoryScreen(navController: NavController) {
     Column {
         Text(text = "Story")
-        Button(onClick = { navController.navigate("${Screen.AddPath.root}/1") }) {
-            Text(text = "Add Path 1")
+        Button(onClick = { navController.navigate("${Screen.AddCourse.root}/1") }) {
+            Text(text = "Add Course 1")
         }
-        Button(onClick = { navController.navigate("${Screen.Path.root}/11") }) {
-            Text(text = "Path 11")
+        Button(onClick = { navController.navigate("${Screen.Course.root}/11") }) {
+            Text(text = "Course 11")
         }
     }
 }
@@ -277,30 +277,30 @@ fun SearchScreen(navController: NavController, key: String) {
         Button(onClick = { navController.navigate("${Screen.Place.root}/100") }) {
             Text(text = "Place 100")
         }
-        Button(onClick = { navController.navigate("${Screen.Path.root}/200") }) {
-            Text(text = "Path 200")
+        Button(onClick = { navController.navigate("${Screen.Course.root}/200") }) {
+            Text(text = "Course 200")
         }
     }
 }
 
 @Composable
-fun AddPathScreen(navController: NavController, id: String) {
+fun AddCourseScreen(navController: NavController, id: String) {
     Column {
-        Text(text = "add path $id")
+        Text(text = "add course $id")
         Button(onClick = {
             navController.popBackStack()
         }) {
-            Text(text = "Save Path $id")
+            Text(text = "Save Course $id")
         }
     }
 }
 
 @Composable
-fun PathScreen(navController: NavController, id: String) {
+fun CourseScreen(navController: NavController, id: String) {
     Column {
-        Text(text = "path $id")
-        Button(onClick = { navController.navigate("${Screen.AddPath.root}/${id}") }) {
-            Text(text = "Add Path $id")
+        Text(text = "course $id")
+        Button(onClick = { navController.navigate("${Screen.AddCourse.root}/${id}") }) {
+            Text(text = "Add Course $id")
         }
     }
 

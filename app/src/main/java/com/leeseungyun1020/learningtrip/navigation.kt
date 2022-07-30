@@ -58,12 +58,12 @@ fun NavGraphBuilder.graph(navController: NavController) {
         SearchScreen(navController, it.arguments?.getString("key") ?: "")
     }
 
-    composable(Screen.AddPath.route) {
-        AddPathScreen(navController, it.arguments?.getString("id") ?: "0")
+    composable(Screen.AddCourse.route) {
+        AddCourseScreen(navController, it.arguments?.getString("id") ?: "0")
     }
 
-    composable(Screen.Path.route) {
-        PathScreen(navController, it.arguments?.getString("id") ?: "0")
+    composable(Screen.Course.route) {
+        CourseScreen(navController, it.arguments?.getString("id") ?: "0")
     }
 
     composable(Screen.Account.route) {

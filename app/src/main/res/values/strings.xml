@@ -6,7 +6,7 @@
     <string name="action_delete">Delete</string>
     <string name="title_recommend_keyword">Recommend Keywords</string>
     <string name="title_recommend_place">Recommend Places</string>
-    <string name="title_recommend_route">Recommend Routes</string>
+    <string name="title_recommend_course">Recommend Courses</string>
     <string name="nav_home">Home</string>
     <string name="nav_category">Category</string>
     <string name="nav_story">Story</string>

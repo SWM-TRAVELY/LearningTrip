@@ -28,12 +28,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.Screen
+import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.Keyword
-import com.leeseungyun1020.learningtrip.model.Route
 import com.leeseungyun1020.learningtrip.model.SimplePlace
+import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.common.PlaceBox
-import com.leeseungyun1020.learningtrip.ui.common.RouteBox
 import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
@@ -131,21 +131,21 @@ fun HomeScreen(navController: NavController) {
             // Route List
             Text(
                 modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                text = stringResource(id = R.string.title_recommend_route),
+                text = stringResource(id = R.string.title_recommend_course),
                 fontSize = 16.sp, color = Gray2
             )
 
-            RouteListView(
+            CourseListView(
                 modifier = Modifier
                     .padding(vertical = 8.dp),
-                routeList = listOf(
-                    Route(
+                courseList = listOf(
+                    Course(
                         "1", "코스1", listOf(
                             SimplePlace("1", "관광지1", "14", "image1"),
                             SimplePlace("2", "관광지2", "14", "image2"),
                         )
                     ),
-                    Route(
+                    Course(
                         "2", "코스2", listOf(
                             SimplePlace("3", "관광지3", "14", "image3"),
                             SimplePlace("4", "관광지4", "14", "image4"),
@@ -155,7 +155,7 @@ fun HomeScreen(navController: NavController) {
                     )
                 )
             ) {
-                navController.navigate("${Screen.Path.root}/${it.id}")
+                navController.navigate("${Screen.Course.root}/${it.id}")
             }
         })
 }
@@ -227,19 +227,23 @@ fun PlaceListView(
 
 
 @Composable
-fun RouteListView(modifier: Modifier, routeList: List<Route>, onRouteClicked: (Route) -> Unit) {
+fun CourseListView(
+    modifier: Modifier,
+    courseList: List<Course>,
+    onCourseClicked: (Course) -> Unit
+) {
     var lastTime by remember { mutableStateOf(System.currentTimeMillis()) }
     var centerIndex by remember { mutableStateOf(0) }
 
-    centerIndex = (centerIndex + routeList.size) % routeList.size
+    centerIndex = (centerIndex + courseList.size) % courseList.size
     val startRoute = when (centerIndex) {
-        0 -> routeList.last()
-        else -> routeList[centerIndex - 1]
+        0 -> courseList.last()
+        else -> courseList[centerIndex - 1]
     }
-    val centerRoute = routeList[centerIndex]
+    val centerRoute = courseList[centerIndex]
     val endRoute = when (centerIndex) {
-        routeList.lastIndex -> routeList.first()
-        else -> routeList[centerIndex + 1]
+        courseList.lastIndex -> courseList.first()
+        else -> courseList[centerIndex + 1]
     }
 
     ConstraintLayout(modifier = modifier
@@ -261,15 +265,15 @@ fun RouteListView(modifier: Modifier, routeList: List<Route>, onRouteClicked: (R
         )
     ) {
         val (startBox, centerBox, endBox) = createRefs()
-        RouteBox(route = startRoute, modifier = Modifier
+        CourseBox(course = startRoute, modifier = Modifier
             .constrainAs(startBox) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
                 end.linkTo(centerBox.start)
             }
-            .clickable { onRouteClicked(startRoute) })
+            .clickable { onCourseClicked(startRoute) })
 
-        RouteBox(route = centerRoute, modifier = Modifier
+        CourseBox(course = centerRoute, modifier = Modifier
             .constrainAs(centerBox) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
@@ -278,16 +282,16 @@ fun RouteListView(modifier: Modifier, routeList: List<Route>, onRouteClicked: (R
             }
             .width(310.dp)
             .padding(horizontal = 8.dp)
-            .clickable { onRouteClicked(centerRoute) }
+            .clickable { onCourseClicked(centerRoute) }
         )
 
-        RouteBox(route = endRoute, modifier = Modifier
+        CourseBox(course = endRoute, modifier = Modifier
             .constrainAs(endBox) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
                 start.linkTo(centerBox.end)
             }
-            .clickable { onRouteClicked(endRoute) })
+            .clickable { onCourseClicked(endRoute) })
     }
 //    }
 }
