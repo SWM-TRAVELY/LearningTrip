@@ -87,15 +87,15 @@ fun HomeScreen(navController: NavController) {
                         "키워드1"
                     ),
                     Keyword(
-                        "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=1f9b44e2-bd54-42a6-b4ab-287eca75e023",
                         "키워드2"
                     ),
                     Keyword(
-                        "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
                         "키워드3"
                     ),
                     Keyword(
-                        "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
                         "키워드4"
                     ),
                     Keyword(

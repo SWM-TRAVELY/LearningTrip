@@ -53,7 +53,10 @@ fun KeywordListView(
                     placeholder = painterResource(R.drawable.ic_baseline_image_24),
                     contentDescription = keywordList[it].name,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.clip(CircleShape)
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(color = Color.Black),
+                    alpha = 0.5f,
                 )
                 Text(
                     text = keywordList[it].name,
