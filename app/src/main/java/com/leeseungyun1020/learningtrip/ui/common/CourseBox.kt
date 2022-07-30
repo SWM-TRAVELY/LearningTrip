@@ -1,7 +1,5 @@
 package com.leeseungyun1020.learningtrip.ui.common
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -10,29 +8,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimplePlace
-import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import java.lang.Integer.min
 
 @Composable
 fun CourseBox(modifier: Modifier = Modifier, course: Course) {
     Box(modifier = modifier) {
         // TODO: 코스 이미지 URL로 교체
-        Image(
-            painter = painterResource(id = R.drawable.ic_baseline_image_24),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(course.placeList.first().imageURL)
+                .crossfade(true)
+                .build(),
+            //TODO: Replace keyword placeholder
+            placeholder = painterResource(R.drawable.ic_baseline_image_24),
             contentDescription = course.name,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
                 .clip(RoundedCornerShape(5.dp))
-                .background(Gray2)
         )
+
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)

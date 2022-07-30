@@ -12,7 +12,7 @@ data class Place(
     val longitude: Double,
     val tel: String,
     val overview: String,
-    val image: String,
+    val imageURL: String,
     val restDate: String,
     val useTime: String,
     val chkParking: Boolean,
@@ -26,8 +26,8 @@ data class Place(
     val heritageList: List<SimpleHeritage>,
 )
 
-data class SimplePlace(val id: String, val name: String, val typeId: String, val image: String)
+data class SimplePlace(val id: String, val name: String, val typeId: String, val imageURL: String)
 
 fun Place.toSimplePlace(): SimplePlace {
-    return SimplePlace(id, name, typeId, image)
+    return SimplePlace(id, name, typeId, imageURL)
 }
