@@ -73,153 +73,163 @@ fun HomeScreen(navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
         }, bodyContent = {
-            // Keyword List
-            Text(
-                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                text = stringResource(id = R.string.title_recommend_keyword),
-                color = Gray2, fontSize = 16.sp
-            )
-            KeywordListView(
-                modifier = Modifier.padding(top = 8.dp),
-                innerStartPadding = 16.dp,
-                keywordList = listOf(
-                    Keyword(
-                        "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                        "키워드1"
-                    ),
-                    Keyword(
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=1f9b44e2-bd54-42a6-b4ab-287eca75e023",
-                        "키워드2"
-                    ),
-                    Keyword(
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
-                        "키워드3"
-                    ),
-                    Keyword(
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
-                        "키워드4"
-                    ),
-                    Keyword(
-                        "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                        "키워드5"
-                    ),
-                    Keyword(
-                        "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                        "키워드6"
-                    ),
+            if (searchText.isEmpty()) {
+                // Keyword List
+                Text(
+                    modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                    text = stringResource(id = R.string.title_recommend_keyword),
+                    color = Gray2, fontSize = 16.sp
                 )
-            ) {
-                navController.navigate("${Screen.Search.root}/${it.name}")
-            }
+                KeywordListView(
+                    modifier = Modifier.padding(top = 8.dp),
+                    innerStartPadding = 16.dp,
+                    keywordList = listOf(
+                        Keyword(
+                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                            "키워드1"
+                        ),
+                        Keyword(
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=1f9b44e2-bd54-42a6-b4ab-287eca75e023",
+                            "키워드2"
+                        ),
+                        Keyword(
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
+                            "키워드3"
+                        ),
+                        Keyword(
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
+                            "키워드4"
+                        ),
+                        Keyword(
+                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                            "키워드5"
+                        ),
+                        Keyword(
+                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                            "키워드6"
+                        ),
+                    )
+                ) {
+                    navController.navigate("${Screen.Search.root}/${it.name}")
+                }
 
-            // Introduce(Banner) Image
-            BannerView(
-                modifier = Modifier
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                    .fillMaxWidth()
-                    .height(104.dp)
-                    .background(color = Gray3)
-            )
-
-            // Place List
-            Text(
-                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                text = stringResource(id = R.string.title_recommend_place),
-                fontSize = 16.sp, color = Gray2
-            )
-            PlaceListView(
-                modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
-                innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
-                placeList = listOf(
-                    SimplePlace(
-                        "1",
-                        "관광지1",
-                        "14",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=0c4dd9b5-9b1a-45b2-800b-0378b70f423f"
-                    ),
-                    SimplePlace(
-                        "2",
-                        "관광지2",
-                        "14",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=9d5fa8b0-500e-4592-9176-e57bb9f3680e"
-                    ),
-                    SimplePlace(
-                        "3",
-                        "관광지3",
-                        "14",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=8863488b-3a62-4cee-b570-61065424d608"
-                    ),
-                    SimplePlace(
-                        "4",
-                        "관광지4",
-                        "14",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=55dfc361-0e51-4c4f-bd96-f77daa82af81"
-                    ),
+                // Introduce(Banner) Image
+                BannerView(
+                    modifier = Modifier
+                        .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                        .fillMaxWidth()
+                        .height(104.dp)
+                        .background(color = Gray3)
                 )
-            ) {
-                navController.navigate("${Screen.Place.root}/${it.id}")
-            }
 
-            // Route List
-            Text(
-                modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                text = stringResource(id = R.string.title_recommend_course),
-                fontSize = 16.sp, color = Gray2
-            )
+                // Place List
+                Text(
+                    modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                    text = stringResource(id = R.string.title_recommend_place),
+                    fontSize = 16.sp, color = Gray2
+                )
+                PlaceListView(
+                    modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
+                    placeList = listOf(
+                        SimplePlace(
+                            1,
+                            "관광지1",
+                            "14",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=0c4dd9b5-9b1a-45b2-800b-0378b70f423f"
+                        ),
+                        SimplePlace(
+                            2,
+                            "관광지2",
+                            "14",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=9d5fa8b0-500e-4592-9176-e57bb9f3680e"
+                        ),
+                        SimplePlace(
+                            3,
+                            "관광지3",
+                            "14",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=8863488b-3a62-4cee-b570-61065424d608"
+                        ),
+                        SimplePlace(
+                            4,
+                            "관광지4",
+                            "14",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=55dfc361-0e51-4c4f-bd96-f77daa82af81"
+                        ),
+                    )
+                ) {
+                    navController.navigate("${Screen.Place.root}/${it.id}")
+                }
 
-            CourseListView(
-                modifier = Modifier
-                    .padding(vertical = 8.dp),
-                courseList = listOf(
-                    Course(
-                        "1", "코스1", listOf(
-                            SimplePlace(
-                                "1",
-                                "관광지1",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                            ),
-                            SimplePlace(
-                                "2",
-                                "관광지2",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                            ),
-                        )
-                    ),
-                    Course(
-                        "2", "코스2", listOf(
-                            SimplePlace(
-                                "3",
-                                "관광지3",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
-                            SimplePlace(
-                                "4",
-                                "관광지4",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
-                            SimplePlace(
-                                "5",
-                                "관광지5",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
-                            SimplePlace(
-                                "6",
-                                "관광지6",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
+                // Route List
+                Text(
+                    modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                    text = stringResource(id = R.string.title_recommend_course),
+                    fontSize = 16.sp, color = Gray2
+                )
+
+                CourseListView(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp),
+                    courseList = listOf(
+                        Course(
+                            "1", "코스1", listOf(
+                                SimplePlace(
+                                    1,
+                                    "관광지1",
+                                    "14",
+                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
+                                ),
+                                SimplePlace(
+                                    2,
+                                    "관광지2",
+                                    "14",
+                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
+                                ),
+                            )
+                        ),
+                        Course(
+                            "2", "코스2", listOf(
+                                SimplePlace(
+                                    3,
+                                    "관광지3",
+                                    "14",
+                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                                ),
+                                SimplePlace(
+                                    4,
+                                    "관광지4",
+                                    "14",
+                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                                ),
+                                SimplePlace(
+                                    5,
+                                    "관광지5",
+                                    "14",
+                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                                ),
+                                SimplePlace(
+                                    6,
+                                    "관광지6",
+                                    "14",
+                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                                ),
+                            )
                         )
                     )
-                )
-            ) {
-                navController.navigate("${Screen.Course.root}/${it.id}")
+                ) {
+                    navController.navigate("${Screen.Course.root}/${it.id}")
+                }
+            } else {
+                searchListView(searchText)
             }
+
         })
+}
+
+@Composable
+fun searchListView(searchText: String) {
+    Text(text = searchText)
 }
 
 @Preview(showBackground = true)
