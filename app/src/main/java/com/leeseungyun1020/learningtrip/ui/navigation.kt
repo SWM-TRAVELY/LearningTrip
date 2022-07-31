@@ -1,9 +1,10 @@
-package com.leeseungyun1020.learningtrip
+package com.leeseungyun1020.learningtrip.ui
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.leeseungyun1020.learningtrip.*
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 
 fun NavGraphBuilder.graph(navController: NavController) {

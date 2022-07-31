@@ -3,8 +3,6 @@ package com.leeseungyun1020.learningtrip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,156 +20,82 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.leeseungyun1020.learningtrip.ui.NavigationScreen
+import com.leeseungyun1020.learningtrip.ui.Screen
+import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.Primary
 import com.leeseungyun1020.learningtrip.ui.theme.Secondary
 
-sealed class NavigationScreen(
-    val route: String,
-    @StringRes val resourceId: Int,
-    @DrawableRes val iconId: Int,
-    val screenRoutes: List<String>,
-) {
-    object Home : NavigationScreen(
-        "home",
-        R.string.nav_home,
-        R.drawable.ic_home,
-        listOf("home")
-    )
-
-    object Story :
-        NavigationScreen(
-            "story",
-            R.string.nav_story,
-            R.drawable.ic_story,
-            listOf(
-                "story",
-                Screen.AddCourse.route,
-                Screen.Course.route
-            )
-        )
-
-    object Category : NavigationScreen(
-        "category",
-        R.string.nav_category,
-        R.drawable.ic_category,
-        listOf(
-            "category",
-            Screen.Place.route,
-            Screen.AddReview.route,
-            Screen.Heritage.route,
-            Screen.Search.route
-        )
-    )
-
-    object Nearby :
-        NavigationScreen(
-            "nearby",
-            R.string.nav_nearby,
-            R.drawable.ic_nearby,
-            listOf("nearby")
-        )
-
-    object My : NavigationScreen(
-        "my",
-        R.string.nav_my,
-        R.drawable.ic_my,
-        listOf(
-            "my",
-            Screen.Account.route,
-            Screen.MyReview.route,
-            Screen.Collection.route,
-            Screen.Achievement.route,
-            Screen.Sticker.route,
-            Screen.NoticeList.route,
-            Screen.Notice.route
-        )
-    )
-}
-
-sealed class Screen(val route: String, val root: String) {
-    object SignIn : Screen("signIn", "signIn")
-    object SignUp : Screen("SingUp", "signUp")
-    object Permission : Screen("permission", "permission")
-    object Place : Screen("place/{id}", "place")
-    object AddReview : Screen("addReview/{placeId}", "addReview")
-    object Heritage : Screen("heritage/{id}", "heritage")
-    object Search : Screen("search/{key}", "search")
-    object AddCourse : Screen("addCourse/{id}", "addCourse")
-    object Course : Screen("course/{id}", "course")
-    object Account : Screen("account", "account")
-    object MyReview : Screen("myReview", "myReview")
-    object Collection : Screen("collection", "collection")
-    object Achievement : Screen("achievement", "achievement")
-    object Sticker : Screen("sticker", "sticker")
-    object NoticeList : Screen("noticeList", "noticeList")
-    object Notice : Screen("notice/{id}", "notice")
-}
-
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            LearningTripTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Scaffold(
-                        bottomBar = {
-                            val items = listOf(
-                                NavigationScreen.Category,
-                                NavigationScreen.Story,
-                                NavigationScreen.Home,
-                                NavigationScreen.Nearby,
-                                NavigationScreen.My
-                            )
-                            NavigationBar {
-                                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                                val currentDestination = navBackStackEntry?.destination
+            mainScreen()
+        }
+    }
+}
 
-                                items.forEach { screen ->
-                                    NavigationBarItem(
-                                        icon = {
-                                            Icon(
-                                                imageVector = ImageVector.vectorResource(id = screen.iconId),
-                                                contentDescription = null
-                                            )
-                                        },
-                                        label = { Text(stringResource(screen.resourceId)) },
-                                        selected = currentDestination?.hierarchy?.any { it.route in screen.screenRoutes } == true,
-                                        onClick = {
-                                            navController.navigate(screen.route) {
-                                                popUpTo(navController.graph.findStartDestination().id) {
-                                                    saveState = false
-                                                }
-                                                launchSingleTop = true
-                                                restoreState = true
-                                            }
-                                        },
-                                        alwaysShowLabel = true,
-                                        colors = NavigationBarItemDefaults.colors(
-                                            selectedIconColor = Primary,
-                                            selectedTextColor = Primary,
-                                            indicatorColor = Secondary
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun mainScreen() {
+    val navController = rememberNavController()
+    LearningTripTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Scaffold(
+                bottomBar = {
+                    val items = listOf(
+                        NavigationScreen.Category,
+                        NavigationScreen.Story,
+                        NavigationScreen.Home,
+                        NavigationScreen.Nearby,
+                        NavigationScreen.My
+                    )
+                    NavigationBar {
+                        val navBackStackEntry by navController.currentBackStackEntryAsState()
+                        val currentDestination = navBackStackEntry?.destination
 
-                                        )
+                        items.forEach { screen ->
+                            NavigationBarItem(
+                                icon = {
+                                    Icon(
+                                        imageVector = ImageVector.vectorResource(id = screen.iconId),
+                                        contentDescription = null
                                     )
-                                }
-                            }
-                        }
-                    ) { innerPadding ->
-                        NavHost(
-                            navController,
-                            startDestination = NavigationScreen.Home.route,
-                            Modifier.padding(innerPadding)
-                        ) {
-                            graph(navController)
+                                },
+                                label = { Text(stringResource(screen.resourceId)) },
+                                selected = currentDestination?.hierarchy?.any { it.route in screen.screenRoutes } == true,
+                                onClick = {
+                                    navController.navigate(screen.route) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = false
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                },
+                                alwaysShowLabel = true,
+                                colors = NavigationBarItemDefaults.colors(
+                                    selectedIconColor = Primary,
+                                    selectedTextColor = Primary,
+                                    indicatorColor = Secondary
+
+                                )
+                            )
                         }
                     }
+                }
+            ) { innerPadding ->
+                NavHost(
+                    navController,
+                    startDestination = NavigationScreen.Home.route,
+                    Modifier.padding(innerPadding)
+                ) {
+                    graph(navController)
                 }
             }
         }
