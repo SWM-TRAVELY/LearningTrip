@@ -55,5 +55,5 @@ fun PlaceBox(modifier: Modifier = Modifier, simplePlace: SimplePlace) {
 @Preview(showBackground = true)
 @Composable
 fun PlaceBoxPreview() {
-    PlaceBox(simplePlace = SimplePlace("1", "관광지1", "14", "image1"))
+    PlaceBox(simplePlace = SimplePlace(1, "관광지1", "14", "image1"))
 }
