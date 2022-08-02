@@ -27,10 +27,16 @@ import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.Primary
 import com.leeseungyun1020.learningtrip.ui.theme.Secondary
+import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
+
+lateinit var placeViewModel: PlaceViewModel
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        placeViewModel = PlaceViewModel(this)
+        placeViewModel.updatePlaceData(this)
         setContent {
             mainScreen()
         }
