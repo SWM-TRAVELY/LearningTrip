@@ -6,10 +6,14 @@ import kotlinx.coroutines.flow.Flow
 class PlaceRepository(private val placeDao: PlaceDao) {
     val allPlaces: Flow<List<Place>> = placeDao.getAll()
 
-    fun placeById(id: Int) = placeDao.getById(id)
+    suspend fun placeById(id: Int) = placeDao.getById(id)
 
     suspend fun placeByKeyword(keyword: String): List<Place> {
         return placeDao.findByKeyword(keyword)
+    }
+
+    suspend fun searchNameByKeyword(keyword: String): List<String> {
+        return placeDao.searchNameByKeyword(keyword)
     }
 
     suspend fun insert(place: Place) {

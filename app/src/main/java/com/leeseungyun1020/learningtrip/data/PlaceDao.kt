@@ -15,8 +15,11 @@ interface PlaceDao {
     fun getAll(): Flow<List<Place>>
 
     @Query("SELECT * FROM place WHERE id = :id")
-    fun getById(id: Int): Place
+    suspend fun getById(id: Int): Place
 
     @Query("SELECT * FROM place WHERE name LIKE '%' || :keyword || '%' OR address LIKE '%' || :keyword || '%'")
     suspend fun findByKeyword(keyword: String): List<Place>
+
+    @Query("SELECT name FROM place WHERE name LIKE '%' || :keyword || '%' LIMIT 16")
+    suspend fun searchNameByKeyword(keyword: String): List<String>
 }
