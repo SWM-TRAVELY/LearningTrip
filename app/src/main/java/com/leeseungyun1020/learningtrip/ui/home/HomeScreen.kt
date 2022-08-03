@@ -3,6 +3,7 @@ package com.leeseungyun1020.learningtrip.ui.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -47,6 +48,11 @@ fun HomeScreen(navController: NavController) {
                     searchText = it
                     placeViewModel.placeNameByKeyword(it)
                 },
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        navController.navigate("${Screen.Search.root}/$searchText")
+                    },
+                ),
                 modifier = Modifier
                     .padding(16.dp)
                     .padding(
