@@ -17,6 +17,7 @@ class PlaceViewModel(context: Context) : ViewModel() {
     private val repository: PlaceRepository = PlaceRepository(placeDao)
 
     val allPlaces = repository.allPlaces.asLiveData()
+    val recommendedPlaces = repository.recommendedPlaces.asLiveData()
     val filteredPlaces = MutableLiveData<List<Place>>()
     val filteredPlaceNames = MutableLiveData<List<String>>()
     val placeById = MutableLiveData<Place>()

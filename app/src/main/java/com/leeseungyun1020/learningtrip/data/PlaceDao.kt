@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.leeseungyun1020.learningtrip.model.Place
+import com.leeseungyun1020.learningtrip.model.SimplePlace
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -13,6 +14,9 @@ interface PlaceDao {
 
     @Query("SELECT * FROM place")
     fun getAll(): Flow<List<Place>>
+
+    @Query("SELECT id, name, typeId, imageURL FROM place ORDER BY RANDOM() LIMIT 4")
+    fun recommendedPlace(): Flow<List<SimplePlace>>
 
     @Query("SELECT * FROM place WHERE id = :id")
     suspend fun getById(id: Int): Place

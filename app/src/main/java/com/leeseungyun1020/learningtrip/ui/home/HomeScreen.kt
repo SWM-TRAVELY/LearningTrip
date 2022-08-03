@@ -35,6 +35,7 @@ import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 @Composable
 fun HomeScreen(navController: NavController) {
     val searchedPlaceNames by placeViewModel.filteredPlaceNames.observeAsState()
+    val recommendedPlaces by placeViewModel.recommendedPlaces.observeAsState()
     var searchText by rememberSaveable { mutableStateOf("") }
 
     LearningTripScaffold(
@@ -137,32 +138,7 @@ fun HomeScreen(navController: NavController) {
                 PlaceListView(
                     modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
-                    placeList = listOf(
-                        SimplePlace(
-                            1,
-                            "관광지1",
-                            "14",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=0c4dd9b5-9b1a-45b2-800b-0378b70f423f"
-                        ),
-                        SimplePlace(
-                            2,
-                            "관광지2",
-                            "14",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=9d5fa8b0-500e-4592-9176-e57bb9f3680e"
-                        ),
-                        SimplePlace(
-                            3,
-                            "관광지3",
-                            "14",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=8863488b-3a62-4cee-b570-61065424d608"
-                        ),
-                        SimplePlace(
-                            4,
-                            "관광지4",
-                            "14",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=55dfc361-0e51-4c4f-bd96-f77daa82af81"
-                        ),
-                    )
+                    placeList = recommendedPlaces ?: listOf(),
                 ) {
                     navController.navigate("${Screen.Place.root}/${it.id}")
                 }
