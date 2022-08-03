@@ -17,8 +17,9 @@ class PlaceViewModel(context: Context) : ViewModel() {
     private val placeDao = AppDatabase.getDatabase(context).placeDao()
     private val repository: PlaceRepository = PlaceRepository(placeDao)
 
+    val isUpdated = MutableLiveData(false)
     val allPlaces = repository.allPlaces.asLiveData()
-    val recommendedPlaces = repository.recommendedPlaces.asLiveData()
+    val recommendedPlaces = MutableLiveData<List<SimplePlace>>()
     val filteredPlaces = MutableLiveData<List<SimplePlace>>()
     val filteredPlaceNames = MutableLiveData<List<String>>()
     val placeById = MutableLiveData<Place>()
@@ -28,6 +29,10 @@ class PlaceViewModel(context: Context) : ViewModel() {
             filteredPlaces.postValue(repository.placeByKeyword(""))
             filteredPlaceNames.postValue(repository.searchNameByKeyword(""))
         }
+    }
+
+    fun recommend() = viewModelScope.launch {
+        recommendedPlaces.postValue(repository.recommend())
     }
 
     fun placeById(id: Int) = viewModelScope.launch {
@@ -49,6 +54,7 @@ class PlaceViewModel(context: Context) : ViewModel() {
     fun updatePlaceData(context: Context) {
         val sharedPref = context.getSharedPreferences("place_data", Context.MODE_PRIVATE)
         if (sharedPref.getBoolean("place_data_updated", false)) {
+            isUpdated.postValue(true)
             return
         }
         viewModelScope.launch {
@@ -108,6 +114,7 @@ class PlaceViewModel(context: Context) : ViewModel() {
                 putBoolean("place_data_updated", true)
                 apply()
             }
+            isUpdated.postValue(true)
         }
     }
 }

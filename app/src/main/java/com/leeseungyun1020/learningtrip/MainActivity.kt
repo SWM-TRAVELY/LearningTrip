@@ -3,12 +3,15 @@ package com.leeseungyun1020.learningtrip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -23,7 +26,6 @@ import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.graph
-import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.Primary
 import com.leeseungyun1020.learningtrip.ui.theme.Secondary
@@ -47,72 +49,81 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun mainScreen() {
     val navController = rememberNavController()
+    val isPlaceUpdated by placeViewModel.isUpdated.observeAsState()
     LearningTripTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            Scaffold(
-                bottomBar = {
-                    val items = listOf(
-                        NavigationScreen.Category,
-                        NavigationScreen.Story,
-                        NavigationScreen.Home,
-                        NavigationScreen.Nearby,
-                        NavigationScreen.My
-                    )
-                    NavigationBar {
-                        val navBackStackEntry by navController.currentBackStackEntryAsState()
-                        val currentDestination = navBackStackEntry?.destination
+            if (isPlaceUpdated == true) {
+                Scaffold(
+                    bottomBar = {
+                        val items = listOf(
+                            NavigationScreen.Category,
+                            NavigationScreen.Story,
+                            NavigationScreen.Home,
+                            NavigationScreen.Nearby,
+                            NavigationScreen.My
+                        )
+                        NavigationBar {
+                            val navBackStackEntry by navController.currentBackStackEntryAsState()
+                            val currentDestination = navBackStackEntry?.destination
 
-                        items.forEach { screen ->
-                            NavigationBarItem(
-                                icon = {
-                                    Icon(
-                                        imageVector = ImageVector.vectorResource(id = screen.iconId),
-                                        contentDescription = null
-                                    )
-                                },
-                                label = { Text(stringResource(screen.resourceId)) },
-                                selected = currentDestination?.hierarchy?.any { it.route in screen.screenRoutes } == true,
-                                onClick = {
-                                    navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = false
+                            items.forEach { screen ->
+                                NavigationBarItem(
+                                    icon = {
+                                        Icon(
+                                            imageVector = ImageVector.vectorResource(id = screen.iconId),
+                                            contentDescription = null
+                                        )
+                                    },
+                                    label = { Text(stringResource(screen.resourceId)) },
+                                    selected = currentDestination?.hierarchy?.any { it.route in screen.screenRoutes } == true,
+                                    onClick = {
+                                        navController.navigate(screen.route) {
+                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                saveState = false
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = true
                                         }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                },
-                                alwaysShowLabel = true,
-                                colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = Primary,
-                                    selectedTextColor = Primary,
-                                    indicatorColor = Secondary
+                                    },
+                                    alwaysShowLabel = true,
+                                    colors = NavigationBarItemDefaults.colors(
+                                        selectedIconColor = Primary,
+                                        selectedTextColor = Primary,
+                                        indicatorColor = Secondary
 
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
+                ) { innerPadding ->
+                    NavHost(
+                        navController,
+                        startDestination = NavigationScreen.Home.route,
+                        Modifier.padding(innerPadding)
+                    ) {
+                        graph(navController)
+                    }
                 }
-            ) { innerPadding ->
-                NavHost(
-                    navController,
-                    startDestination = NavigationScreen.Home.route,
-                    Modifier.padding(innerPadding)
-                ) {
-                    graph(navController)
+            } else {
+                Box(contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     LearningTripTheme {
-        HomeScreen(navController = rememberNavController())
+        Box(contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
     }
 }
 
@@ -142,6 +153,7 @@ fun StoryScreen(navController: NavController) {
 @Composable
 fun NearbyScreen(navController: NavController) {
     Text(text = "Nearby")
+    CircularProgressIndicator()
 }
 
 @Composable

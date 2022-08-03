@@ -16,7 +16,7 @@ interface PlaceDao {
     fun getAll(): Flow<List<Place>>
 
     @Query("SELECT id, name, typeId, imageURL FROM place ORDER BY RANDOM() LIMIT 4")
-    fun recommendedPlace(): Flow<List<SimplePlace>>
+    suspend fun recommendedPlace(): List<SimplePlace>
 
     @Query("SELECT * FROM place WHERE id = :id")
     suspend fun getById(id: Int): Place

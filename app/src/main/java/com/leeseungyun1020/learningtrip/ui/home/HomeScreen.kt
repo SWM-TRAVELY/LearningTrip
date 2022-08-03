@@ -39,6 +39,8 @@ fun HomeScreen(navController: NavController) {
     val recommendedPlaces by placeViewModel.recommendedPlaces.observeAsState()
     var searchText by rememberSaveable { mutableStateOf("") }
 
+    placeViewModel.recommend()
+
     LearningTripScaffold(
         title = stringResource(id = R.string.app_name),
         topBarExtraContent = {

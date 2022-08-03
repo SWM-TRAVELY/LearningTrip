@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 class PlaceRepository(private val placeDao: PlaceDao) {
     val allPlaces: Flow<List<Place>> = placeDao.getAll()
-    val recommendedPlaces: Flow<List<SimplePlace>> = placeDao.recommendedPlace()
+
+    suspend fun recommend() = placeDao.recommendedPlace()
 
     suspend fun placeById(id: Int) = placeDao.getById(id)
 
