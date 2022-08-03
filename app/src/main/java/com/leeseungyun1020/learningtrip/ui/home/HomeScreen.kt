@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -24,6 +25,7 @@ import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.Keyword
 import com.leeseungyun1020.learningtrip.model.SimplePlace
+import com.leeseungyun1020.learningtrip.placeViewModel
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray2
@@ -32,6 +34,7 @@ import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    val searchedPlaceNames by placeViewModel.filteredPlaceNames.observeAsState()
     var searchText by rememberSaveable { mutableStateOf("") }
 
     LearningTripScaffold(
@@ -39,7 +42,10 @@ fun HomeScreen(navController: NavController) {
         topBarExtraContent = {
             TextField(
                 value = searchText,
-                onValueChange = { searchText = it },
+                onValueChange = {
+                    searchText = it
+                    placeViewModel.placeNameByKeyword(it)
+                },
                 modifier = Modifier
                     .padding(16.dp)
                     .padding(
@@ -221,15 +227,16 @@ fun HomeScreen(navController: NavController) {
                     navController.navigate("${Screen.Course.root}/${it.id}")
                 }
             } else {
-                searchListView(searchText)
+                TextListView(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    textList = searchedPlaceNames ?: listOf(),
+                    onTextClicked = { keyword -> navController.navigate("${Screen.Search.root}/$keyword") }
+                )
             }
 
         })
-}
-
-@Composable
-fun searchListView(searchText: String) {
-    Text(text = searchText)
 }
 
 @Preview(showBackground = true)
