@@ -21,8 +21,8 @@ interface PlaceDao {
     @Query("SELECT * FROM place WHERE id = :id")
     suspend fun getById(id: Int): Place
 
-    @Query("SELECT * FROM place WHERE name LIKE '%' || :keyword || '%' OR address LIKE '%' || :keyword || '%'")
-    suspend fun findByKeyword(keyword: String): List<Place>
+    @Query("SELECT id, name, typeId, imageURL FROM place WHERE name LIKE '%' || :keyword || '%' OR address LIKE '%' || :keyword || '%' LIMIT 16")
+    suspend fun findByKeyword(keyword: String): List<SimplePlace>
 
     @Query("SELECT name FROM place WHERE name LIKE '%' || :keyword || '%' LIMIT 16")
     suspend fun searchNameByKeyword(keyword: String): List<String>

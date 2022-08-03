@@ -10,7 +10,7 @@ class PlaceRepository(private val placeDao: PlaceDao) {
 
     suspend fun placeById(id: Int) = placeDao.getById(id)
 
-    suspend fun placeByKeyword(keyword: String): List<Place> {
+    suspend fun placeByKeyword(keyword: String): List<SimplePlace> {
         return placeDao.findByKeyword(keyword)
     }
 

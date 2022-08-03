@@ -201,19 +201,6 @@ fun HeritageScreen(navController: NavController, id: String) {
 }
 
 @Composable
-fun SearchScreen(navController: NavController, key: String) {
-    Column {
-        Text(text = "search '$key'")
-        Button(onClick = { navController.navigate("${Screen.Place.root}/100") }) {
-            Text(text = "Place 100")
-        }
-        Button(onClick = { navController.navigate("${Screen.Course.root}/200") }) {
-            Text(text = "Course 200")
-        }
-    }
-}
-
-@Composable
 fun AddCourseScreen(navController: NavController, id: String) {
     Column {
         Text(text = "add course $id")

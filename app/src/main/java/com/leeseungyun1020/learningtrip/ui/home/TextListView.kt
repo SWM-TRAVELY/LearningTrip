@@ -2,6 +2,7 @@ package com.leeseungyun1020.learningtrip.ui.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,10 +22,11 @@ fun TextListView(
             Text(
                 text = text,
                 modifier = Modifier
-                    .padding(12.dp)
+                    .fillMaxWidth()
                     .clickable {
                         onTextClicked(text)
-                    },
+                    }
+                    .padding(12.dp),
                 fontSize = 16.sp
             )
         }

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.AppDatabase
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.Place
+import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.opencsv.CSVReader
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,7 @@ class PlaceViewModel(context: Context) : ViewModel() {
 
     val allPlaces = repository.allPlaces.asLiveData()
     val recommendedPlaces = repository.recommendedPlaces.asLiveData()
-    val filteredPlaces = MutableLiveData<List<Place>>()
+    val filteredPlaces = MutableLiveData<List<SimplePlace>>()
     val filteredPlaceNames = MutableLiveData<List<String>>()
     val placeById = MutableLiveData<Place>()
 
