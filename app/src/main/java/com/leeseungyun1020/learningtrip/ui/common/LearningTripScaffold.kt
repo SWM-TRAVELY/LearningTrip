@@ -3,6 +3,7 @@ package com.leeseungyun1020.learningtrip.ui.common
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,10 +29,12 @@ fun LearningTripScaffold(
     Scaffold(
         topBar = {
             Column(
-                modifier = Modifier.background(
-                    color = Primary,
-                    shape = RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp)
-                ),
+                modifier = Modifier
+                    .background(
+                        color = Primary,
+                        shape = RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp)
+                    )
+                    .heightIn(min = 56.dp),
             ) {
                 Text(
                     text = title,
