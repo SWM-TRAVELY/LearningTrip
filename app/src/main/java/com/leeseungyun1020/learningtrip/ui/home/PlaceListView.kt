@@ -31,18 +31,23 @@ fun PlaceListView(
                         .clickable { onPlaceClicked(placeList[i]) },
                     simplePlace = placeList[i],
                 )
-                val place = placeList.getOrNull(i + 1) ?: placeList.last()
-                PlaceBox(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(
-                            start = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
-                            bottom = innerPadding.calculateBottomPadding(),
-                            top = if (i == 0) 0.dp else innerPadding.calculateTopPadding()
-                        )
-                        .clickable { onPlaceClicked(place) },
-                    simplePlace = place,
-                )
+                val place = placeList.getOrNull(i + 1)
+                if (place != null) {
+                    PlaceBox(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(
+                                start = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
+                                bottom = innerPadding.calculateBottomPadding(),
+                                top = if (i == 0) 0.dp else innerPadding.calculateTopPadding()
+                            )
+                            .clickable { onPlaceClicked(place) },
+                        simplePlace = place,
+                    )
+                } else {
+                    Spacer(Modifier.weight(1f))
+                }
+
             }
         }
     }
