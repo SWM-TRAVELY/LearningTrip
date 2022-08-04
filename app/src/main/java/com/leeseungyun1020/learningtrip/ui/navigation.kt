@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.leeseungyun1020.learningtrip.*
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
+import com.leeseungyun1020.learningtrip.ui.place.PlaceScreen
 import com.leeseungyun1020.learningtrip.ui.search.SearchScreen
 
 fun NavGraphBuilder.graph(navController: NavController) {

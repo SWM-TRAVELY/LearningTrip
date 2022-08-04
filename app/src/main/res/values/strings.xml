@@ -12,4 +12,7 @@
     <string name="nav_story">Story</string>
     <string name="nav_nearby">Nearby</string>
     <string name="nav_my">My</string>
+    <string name="action_play">Voice Play</string>
+    <string name="action_sticker">Sticker</string>
+    <string name="star">star</string>
 </resources>

@@ -40,14 +40,14 @@ class MainActivity : ComponentActivity() {
         placeViewModel = PlaceViewModel(this)
         placeViewModel.updatePlaceData(this)
         setContent {
-            mainScreen()
+            MainScreen()
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun mainScreen() {
+fun MainScreen() {
     val navController = rememberNavController()
     val isPlaceUpdated by placeViewModel.isUpdated.observeAsState()
     LearningTripTheme {
@@ -189,17 +189,6 @@ fun SignUpScreen(navController: NavController) {
 @Composable
 fun PermissionScreen(navController: NavController) {
     Text(text = "permission")
-}
-
-@Composable
-fun PlaceScreen(navController: NavController, id: String) {
-    Column {
-        Text(text = "place $id")
-        Button(onClick = { navController.navigate("${Screen.Heritage.root}/100") }) {
-            Text(text = "Heritage 100")
-        }
-    }
-
 }
 
 @Composable
