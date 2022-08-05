@@ -17,4 +17,22 @@
     <string name="star">star</string>
     <string name="description">Description</string>
     <string name="review">Review</string>
+    <string name="title_simple_desc">Simple Description</string>
+    <string name="title_policy">Policy</string>
+    <string name="title_exprience_guide">Experience Guide</string>
+    <string name="title_heritage_guide">Heritage Guide</string>
+    <string name="title_use_time">Operating hours</string>
+    <string name="title_rest_date">Rest date</string>
+    <string name="title_telephone">Telephone</string>
+    <string name="title_parking">Parking</string>
+    <string name="title_other">The other</string>
+    <string name="title_pet">Pet</string>
+    <string name="title_baby_carriage">Baby carriage</string>
+    <string name="title_available">Available</string>
+    <string name="title_not_available">Not Available</string>
+    <string name="title_recommended_age">Recommended age</string>
+    <string name="title_world_record">World Record</string>
+    <string name="title_world_cultural">World Cultural</string>
+    <string name="title_world_natural">World Natural</string>
+    <string name="title_textbook">Textbook</string>
 </resources>

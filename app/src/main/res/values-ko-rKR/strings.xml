@@ -18,4 +18,22 @@
     <string name="star">별점</string>
     <string name="description">설명</string>
     <string name="review">리뷰</string>
+    <string name="title_simple_desc">간단 설명</string>
+    <string name="title_policy">이용 정책</string>
+    <string name="title_exprience_guide">체험 안내</string>
+    <string name="title_heritage_guide">문화재 안내</string>
+    <string name="title_use_time">이용시간</string>
+    <string name="title_rest_date">휴무일</string>
+    <string name="title_telephone">전화번호</string>
+    <string name="title_parking">주차시설</string>
+    <string name="title_other">그 외</string>
+    <string name="title_pet">애완동물 동반</string>
+    <string name="title_baby_carriage">유모차 대여</string>
+    <string name="title_available">가능</string>
+    <string name="title_not_available">불가</string>
+    <string name="title_recommended_age">권장연령</string>
+    <string name="title_world_record">세계 기록 유산</string>
+    <string name="title_world_cultural">세계 문화 유산</string>
+    <string name="title_world_natural">세계 자연 유산</string>
+    <string name="title_textbook">교과서 속 여행지</string>
 </resources>
