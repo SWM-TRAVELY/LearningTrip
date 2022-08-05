@@ -16,4 +16,6 @@
     <string name="action_play">음성 재생</string>
     <string name="action_sticker">스티커</string>
     <string name="star">별점</string>
+    <string name="description">설명</string>
+    <string name="review">리뷰</string>
 </resources>

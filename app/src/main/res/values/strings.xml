@@ -15,4 +15,6 @@
     <string name="action_play">Voice Play</string>
     <string name="action_sticker">Sticker</string>
     <string name="star">star</string>
+    <string name="description">Description</string>
+    <string name="review">Review</string>
 </resources>
