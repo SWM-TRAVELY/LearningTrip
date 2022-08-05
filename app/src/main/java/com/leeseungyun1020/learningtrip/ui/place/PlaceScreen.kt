@@ -3,6 +3,8 @@ package com.leeseungyun1020.learningtrip.ui.place
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +21,7 @@ import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.PlaceReview
+import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 
@@ -87,6 +90,22 @@ fun PlaceScreen(navController: NavController, id: String) {
         }
 
         // TODO: Add place detail and review view
+        TopIndicatorTab(
+            titles = listOf(
+                stringResource(id = R.string.description),
+                stringResource(id = R.string.review)
+            ), pages = listOf(
+                @Composable {
+                    Button(onClick = { navController.navigate("${Screen.Heritage.root}/100") }) {
+                        Text(text = "Heritage 100")
+                    }
+                },
+                @Composable {
+                    Text(text = "Review")
+                }
+            )
+        )
+
 
     }
 }
