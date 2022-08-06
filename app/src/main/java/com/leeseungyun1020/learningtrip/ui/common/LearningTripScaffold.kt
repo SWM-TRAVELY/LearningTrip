@@ -16,10 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
-import com.leeseungyun1020.learningtrip.ui.theme.Primary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +34,7 @@ fun LearningTripScaffold(
             Column(
                 modifier = Modifier
                     .background(
-                        color = Primary,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp)
                     )
             ) {
@@ -60,7 +58,7 @@ fun LearningTripScaffold(
                             .align(Alignment.Center)
                             .fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        fontSize = 16.sp,
+                        style = MaterialTheme.typography.bodyLarge,
                         color = Color.White
                     )
                 }
@@ -98,7 +96,7 @@ fun LearningTripScaffoldPreview() {
                     text = "Extra Content",
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                     textAlign = TextAlign.Center,
-                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyLarge,
                     color = Color.White
                 )
             }, bodyContent = {
@@ -107,25 +105,25 @@ fun LearningTripScaffoldPreview() {
                         text = "Body Content1",
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                         textAlign = TextAlign.Center,
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                     Text(
                         text = "Body Content2",
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                         textAlign = TextAlign.Center,
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                     Text(
                         text = "Body Content3",
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                         textAlign = TextAlign.Center,
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                     Text(
                         text = "Body Content4",
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                         textAlign = TextAlign.Center,
-                        fontSize = 16.sp
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
 

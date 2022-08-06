@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
+import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 
 @Composable
 fun CelledTextListView(
@@ -35,16 +37,19 @@ fun CelledTextListView(
                 openDialog = false
             },
             title = {
-                Text(text = title ?: stringResource(id = R.string.detail))
+                Text(
+                    text = title ?: stringResource(id = R.string.detail),
+                    fontFamily = notoSansKRFamily
+                )
             },
             text = {
                 Column {
                     for (item in items) {
                         Text(
-                            text = item.first, fontSize = 14.sp,
+                            text = item.first, style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(top = 2.dp)
                         )
-                        Text(text = item.second, fontSize = 12.sp)
+                        Text(text = item.second, style = MaterialTheme.typography.bodySmall)
                     }
                 }
 
@@ -55,7 +60,10 @@ fun CelledTextListView(
                         openDialog = false
                     }
                 ) {
-                    Text(stringResource(id = R.string.action_confirm))
+                    Text(
+                        stringResource(id = R.string.action_confirm),
+                        fontFamily = notoSansKRFamily
+                    )
                 }
             },
         )
@@ -64,25 +72,31 @@ fun CelledTextListView(
         .fillMaxWidth()
         .clickable { openDialog = true }) {
         if (!title.isNullOrEmpty())
-            Text(text = title, color = titleColor, fontSize = 14.sp)
+            Text(text = title, color = titleColor, style = MaterialTheme.typography.bodyMedium)
         Row(modifier = if (title.isNullOrEmpty()) Modifier else Modifier.padding(top = 2.dp)) {
             Column {
                 for (item in items)
                     Text(
-                        text = item.first, fontSize = 12.sp, color = fontColor
+                        text = item.first,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = fontColor
                     )
             }
             Column(modifier = Modifier.padding(start = 8.dp)) {
                 for (i in 0..items.lastIndex)
                     Text(
-                        text = "|", fontSize = 12.sp, color = fontColor
+                        text = "|", style = MaterialTheme.typography.bodySmall, color = fontColor
                     )
             }
             Column(modifier = Modifier.padding(start = 8.dp)) {
                 for (item in items)
                     Text(
-                        text = item.second, fontSize = 12.sp, lineHeight = 12.sp, color = fontColor,
-                        maxLines = 1, overflow = TextOverflow.Ellipsis
+                        text = item.second,
+                        style = MaterialTheme.typography.bodySmall,
+                        lineHeight = 12.sp,
+                        color = fontColor,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
             }
         }

@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
@@ -65,7 +64,10 @@ fun HomeScreen(navController: NavController) {
                     Row {
                         Icon(Icons.Filled.Search, stringResource(id = R.string.action_search))
                         Spacer(modifier = Modifier.padding(start = 4.dp))
-                        Text(text = stringResource(id = R.string.hint_search))
+                        Text(
+                            text = stringResource(id = R.string.hint_search),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
                     }
                 },
                 singleLine = true,
@@ -93,7 +95,7 @@ fun HomeScreen(navController: NavController) {
                 Text(
                     modifier = Modifier.padding(top = 8.dp, start = 16.dp),
                     text = stringResource(id = R.string.title_recommend_keyword),
-                    color = Gray2, fontSize = 16.sp
+                    color = Gray2, style = MaterialTheme.typography.bodyLarge,
                 )
                 KeywordListView(
                     modifier = Modifier.padding(top = 8.dp),
@@ -141,7 +143,7 @@ fun HomeScreen(navController: NavController) {
                 Text(
                     modifier = Modifier.padding(top = 8.dp, start = 16.dp),
                     text = stringResource(id = R.string.title_recommend_place),
-                    fontSize = 16.sp, color = Gray2
+                    color = Gray2, style = MaterialTheme.typography.bodyLarge,
                 )
                 PlaceListView(
                     modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
@@ -155,7 +157,7 @@ fun HomeScreen(navController: NavController) {
                 Text(
                     modifier = Modifier.padding(top = 8.dp, start = 16.dp),
                     text = stringResource(id = R.string.title_recommend_course),
-                    fontSize = 16.sp, color = Gray2
+                    color = Gray2, style = MaterialTheme.typography.bodyLarge,
                 )
 
                 CourseListView(

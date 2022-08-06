@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
@@ -66,7 +66,7 @@ fun KeywordListView(
                 Text(
                     text = keywordList[it].name,
                     modifier = Modifier.align(Alignment.Center),
-                    fontSize = 12.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     color = Color.White,
                 )
             }

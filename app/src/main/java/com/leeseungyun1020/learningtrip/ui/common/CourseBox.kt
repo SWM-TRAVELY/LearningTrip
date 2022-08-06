@@ -3,6 +3,7 @@ package com.leeseungyun1020.learningtrip.ui.common
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimplePlace
+import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 import java.lang.Integer.min
 
 @Composable
@@ -64,7 +66,7 @@ fun CourseBox(modifier: Modifier = Modifier, course: Course) {
         ) {
             Text(
                 text = course.name,
-                fontSize = 12.sp,
+                style = MaterialTheme.typography.bodySmall,
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 1.dp)
             )
@@ -73,6 +75,7 @@ fun CourseBox(modifier: Modifier = Modifier, course: Course) {
                     .map { it.name })
                     Text(
                         text = text,
+                        fontFamily = notoSansKRFamily,
                         fontSize = 9.sp,
                         color = Color.White,
                         modifier = Modifier.padding(end = 20.dp)

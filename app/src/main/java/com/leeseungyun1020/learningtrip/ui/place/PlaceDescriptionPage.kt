@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.ui.theme.Gray2
@@ -32,11 +32,12 @@ fun PlaceDescriptionPage(
         // Simple Description
         Text(
             modifier = Modifier.padding(top = 10.dp),
-            text = stringResource(id = R.string.title_simple_desc), fontSize = 14.sp
+            text = stringResource(id = R.string.title_simple_desc),
+            style = MaterialTheme.typography.bodyMedium,
         )
         Text(
             modifier = Modifier.padding(top = 2.dp),
-            text = place.overview, fontSize = 12.sp,
+            text = place.overview, style = MaterialTheme.typography.bodySmall,
             color = Gray2,
             maxLines = if (!isOpen) 3 else Int.MAX_VALUE,
             overflow = TextOverflow.Ellipsis
@@ -90,30 +91,31 @@ fun PlaceDescriptionPage(
             if (place.chkWorldCultural || place.chkWorldNatural || place.chkWorldRecord || place.chkInTextbook)
                 Text(
                     modifier = Modifier.padding(top = 10.dp, bottom = 2.dp),
-                    text = stringResource(id = R.string.title_heritage_guide), fontSize = 14.sp
+                    text = stringResource(id = R.string.title_heritage_guide),
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             if (place.chkWorldCultural)
                 Text(
                     text = "• ${stringResource(id = R.string.title_world_cultural)}",
-                    fontSize = 12.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     color = Gray2
                 )
             if (place.chkWorldNatural)
                 Text(
                     text = "• ${stringResource(id = R.string.title_world_natural)}",
-                    fontSize = 12.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     color = Gray2
                 )
             if (place.chkWorldRecord)
                 Text(
                     text = "• ${stringResource(id = R.string.title_world_record)}",
-                    fontSize = 12.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     color = Gray2
                 )
             if (place.chkInTextbook)
                 Text(
                     text = "• ${stringResource(id = R.string.title_textbook)}",
-                    fontSize = 12.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     color = Gray2
                 )
         }

@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +24,7 @@ import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.PlaceReview
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.Tertiary
+import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 
 @Composable
 fun PlaceSummationBox(
@@ -62,7 +64,12 @@ fun PlaceSummationBox(
                 .align(Alignment.BottomStart)
                 .padding(bottom = 10.dp, start = 30.dp)
         ) {
-            Text(text = place.name, fontSize = 20.sp)
+            Text(
+                text = place.name,
+                fontSize = 20.sp,
+                fontFamily = notoSansKRFamily,
+                fontWeight = FontWeight.Bold
+            )
             Row(modifier = Modifier.padding(top = 2.dp)) {
                 Icon(
                     imageVector = Icons.Default.Star,
@@ -73,9 +80,17 @@ fun PlaceSummationBox(
                     tint = Tertiary
                 )
                 Spacer(modifier = Modifier.width(2.dp))
-                Text(text = String.format("%.1f", placeReview.rating), fontSize = 10.sp)
+                Text(
+                    text = String.format("%.1f", placeReview.rating),
+                    fontSize = 10.sp,
+                    fontFamily = notoSansKRFamily
+                )
                 Spacer(modifier = Modifier.width(1.dp))
-                Text(text = "(${placeReview.review})", fontSize = 10.sp)
+                Text(
+                    text = "(${placeReview.review})",
+                    fontSize = 10.sp,
+                    fontFamily = notoSansKRFamily
+                )
             }
 
         }

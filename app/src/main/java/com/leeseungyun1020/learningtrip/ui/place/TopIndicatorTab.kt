@@ -10,7 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import com.leeseungyun1020.learningtrip.ui.theme.Gray4
 
@@ -55,11 +54,10 @@ fun TopIndicatorTab(
 
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(top = 12.dp),
-                        fontSize = 14.sp,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = if (state == index) MaterialTheme.colorScheme.primary
                         else Gray2
                     )
