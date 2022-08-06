@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -27,8 +28,6 @@ import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
-import com.leeseungyun1020.learningtrip.ui.theme.Primary
-import com.leeseungyun1020.learningtrip.ui.theme.Secondary
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
 lateinit var placeViewModel: PlaceViewModel
@@ -65,7 +64,9 @@ fun MainScreen() {
                             NavigationScreen.Nearby,
                             NavigationScreen.My
                         )
-                        NavigationBar {
+                        NavigationBar(
+                            containerColor = Color.Transparent
+                        ) {
                             val navBackStackEntry by navController.currentBackStackEntryAsState()
                             val currentDestination = navBackStackEntry?.destination
 
@@ -90,11 +91,11 @@ fun MainScreen() {
                                     },
                                     alwaysShowLabel = true,
                                     colors = NavigationBarItemDefaults.colors(
-                                        selectedIconColor = Primary,
-                                        selectedTextColor = Primary,
-                                        indicatorColor = Secondary
+                                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                                        indicatorColor = MaterialTheme.colorScheme.background,
 
-                                    )
+                                        )
                                 )
                             }
                         }
