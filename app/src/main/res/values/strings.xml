@@ -37,4 +37,6 @@
     <string name="title_textbook">Textbook</string>
     <string name="action_expand_more">Expand more</string>
     <string name="action_expand_less">Expand less</string>
+    <string name="detail">Detail</string>
+    <string name="action_confirm">Confirm</string>
 </resources>

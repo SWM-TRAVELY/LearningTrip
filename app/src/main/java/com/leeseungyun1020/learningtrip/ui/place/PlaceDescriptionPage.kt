@@ -44,10 +44,6 @@ fun PlaceDescriptionPage(
 
         if (isOpen) {
             // Policy
-            Text(
-                modifier = Modifier.padding(top = 10.dp),
-                text = stringResource(id = R.string.title_policy), fontSize = 14.sp
-            )
             val parkingText =
                 if (place.chkParking)
                     stringResource(id = R.string.title_available)
@@ -65,7 +61,8 @@ fun PlaceDescriptionPage(
                     stringResource(id = R.string.title_not_available)
             }"
             CelledTextListView(
-                modifier = Modifier.padding(top = 2.dp),
+                modifier = Modifier.padding(top = 10.dp),
+                title = stringResource(id = R.string.title_policy),
                 items = listOf(
                     stringResource(id = R.string.title_use_time) to place.useTime,
                     stringResource(id = R.string.title_rest_date) to place.restDate,
@@ -73,21 +70,20 @@ fun PlaceDescriptionPage(
                     stringResource(id = R.string.title_parking) to parkingText,
                     stringResource(id = R.string.title_other) to otherText,
                 ),
-                fontColor = Gray2
+                fontColor = Gray2,
+                showDialog = true
             )
 
             // Experience Guide
-            Text(
-                modifier = Modifier.padding(top = 10.dp),
-                text = stringResource(id = R.string.title_exprience_guide), fontSize = 14.sp
-            )
             CelledTextListView(
-                modifier = Modifier.padding(top = 2.dp),
+                modifier = Modifier.padding(top = 10.dp),
+                title = stringResource(id = R.string.title_exprience_guide),
                 items = listOf(
                     stringResource(id = R.string.title_recommended_age) to place.ageAvailable,
                     stringResource(id = R.string.title_exprience_guide) to place.expGuide,
                 ),
-                fontColor = Gray2
+                fontColor = Gray2,
+                showDialog = true
             )
 
             // Heritage Guide

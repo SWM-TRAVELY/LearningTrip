@@ -38,4 +38,6 @@
     <string name="title_textbook">교과서 속 여행지</string>
     <string name="action_expand_more">더보기</string>
     <string name="action_expand_less">축소하기</string>
+    <string name="detail">상세 내용</string>
+    <string name="action_confirm">확인</string>
 </resources>
