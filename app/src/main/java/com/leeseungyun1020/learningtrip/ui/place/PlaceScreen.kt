@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +31,8 @@ import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 @Composable
 fun PlaceScreen(navController: NavController, id: String) {
     val place by placeViewModel.placeById.observeAsState()
+    var isDescriptionOpen by remember { mutableStateOf(false) }
+    var isReviewOpen by remember { mutableStateOf(false) }
     if (id.isDigitsOnly())
         placeViewModel.placeById(id.toInt())
     LearningTripScaffold(
@@ -84,7 +85,9 @@ fun PlaceScreen(navController: NavController, id: String) {
                                     top = 10.dp,
                                     start = 32.dp,
                                     end = 32.dp
-                                ), place = it
+                                ), place = it,
+                                isOpen = isDescriptionOpen,
+                                onOpenClicked = { isDescriptionOpen = !isDescriptionOpen }
                             )
                         }
                         Button(onClick = { navController.navigate("${Screen.Heritage.root}/100") }) {

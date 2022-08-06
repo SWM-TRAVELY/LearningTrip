@@ -35,4 +35,6 @@
     <string name="title_world_cultural">World Cultural</string>
     <string name="title_world_natural">World Natural</string>
     <string name="title_textbook">Textbook</string>
+    <string name="action_expand_more">Expand more</string>
+    <string name="action_expand_less">Expand less</string>
 </resources>

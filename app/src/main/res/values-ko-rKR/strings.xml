@@ -36,4 +36,6 @@
     <string name="title_world_cultural">세계 문화 유산</string>
     <string name="title_world_natural">세계 자연 유산</string>
     <string name="title_textbook">교과서 속 여행지</string>
+    <string name="action_expand_more">더보기</string>
+    <string name="action_expand_less">축소하기</string>
 </resources>
