@@ -39,4 +39,5 @@
     <string name="action_expand_less">Expand less</string>
     <string name="detail">Detail</string>
     <string name="action_confirm">Confirm</string>
+    <string name="title_related_heritage">Related Heritage</string>
 </resources>

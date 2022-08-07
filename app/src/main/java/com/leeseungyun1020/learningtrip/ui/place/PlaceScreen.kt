@@ -1,10 +1,10 @@
 package com.leeseungyun1020.learningtrip.ui.place
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -21,11 +21,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.leeseungyun1020.learningntripapitest.SimpleHeritage
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.PlaceReview
 import com.leeseungyun1020.learningtrip.placeViewModel
 import com.leeseungyun1020.learningtrip.ui.Screen
+import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
+import com.leeseungyun1020.learningtrip.ui.theme.Gray4
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 
 @Composable
@@ -90,9 +93,65 @@ fun PlaceScreen(navController: NavController, id: String) {
                                 onOpenClicked = { isDescriptionOpen = !isDescriptionOpen }
                             )
                         }
-                        Button(onClick = { navController.navigate("${Screen.Heritage.root}/100") }) {
-                            Text(text = "Heritage 100")
+
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp)
+                                .background(color = Gray4)
+                        )
+
+                        Text(
+                            text = stringResource(id = R.string.title_related_heritage),
+                            modifier = Modifier.padding(top = 10.dp, start = 16.dp),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+
+                        val heritages = listOf(
+                            SimpleHeritage(
+                                id = 1,
+                                name = "문화재1",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
+                            ),
+                            SimpleHeritage(
+                                id = 2,
+                                name = "문화재1",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
+                            ),
+                            SimpleHeritage(
+                                id = 3,
+                                name = "문화재1",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
+                            ),
+                            SimpleHeritage(
+                                id = 4,
+                                name = "문화재1",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
+                            ),
+                            SimpleHeritage(
+                                id = 5,
+                                name = "문화재1",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
+                            ),
+                        )
+
+                        LazyRow(modifier = Modifier.padding(top = 10.dp)) {
+                            items(count = heritages.size, key = { heritages[it].id }) {
+                                val modifier = if (it == 0)
+                                    Modifier.padding(start = 16.dp)
+                                else Modifier
+                                HeritageBox(
+                                    modifier = modifier
+                                        .padding(end = 8.dp)
+                                        .width(120.dp)
+                                        .height(150.dp)
+                                        .clickable { navController.navigate("${Screen.Heritage.root}/${heritages[it].id}") },
+                                    simpleHeritage = heritages[it]
+                                )
+                            }
                         }
+
+
                     }
                 },
                 @Composable {

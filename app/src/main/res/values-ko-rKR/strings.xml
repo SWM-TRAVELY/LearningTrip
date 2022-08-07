@@ -40,4 +40,5 @@
     <string name="action_expand_less">축소하기</string>
     <string name="detail">상세 내용</string>
     <string name="action_confirm">확인</string>
+    <string name="title_related_heritage">관련 문화재</string>
 </resources>
