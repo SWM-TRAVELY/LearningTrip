@@ -1,13 +1,13 @@
 package com.leeseungyun1020.learningntripapitest
 
 data class Heritage(
-    val id: String,
+    val id: Int,
     val name: String,
     val imageURL: String,
 )
 
 data class SimpleHeritage(
-    val id: String,
+    val id: Int,
     val name: String,
     val imageURL: String,
 )
