@@ -1,9 +1,7 @@
 package com.leeseungyun1020.learningtrip.ui.common
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,10 +18,13 @@ import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 
-//괴도 성민 왔다감
 @Composable
-fun PlaceBox(modifier: Modifier = Modifier, simplePlace: SimplePlace) {
-    Log.e("LSY", "PlaceBox: $simplePlace")
+fun PlaceBox(
+    modifier: Modifier = Modifier,
+    imageModifier: Modifier = Modifier,
+    simplePlace: SimplePlace
+) {
+
     Column(modifier = modifier) {
 
         AsyncImage(
@@ -35,9 +36,8 @@ fun PlaceBox(modifier: Modifier = Modifier, simplePlace: SimplePlace) {
             placeholder = painterResource(R.drawable.ic_baseline_image_24),
             contentDescription = simplePlace.name,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(136.dp)
+            modifier = imageModifier
+                .fillMaxSize()
                 .clip(RoundedCornerShape(5.dp))
         )
 

@@ -29,6 +29,8 @@ fun PlaceListView(
                             top = if (i == 0) 0.dp else innerPadding.calculateTopPadding()
                         )
                         .clickable { onPlaceClicked(placeList[i]) },
+                    imageModifier = Modifier
+                        .height(136.dp),
                     simplePlace = placeList[i],
                 )
                 val place = placeList.getOrNull(i + 1)
@@ -42,6 +44,8 @@ fun PlaceListView(
                                 top = if (i == 0) 0.dp else innerPadding.calculateTopPadding()
                             )
                             .clickable { onPlaceClicked(place) },
+                        imageModifier = Modifier
+                            .height(136.dp),
                         simplePlace = place,
                     )
                 } else {
