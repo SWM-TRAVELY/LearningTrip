@@ -14,26 +14,23 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.PlaceReview
 import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 import com.leeseungyun1020.learningtrip.model.SimplePlace
-import com.leeseungyun1020.learningtrip.placeViewModel
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray4
-import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
+import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
 @Composable
-fun PlaceScreen(navController: NavController, id: String) {
+fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id: String) {
     val place by placeViewModel.placeById.observeAsState()
     var isDescriptionOpen by remember { mutableStateOf(false) }
     var isReviewOpen by remember { mutableStateOf(false) }
@@ -197,13 +194,5 @@ fun PlaceScreen(navController: NavController, id: String) {
         )
 
 
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PlaceScreenPreview() {
-    LearningTripTheme {
-        PlaceScreen(navController = rememberNavController(), "1940208")
     }
 }

@@ -8,18 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.leeseungyun1020.learningtrip.placeViewModel
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.home.PlaceListView
-import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
+import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
 @Composable
-fun SearchScreen(navController: NavController, key: String) {
+fun SearchScreen(navController: NavController, placeViewModel: PlaceViewModel, key: String) {
     val searchResultPlaces by placeViewModel.filteredPlaces.observeAsState()
     placeViewModel.placeByKeyword(key)
 
@@ -39,12 +36,4 @@ fun SearchScreen(navController: NavController, key: String) {
                 })
         }
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    LearningTripTheme {
-        SearchScreen(navController = rememberNavController(), "keyword")
-    }
 }

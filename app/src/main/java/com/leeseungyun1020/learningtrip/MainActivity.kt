@@ -30,23 +30,20 @@ import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
-lateinit var placeViewModel: PlaceViewModel
-
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        placeViewModel = PlaceViewModel(this)
+        val placeViewModel = PlaceViewModel(this)
         placeViewModel.updatePlaceData(this)
         setContent {
-            MainScreen()
+            MainScreen(placeViewModel)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(placeViewModel: PlaceViewModel) {
     val navController = rememberNavController()
     val isPlaceUpdated by placeViewModel.isUpdated.observeAsState()
     LearningTripTheme {
@@ -106,7 +103,7 @@ fun MainScreen() {
                         startDestination = NavigationScreen.Home.route,
                         Modifier.padding(innerPadding)
                     ) {
-                        graph(navController)
+                        graph(navController, placeViewModel)
                     }
                 }
             } else {

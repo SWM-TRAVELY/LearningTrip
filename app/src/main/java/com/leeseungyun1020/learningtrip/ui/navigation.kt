@@ -8,10 +8,11 @@ import com.leeseungyun1020.learningtrip.*
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.place.PlaceScreen
 import com.leeseungyun1020.learningtrip.ui.search.SearchScreen
+import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
-fun NavGraphBuilder.graph(navController: NavController) {
+fun NavGraphBuilder.graph(navController: NavController, placeViewModel: PlaceViewModel) {
     composable(NavigationScreen.Home.route) {
-        HomeScreen(navController)
+        HomeScreen(navController, placeViewModel)
     }
     composable(NavigationScreen.Category.route) {
         CategoryScreen(navController)
@@ -43,7 +44,7 @@ fun NavGraphBuilder.graph(navController: NavController) {
     }
 
     composable(Screen.Place.route) {
-        PlaceScreen(navController, it.arguments?.getString("id") ?: "0")
+        PlaceScreen(navController, placeViewModel, it.arguments?.getString("id") ?: "0")
     }
 
     composable(Screen.AddReview.route) {
@@ -58,7 +59,7 @@ fun NavGraphBuilder.graph(navController: NavController) {
     }
 
     composable(Screen.Search.route) {
-        SearchScreen(navController, it.arguments?.getString("key") ?: "")
+        SearchScreen(navController, placeViewModel, it.arguments?.getString("key") ?: "")
     }
 
     composable(Screen.AddCourse.route) {

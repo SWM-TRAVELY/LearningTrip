@@ -17,23 +17,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.Keyword
 import com.leeseungyun1020.learningtrip.model.SimplePlace
-import com.leeseungyun1020.learningtrip.placeViewModel
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
-import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
+import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
     val searchedPlaceNames by placeViewModel.filteredPlaceNames.observeAsState()
     val recommendedPlaces by placeViewModel.recommendedPlaces.observeAsState()
     var searchText by rememberSaveable { mutableStateOf("") }
@@ -81,6 +78,7 @@ fun HomeScreen(navController: NavController) {
                         }
                     }
                 },
+
                 colors = TextFieldDefaults.textFieldColors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
@@ -223,12 +221,4 @@ fun HomeScreen(navController: NavController) {
             }
 
         })
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    LearningTripTheme {
-        HomeScreen(navController = rememberNavController())
-    }
 }
