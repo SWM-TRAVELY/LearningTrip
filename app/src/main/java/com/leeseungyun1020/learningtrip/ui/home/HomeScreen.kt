@@ -29,6 +29,7 @@ import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
     val searchedPlaceNames by placeViewModel.filteredPlaceNames.observeAsState()
