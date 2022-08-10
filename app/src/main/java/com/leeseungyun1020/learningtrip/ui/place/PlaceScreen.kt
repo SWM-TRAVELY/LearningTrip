@@ -24,6 +24,7 @@ import coil.request.ImageRequest
 import com.leeseungyun1020.learningntripapitest.SimpleHeritage
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.PlaceReview
+import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.placeViewModel
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
@@ -66,7 +67,7 @@ fun PlaceScreen(navController: NavController, id: String) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
-                        .padding(top = 72.dp),
+                        .padding(top = 232.dp),
                     place = it,
                     placeReview = PlaceReview(place!!.id, 4.88, 100),
                     onPlayClick = { /*TODO*/ },
@@ -151,7 +152,42 @@ fun PlaceScreen(navController: NavController, id: String) {
                             }
                         }
 
+                        val places = listOf(
+                            SimplePlace(
+                                id = 1,
+                                typeId = 14,
+                                name = "장소1",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
+                            ),
+                            SimplePlace(
+                                id = 2,
+                                typeId = 14,
+                                name = "장소2",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
+                            ),
+                            SimplePlace(
+                                id = 3,
+                                typeId = 14,
+                                name = "장소3",
+                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
+                            ),
+                        )
 
+                        PlaceListRow(
+                            modifier = Modifier.padding(top = 16.dp, start = 16.dp),
+                            title = stringResource(id = R.string.title_similar_place),
+                            placeStartPadding = 16.dp,
+                            places = places,
+                            onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
+                        )
+
+                        PlaceListRow(
+                            modifier = Modifier.padding(top = 16.dp, start = 16.dp),
+                            title = stringResource(id = R.string.title_nearby_place),
+                            placeStartPadding = 16.dp,
+                            places = places,
+                            onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
+                        )
                     }
                 },
                 @Composable {

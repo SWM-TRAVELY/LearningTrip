@@ -41,4 +41,6 @@
     <string name="detail">상세 내용</string>
     <string name="action_confirm">확인</string>
     <string name="title_related_heritage">관련 문화재</string>
+    <string name="title_similar_place">유사 관광지</string>
+    <string name="title_nearby_place">주변 관광지</string>
 </resources>
