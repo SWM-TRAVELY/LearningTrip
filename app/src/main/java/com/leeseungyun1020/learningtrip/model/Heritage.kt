@@ -1,4 +1,4 @@
-package com.leeseungyun1020.learningntripapitest
+package com.leeseungyun1020.learningtrip.model
 
 data class Heritage(
     val id: Int,

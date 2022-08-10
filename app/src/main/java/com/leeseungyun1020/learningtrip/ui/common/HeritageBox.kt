@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.leeseungyun1020.learningntripapitest.SimpleHeritage
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 
 //괴도 성민 왔다감
 @Composable

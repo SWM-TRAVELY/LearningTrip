@@ -21,9 +21,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.leeseungyun1020.learningntripapitest.SimpleHeritage
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.PlaceReview
+import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.placeViewModel
 import com.leeseungyun1020.learningtrip.ui.Screen
