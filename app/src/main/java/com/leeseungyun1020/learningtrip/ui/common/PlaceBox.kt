@@ -32,8 +32,9 @@ fun PlaceBox(
                 .data(simplePlace.imageURL)
                 .crossfade(true)
                 .build(),
-            //TODO: Chnage place placeholder
-            placeholder = painterResource(R.drawable.ic_baseline_image_24),
+            placeholder = painterResource(R.drawable.place_placeholder),
+            error = painterResource(R.drawable.place_placeholder),
+            fallback = painterResource(R.drawable.place_placeholder),
             contentDescription = simplePlace.name,
             contentScale = ContentScale.Crop,
             modifier = imageModifier
