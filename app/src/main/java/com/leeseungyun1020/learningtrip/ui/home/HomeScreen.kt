@@ -102,19 +102,19 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     keywordList = listOf(
                         Keyword(
                             "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                            "키워드1"
+                            "신라"
                         ),
                         Keyword(
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=1f9b44e2-bd54-42a6-b4ab-287eca75e023",
-                            "키워드2"
+                            "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
+                            "백제"
                         ),
                         Keyword(
                             "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
-                            "키워드3"
+                            "액티비티"
                         ),
                         Keyword(
                             "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
-                            "키워드4"
+                            "체험"
                         ),
                         Keyword(
                             "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",

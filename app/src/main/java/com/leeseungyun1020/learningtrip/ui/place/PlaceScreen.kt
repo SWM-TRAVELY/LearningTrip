@@ -109,28 +109,13 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                         val heritages = listOf(
                             SimpleHeritage(
                                 id = 1,
-                                name = "문화재1",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
+                                name = "다보탑",
+                                imageURL = "http://www.cha.go.kr/unisearch/images/national_treasure/1612673.jpg"
                             ),
                             SimpleHeritage(
                                 id = 2,
-                                name = "문화재1",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
-                            ),
-                            SimpleHeritage(
-                                id = 3,
-                                name = "문화재1",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
-                            ),
-                            SimpleHeritage(
-                                id = 4,
-                                name = "문화재1",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
-                            ),
-                            SimpleHeritage(
-                                id = 5,
-                                name = "문화재1",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/e/e2/Cheomseongdae-1.jpg"
+                                name = "석가탑",
+                                imageURL = "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021070210514100.jpg"
                             ),
                         )
 
@@ -150,24 +135,24 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                             }
                         }
 
-                        val places = listOf(
+                        val relatedPlaces = listOf(
                             SimplePlace(
-                                id = 1,
-                                typeId = 14,
-                                name = "장소1",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
+                                id = 126216,
+                                typeId = 12,
+                                name = "경주 석굴암",
+                                imageURL = "http://tong.visitkorea.or.kr/cms/resource/21/2616821_image2_1.jpg"
                             ),
                             SimplePlace(
-                                id = 2,
-                                typeId = 14,
-                                name = "장소2",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
+                                id = 317503,
+                                typeId = 12,
+                                name = "분황사",
+                                imageURL = "http://tong.visitkorea.or.kr/cms/resource/28/2371528_image2_1.jpg"
                             ),
                             SimplePlace(
-                                id = 3,
-                                typeId = 14,
-                                name = "장소3",
-                                imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
+                                id = 126175,
+                                typeId = 12,
+                                name = "해인사(합천)",
+                                imageURL = "http://tong.visitkorea.or.kr/cms/resource/48/2690648_image2_1.jpg"
                             ),
                         )
 
@@ -175,15 +160,36 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                             modifier = Modifier.padding(top = 16.dp, start = 16.dp),
                             title = stringResource(id = R.string.title_similar_place),
                             placeStartPadding = 16.dp,
-                            places = places,
+                            places = relatedPlaces,
                             onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
+                        )
+
+                        val nearByPlaces = listOf(
+                            SimplePlace(
+                                id = 128526,
+                                typeId = 12,
+                                name = "동궁과 월지",
+                                imageURL = "http://tong.visitkorea.or.kr/cms/resource/61/2612561_image2_1.jpg"
+                            ),
+                            SimplePlace(
+                                id = 2658227,
+                                typeId = 12,
+                                name = "경주 황리단길",
+                                imageURL = "https://www.gyeongju.go.kr/upload/content/thumb/20200320/157B106CC0A14796BB0381097F4B64A5.jpg"
+                            ),
+                            SimplePlace(
+                                id = 1492402,
+                                typeId = 12,
+                                name = "경주 대릉원 일원",
+                                imageURL = "https://www.gyeongju.go.kr/upload/content/thumb/20200317/8206FFCD7CB5400DAA963F3CA1504EFF.png"
+                            ),
                         )
 
                         PlaceListRow(
                             modifier = Modifier.padding(top = 16.dp, start = 16.dp),
                             title = stringResource(id = R.string.title_nearby_place),
                             placeStartPadding = 16.dp,
-                            places = places,
+                            places = nearByPlaces,
                             onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
                         )
                     }
