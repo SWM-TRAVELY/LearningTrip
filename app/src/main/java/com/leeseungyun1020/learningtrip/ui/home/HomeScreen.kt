@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -212,6 +213,10 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     navController.navigate("${Screen.Course.root}/${it.id}")
                 }
             } else {
+                BackHandler {
+                    searchText = ""
+                }
+
                 TextListView(
                     modifier = Modifier
                         .fillMaxWidth()
