@@ -2,9 +2,7 @@ package com.leeseungyun1020.learningtrip.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
@@ -26,7 +24,8 @@ fun LearningTripScaffold(
     setDisplayHomeAsUpEnabled: Boolean = false,
     setBodyContentInnerPadding: Boolean = true,
     onHomeAsUpClicked: () -> Unit = {},
-    topBarExtraContent: @Composable () -> Unit,
+    topBarExtraContent: @Composable () -> Unit = {},
+    floatingActionButton: @Composable () -> Unit = {},
     bodyContent: @Composable () -> Unit,
 ) {
     Scaffold(
@@ -66,16 +65,15 @@ fun LearningTripScaffold(
                 topBarExtraContent()
             }
         },
+        floatingActionButton = floatingActionButton,
         content = { innerPadding ->
             val modifier =
                 if (setBodyContentInnerPadding)
                     Modifier.padding(top = innerPadding.calculateTopPadding())
                 else Modifier
-            Column(
+            Box(
                 modifier =
-                modifier.verticalScroll(
-                    rememberScrollState()
-                )
+                modifier
             ) {
                 bodyContent()
             }
