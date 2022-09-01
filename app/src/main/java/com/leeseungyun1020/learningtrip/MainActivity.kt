@@ -136,19 +136,6 @@ fun CategoryScreen(navController: NavController) {
 }
 
 @Composable
-fun StoryScreen(navController: NavController) {
-    Column {
-        Text(text = "Story")
-        Button(onClick = { navController.navigate("${Screen.AddCourse.root}/1") }) {
-            Text(text = "Add Course 1")
-        }
-        Button(onClick = { navController.navigate("${Screen.Course.root}/11") }) {
-            Text(text = "Course 11")
-        }
-    }
-}
-
-@Composable
 fun NearbyScreen(navController: NavController) {
     Text(text = "Nearby")
     CircularProgressIndicator()

@@ -42,4 +42,5 @@
     <string name="title_related_heritage">Related Heritage</string>
     <string name="title_similar_place">Similar Place</string>
     <string name="title_nearby_place">Nearby Place</string>
+    <string name="action_add">Add</string>
 </resources>
