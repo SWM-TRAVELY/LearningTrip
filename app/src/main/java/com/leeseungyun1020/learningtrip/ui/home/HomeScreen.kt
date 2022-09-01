@@ -1,6 +1,8 @@
 package com.leeseungyun1020.learningtrip.ui.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -17,19 +19,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.Keyword
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
+import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
     val searchedPlaceNames by placeViewModel.filteredPlaceNames.observeAsState()
@@ -130,13 +137,19 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                 }
 
                 // Introduce(Banner) Image
-                BannerView(
+                HorizontalPager(
+                    count = 2,
                     modifier = Modifier
                         .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                        .fillMaxWidth()
                         .height(104.dp)
                         .background(color = Gray3)
-                )
+                ) { page ->
+                    Text(
+                        text = "Learning Trip - Page: $page",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                    )
+                }
 
                 // Place List
                 Text(
@@ -152,66 +165,77 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     navController.navigate("${Screen.Place.root}/${it.id}")
                 }
 
-                // Route List
+                // Course List
                 Text(
                     modifier = Modifier.padding(top = 8.dp, start = 16.dp),
                     text = stringResource(id = R.string.title_recommend_course),
                     color = Gray2, style = MaterialTheme.typography.bodyLarge,
                 )
 
-                CourseListView(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp),
-                    courseList = listOf(
-                        Course(
-                            "1", "코스1", listOf(
-                                SimplePlace(
-                                    1,
-                                    "관광지1",
-                                    "14",
-                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                                ),
-                                SimplePlace(
-                                    2,
-                                    "관광지2",
-                                    "14",
-                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                                ),
-                            )
-                        ),
-                        Course(
-                            "2", "코스2", listOf(
-                                SimplePlace(
-                                    3,
-                                    "관광지3",
-                                    "14",
-                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                                ),
-                                SimplePlace(
-                                    4,
-                                    "관광지4",
-                                    "14",
-                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                                ),
-                                SimplePlace(
-                                    5,
-                                    "관광지5",
-                                    "14",
-                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                                ),
-                                SimplePlace(
-                                    6,
-                                    "관광지6",
-                                    "14",
-                                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                                ),
-                            )
+                val courseList = listOf(
+                    Course(
+                        "1", "코스1", listOf(
+                            SimplePlace(
+                                1,
+                                "관광지1",
+                                "14",
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
+                            ),
+                            SimplePlace(
+                                2,
+                                "관광지2",
+                                "14",
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
+                            ),
+                        )
+                    ),
+                    Course(
+                        "2", "코스2", listOf(
+                            SimplePlace(
+                                3,
+                                "관광지3",
+                                "14",
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                            ),
+                            SimplePlace(
+                                4,
+                                "관광지4",
+                                "14",
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                            ),
+                            SimplePlace(
+                                5,
+                                "관광지5",
+                                "14",
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                            ),
+                            SimplePlace(
+                                6,
+                                "관광지6",
+                                "14",
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
+                            ),
                         )
                     )
-                ) {
-                    navController.navigate("${Screen.Course.root}/${it.id}")
+                )
+
+                val startIndex = Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2 % courseList.size)
+                HorizontalPager(
+                    count = Int.MAX_VALUE,
+                    contentPadding = PaddingValues(horizontal = 24.dp),
+                    itemSpacing = 8.dp,
+                    state = rememberPagerState(initialPage = startIndex),
+                ) { idx ->
+                    val page = idx % courseList.size
+                    CourseBox(course = courseList[page], modifier = Modifier.clickable {
+                        navController.navigate("${Screen.Course.root}/${courseList[page].id}")
+                    })
                 }
             } else {
+                BackHandler {
+                    searchText = ""
+                }
+
                 TextListView(
                     modifier = Modifier
                         .fillMaxWidth()
