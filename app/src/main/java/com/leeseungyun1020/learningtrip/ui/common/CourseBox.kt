@@ -91,10 +91,10 @@ fun CourseBoxPreview() {
     CourseBox(
         course = Course(
             "2", "코스2", listOf(
-                SimplePlace("3", "관광지3", "14", "image3"),
-                SimplePlace("4", "관광지4", "14", "image4"),
-                SimplePlace("5", "관광지5", "14", "image5"),
-                SimplePlace("6", "관광지6", "14", "image6")
+                SimplePlace("3", "관광지3", "14", "주소", "image3"),
+                SimplePlace("4", "관광지4", "14", "주소", "image4"),
+                SimplePlace("5", "관광지5", "14", "주소", "image5"),
+                SimplePlace("6", "관광지6", "14", "주소", "image6")
             )
         )
     )

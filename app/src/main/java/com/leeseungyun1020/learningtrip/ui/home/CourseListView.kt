@@ -97,12 +97,14 @@ fun CourseListViewPreview() {
                         "1",
                         "관광지1",
                         "14",
+                        "주소",
                         "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
                     ),
                     SimplePlace(
                         "2",
                         "관광지2",
                         "14",
+                        "주소",
                         "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
                     ),
                 )
@@ -113,24 +115,28 @@ fun CourseListViewPreview() {
                         "3",
                         "관광지3",
                         "14",
+                        "주소",
                         "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
                     ),
                     SimplePlace(
                         "4",
                         "관광지4",
                         "14",
+                        "주소",
                         "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
                     ),
                     SimplePlace(
                         "5",
                         "관광지5",
                         "14",
+                        "주소",
                         "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
                     ),
                     SimplePlace(
                         "6",
                         "관광지6",
                         "14",
+                        "주소",
                         "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
                     ),
                 )

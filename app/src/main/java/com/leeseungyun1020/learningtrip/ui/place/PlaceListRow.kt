@@ -60,18 +60,21 @@ fun PlaceListRowPreview() {
                 id = 1,
                 typeId = 14,
                 name = "장소1",
+                address = "주소",
                 imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
             ),
             SimplePlace(
                 id = 2,
                 typeId = 14,
                 name = "장소2",
+                address = "주소",
                 imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
             ),
             SimplePlace(
                 id = 3,
                 typeId = 14,
                 name = "장소3",
+                address = "주소",
                 imageURL = "https://upload.wikimedia.org/wikipedia/commons/3/32/%EA%B2%BD%EC%A3%BC_%EB%B6%88%EA%B5%AD%EC%82%AC.jpg"
             ),
         ),

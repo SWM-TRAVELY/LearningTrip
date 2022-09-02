@@ -148,18 +148,21 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                                     id = 126216,
                                     typeId = 12,
                                     name = "경주 석굴암",
+                                    address = "주소",
                                     imageURL = "http://tong.visitkorea.or.kr/cms/resource/21/2616821_image2_1.jpg"
                                 ),
                                 SimplePlace(
                                     id = 317503,
                                     typeId = 12,
                                     name = "분황사",
+                                    address = "주소",
                                     imageURL = "http://tong.visitkorea.or.kr/cms/resource/28/2371528_image2_1.jpg"
                                 ),
                                 SimplePlace(
                                     id = 126175,
                                     typeId = 12,
                                     name = "해인사(합천)",
+                                    address = "주소",
                                     imageURL = "http://tong.visitkorea.or.kr/cms/resource/48/2690648_image2_1.jpg"
                                 ),
                             )
@@ -177,18 +180,21 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                                     id = 128526,
                                     typeId = 12,
                                     name = "동궁과 월지",
+                                    address = "주소",
                                     imageURL = "http://tong.visitkorea.or.kr/cms/resource/61/2612561_image2_1.jpg"
                                 ),
                                 SimplePlace(
                                     id = 2658227,
                                     typeId = 12,
                                     name = "경주 황리단길",
+                                    address = "주소",
                                     imageURL = "https://www.gyeongju.go.kr/upload/content/thumb/20200320/157B106CC0A14796BB0381097F4B64A5.jpg"
                                 ),
                                 SimplePlace(
                                     id = 1492402,
                                     typeId = 12,
                                     name = "경주 대릉원 일원",
+                                    address = "주소",
                                     imageURL = "https://www.gyeongju.go.kr/upload/content/thumb/20200317/8206FFCD7CB5400DAA963F3CA1504EFF.png"
                                 ),
                             )
