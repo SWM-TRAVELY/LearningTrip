@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.leeseungyun1020.learningtrip.*
+import com.leeseungyun1020.learningtrip.ui.course.CourseScreen
 import com.leeseungyun1020.learningtrip.ui.course.StoryScreen
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.place.PlaceScreen

@@ -44,4 +44,7 @@
     <string name="title_similar_place">유사 관광지</string>
     <string name="title_nearby_place">주변 관광지</string>
     <string name="action_add">추가</string>
+    <string name="title_course">코스 요약</string>
+    <string name="desc_place">관광지</string>
+    <string name="action_update_course">코스 수정</string>
 </resources>

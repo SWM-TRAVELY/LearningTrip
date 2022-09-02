@@ -199,17 +199,6 @@ fun AddCourseScreen(navController: NavController, id: String) {
 }
 
 @Composable
-fun CourseScreen(navController: NavController, id: String) {
-    Column {
-        Text(text = "course $id")
-        Button(onClick = { navController.navigate("${Screen.AddCourse.root}/${id}") }) {
-            Text(text = "Add Course $id")
-        }
-    }
-
-}
-
-@Composable
 fun AccountScreen(navController: NavController) {
     Text(text = "account")
 }

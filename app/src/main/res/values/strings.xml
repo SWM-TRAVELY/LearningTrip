@@ -43,4 +43,7 @@
     <string name="title_similar_place">Similar Place</string>
     <string name="title_nearby_place">Nearby Place</string>
     <string name="action_add">Add</string>
+    <string name="title_course">Course summary</string>
+    <string name="desc_place">Place</string>
+    <string name="action_update_course">Update course</string>
 </resources>
