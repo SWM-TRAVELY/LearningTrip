@@ -47,4 +47,8 @@
     <string name="title_course">코스 요약</string>
     <string name="desc_place">관광지</string>
     <string name="action_update_course">코스 수정</string>
+    <string name="title_update_course">코스 수정</string>
+    <string name="action_save_course">코스 저장</string>
+    <string name="action_swap">변경</string>
+    <string name="title_add_place">관광지 추가</string>
 </resources>

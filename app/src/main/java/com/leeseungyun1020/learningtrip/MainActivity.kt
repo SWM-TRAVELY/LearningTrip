@@ -187,18 +187,6 @@ fun HeritageScreen(navController: NavController, id: String) {
 }
 
 @Composable
-fun AddCourseScreen(navController: NavController, id: String) {
-    Column {
-        Text(text = "add course $id")
-        Button(onClick = {
-            navController.popBackStack()
-        }) {
-            Text(text = "Save Course $id")
-        }
-    }
-}
-
-@Composable
 fun AccountScreen(navController: NavController) {
     Text(text = "account")
 }

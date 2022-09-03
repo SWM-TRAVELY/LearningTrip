@@ -46,4 +46,8 @@
     <string name="title_course">Course summary</string>
     <string name="desc_place">Place</string>
     <string name="action_update_course">Update course</string>
+    <string name="title_update_course">Update course</string>
+    <string name="action_save_course">Save course</string>
+    <string name="action_swap">Swap</string>
+    <string name="title_add_place">Add place</string>
 </resources>
