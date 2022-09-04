@@ -3,6 +3,7 @@ package com.leeseungyun1020.learningtrip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,16 +25,24 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.leeseungyun1020.learningtrip.data.AppDatabase
+import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
 class MainActivity : ComponentActivity() {
+    val database by lazy { AppDatabase.getDatabase(this) }
+    val repository by lazy { PlaceRepository(database.placeDao()) }
+    val placeViewModel: PlaceViewModel by viewModels {
+        PlaceViewModelFactory(repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val placeViewModel = PlaceViewModel(this)
         placeViewModel.updatePlaceData(this)
         setContent {
             MainScreen(placeViewModel)
