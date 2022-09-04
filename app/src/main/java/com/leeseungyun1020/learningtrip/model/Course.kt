@@ -1,10 +1,34 @@
 package com.leeseungyun1020.learningtrip.model
 
-class Course(val id: String, val name: String, val placeList: List<SimplePlace>)
-/*
-class SimpleRoute(val id: String, val name: String, val image: String)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 
-fun Route.toSimpleRoute(): SimpleRoute {
-    return SimpleRoute(id, name, placeList[0].image)
+class DetailedCourse(val id: Int, val name: String, val placeList: List<SimplePlace>)
+
+fun DetailedCourse.toCourse(): Course {
+    val course = Course(name = name, placeIdList = placeList.map { it.id })
+    course.id = id
+    return course
 }
-*/
+
+@Entity
+data class Course(
+    val name: String,
+    val placeIdList: List<Int>
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}
+
+class PlaceIdListConverter {
+    @TypeConverter
+    fun fromString(value: String): List<Int> {
+        return value.split(",").map { it.toInt() }
+    }
+
+    @TypeConverter
+    fun fromList(list: List<Int>): String {
+        return list.joinToString(",")
+    }
+}

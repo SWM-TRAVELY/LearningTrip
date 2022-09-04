@@ -28,7 +28,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.DetailedCourse
 import com.leeseungyun1020.learningtrip.model.Keyword
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
@@ -180,8 +180,8 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     )
 
                     val courseList = listOf(
-                        Course(
-                            "1", "코스1", listOf(
+                        DetailedCourse(
+                            1, "코스1", listOf(
                                 SimplePlace(
                                     1,
                                     "관광지1",
@@ -198,8 +198,8 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                                 ),
                             )
                         ),
-                        Course(
-                            "2", "코스2", listOf(
+                        DetailedCourse(
+                            2, "코스2", listOf(
                                 SimplePlace(
                                     3,
                                     "관광지3",
@@ -240,7 +240,7 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                         state = rememberPagerState(initialPage = startIndex),
                     ) { idx ->
                         val page = idx % courseList.size
-                        CourseBox(course = courseList[page], modifier = Modifier.clickable {
+                        CourseBox(detailedCourse = courseList[page], modifier = Modifier.clickable {
                             navController.navigate("${Screen.Course.root}/${courseList[page].id}")
                         })
                     }

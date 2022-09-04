@@ -20,23 +20,23 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.DetailedCourse
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 import java.lang.Integer.min
 
 @Composable
-fun CourseBox(modifier: Modifier = Modifier, course: Course) {
+fun CourseBox(modifier: Modifier = Modifier, detailedCourse: DetailedCourse) {
     Box(modifier = modifier) {
         // TODO: 코스 이미지 URL로 교체
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(course.placeList.first().imageURL)
+                .data(detailedCourse.placeList.first().imageURL)
                 .crossfade(true)
                 .build(),
             //TODO: Replace keyword placeholder
             placeholder = painterResource(R.drawable.ic_baseline_image_24),
-            contentDescription = course.name,
+            contentDescription = detailedCourse.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,13 +65,18 @@ fun CourseBox(modifier: Modifier = Modifier, course: Course) {
                 .padding(start = 12.dp, bottom = 6.dp)
         ) {
             Text(
-                text = course.name,
+                text = detailedCourse.name,
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 1.dp)
             )
             Row {
-                for (text in course.placeList.slice(0..min(2, course.placeList.lastIndex))
+                for (text in detailedCourse.placeList.slice(
+                    0..min(
+                        2,
+                        detailedCourse.placeList.lastIndex
+                    )
+                )
                     .map { it.name })
                     Text(
                         text = text,
@@ -89,8 +94,8 @@ fun CourseBox(modifier: Modifier = Modifier, course: Course) {
 @Composable
 fun CourseBoxPreview() {
     CourseBox(
-        course = Course(
-            "2", "코스2", listOf(
+        detailedCourse = DetailedCourse(
+            2, "코스2", listOf(
                 SimplePlace("3", "관광지3", "14", "주소", "image3"),
                 SimplePlace("4", "관광지4", "14", "주소", "image4"),
                 SimplePlace("5", "관광지5", "14", "주소", "image5"),

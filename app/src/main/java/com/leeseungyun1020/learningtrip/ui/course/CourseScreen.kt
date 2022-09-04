@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.DetailedCourse
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
@@ -27,8 +27,8 @@ import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 @Composable
 fun CourseScreen(navController: NavController, id: String) {
     // TODO: Get course from repository
-    val course = Course(
-        id, "코스1", listOf(
+    val course = DetailedCourse(
+        id.toIntOrNull() ?: -1, "코스1", listOf(
             SimplePlace(
                 1,
                 "관광지1",

@@ -11,15 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.DetailedCourse
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 
 @Composable
 fun CourseListView(
     modifier: Modifier,
-    courseList: List<Course>,
-    onCourseClicked: (Course) -> Unit
+    courseList: List<DetailedCourse>,
+    onCourseClicked: (DetailedCourse) -> Unit
 ) {
     var lastTime by remember { mutableStateOf(System.currentTimeMillis()) }
     var centerIndex by remember { mutableStateOf(0) }
@@ -54,7 +54,7 @@ fun CourseListView(
         )
     ) {
         val (startBox, centerBox, endBox) = createRefs()
-        CourseBox(course = startRoute, modifier = Modifier
+        CourseBox(detailedCourse = startRoute, modifier = Modifier
             .constrainAs(startBox) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
@@ -62,7 +62,7 @@ fun CourseListView(
             }
             .clickable { centerIndex-- })
 
-        CourseBox(course = centerRoute, modifier = Modifier
+        CourseBox(detailedCourse = centerRoute, modifier = Modifier
             .constrainAs(centerBox) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
@@ -74,7 +74,7 @@ fun CourseListView(
             .clickable { onCourseClicked(centerRoute) }
         )
 
-        CourseBox(course = endRoute, modifier = Modifier
+        CourseBox(detailedCourse = endRoute, modifier = Modifier
             .constrainAs(endBox) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
@@ -91,8 +91,8 @@ fun CourseListViewPreview() {
         modifier = Modifier
             .padding(vertical = 8.dp),
         courseList = listOf(
-            Course(
-                "1", "코스1", listOf(
+            DetailedCourse(
+                1, "코스1", listOf(
                     SimplePlace(
                         "1",
                         "관광지1",
@@ -109,8 +109,8 @@ fun CourseListViewPreview() {
                     ),
                 )
             ),
-            Course(
-                "2", "코스2", listOf(
+            DetailedCourse(
+                2, "코스2", listOf(
                     SimplePlace(
                         "3",
                         "관광지3",

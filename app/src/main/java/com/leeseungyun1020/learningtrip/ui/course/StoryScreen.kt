@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.DetailedCourse
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
@@ -35,8 +35,8 @@ fun StoryScreen(navController: NavController) {
             }
         }) {
         val courseList = listOf(
-            Course(
-                "1", "코스1", listOf(
+            DetailedCourse(
+                1, "코스1", listOf(
                     SimplePlace(
                         1,
                         "관광지1",
@@ -53,8 +53,8 @@ fun StoryScreen(navController: NavController) {
                     ),
                 )
             ),
-            Course(
-                "2", "코스2", listOf(
+            DetailedCourse(
+                2, "코스2", listOf(
                     SimplePlace(
                         3,
                         "관광지3",
@@ -89,7 +89,7 @@ fun StoryScreen(navController: NavController) {
 
         LazyColumn(modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)) {
             items(courseList) { course ->
-                CourseBox(course = course, modifier = Modifier
+                CourseBox(detailedCourse = course, modifier = Modifier
                     .padding(bottom = 12.dp)
                     .clickable {
                         navController.navigate("${Screen.Course.root}/${course.id}")
