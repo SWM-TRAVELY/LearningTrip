@@ -45,3 +45,15 @@ class AddCourseViewModel : ViewModel() {
     val modifiedCourseList = course.placeList.toMutableStateList()
     var courseName by mutableStateOf(course.name)
 }
+
+/*
+class AddCourseViewModelFactory : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(AddCourseViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return AddCourseViewModel() as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+*/

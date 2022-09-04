@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
@@ -28,7 +29,7 @@ import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
 fun AddCourseScreen(
     navController: NavController,
     id: String,
-    viewModel: AddCourseViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: AddCourseViewModel = viewModel()
 ) {
     LearningTripScaffold(
         title = stringResource(id = R.string.title_update_course),
