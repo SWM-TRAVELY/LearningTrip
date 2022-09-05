@@ -1,6 +1,5 @@
 package com.leeseungyun1020.learningtrip.ui
 
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -72,7 +71,7 @@ fun NavGraphBuilder.graph(navController: NavController, placeViewModel: PlaceVie
     }
 
     composable(Screen.AddPlace.route) {
-        AddPlaceScreen(navController, viewModel(navController.previousBackStackEntry ?: it))
+        AddPlaceScreen(navController)
     }
 
     composable(Screen.Course.route) {

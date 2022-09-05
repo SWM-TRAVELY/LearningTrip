@@ -18,15 +18,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AppDatabase
+import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.home.PlaceListView
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModelFactory
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
@@ -34,7 +37,13 @@ import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 @Composable
 fun AddPlaceScreen(
     navController: NavController,
-    viewModel: AddCourseViewModel = viewModel()
+    viewModel: AddCourseViewModel = viewModel(
+        viewModelStoreOwner = navController.previousBackStackEntry
+            ?: LocalViewModelStoreOwner.current!!,
+        factory = AddCourseViewModelFactory(
+            CourseRepository(AppDatabase.getDatabase(LocalContext.current).courseDao())
+        )
+    )
 ) {
     val database = AppDatabase.getDatabase(LocalContext.current)
     val repository = PlaceRepository(database.placeDao())
@@ -102,7 +111,7 @@ fun AddPlaceScreen(
             innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
             placeList = placeList ?: listOf(),
             onPlaceClicked = {
-                viewModel.modifiedCourseList.add(it)
+                viewModel.addPlace(it)
                 navController.popBackStack()
             })
     }

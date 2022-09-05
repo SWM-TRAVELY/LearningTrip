@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -11,26 +13,39 @@ import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.data.AppDatabase
+import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModelFactory
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AddCourseScreen(
     navController: NavController,
     id: String,
-    viewModel: AddCourseViewModel = viewModel()
+    viewModel: AddCourseViewModel = viewModel(
+        factory = AddCourseViewModelFactory(
+            CourseRepository(AppDatabase.getDatabase(LocalContext.current).courseDao())
+        )
+    )
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    if ((id.toIntOrNull() ?: -1) > 0)
+        viewModel.loadCourse(id.toInt())
     LearningTripScaffold(
         title = stringResource(id = R.string.title_update_course),
     ) {
@@ -48,6 +63,12 @@ fun AddCourseScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                    }
+                ),
             )
 
             for ((i, place) in viewModel.modifiedCourseList.withIndex()) {
@@ -62,8 +83,7 @@ fun AddCourseScreen(
                 if (i < viewModel.modifiedCourseList.lastIndex)
                     IconButton(
                         onClick = {
-                            val place = viewModel.modifiedCourseList.removeAt(i)
-                            viewModel.modifiedCourseList.add(i + 1, place)
+                            viewModel.swapPlace(i)
 
                         },
                         modifier = Modifier
@@ -76,30 +96,25 @@ fun AddCourseScreen(
                             )
                         )
                     }
-                else
-                    IconButton(
-                        onClick = {
-                            navController.navigate(Screen.AddPlace.route)
-                        },
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(
-                                id = R.string.action_add
-                            )
-                        )
-                    }
             }
+            IconButton(
+                onClick = {
+                    navController.navigate(Screen.AddPlace.route)
+                },
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(
+                        id = R.string.action_add
+                    )
+                )
+            }
+
             Button(
                 onClick = {
-                    val savingCourse = Course(
-                        viewModel.course.id,
-                        viewModel.courseName,
-                        viewModel.modifiedCourseList
-                    )
-                    // TODO: Save course
+                    viewModel.updateCourse()
                     navController.popBackStack()
                 },
                 modifier = Modifier

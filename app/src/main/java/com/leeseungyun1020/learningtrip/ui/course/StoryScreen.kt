@@ -9,21 +9,37 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.data.AppDatabase
+import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.model.DetailedCourse
-import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
+import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModelFactory
 
 @Composable
-fun StoryScreen(navController: NavController) {
+fun StoryScreen(
+    navController: NavController, viewModel: CourseViewModel = viewModel(
+        factory = CourseViewModelFactory(
+            CourseRepository(AppDatabase.getDatabase(LocalContext.current).courseDao())
+        )
+    )
+) {
+    val courseSimpleList by viewModel.courseList.collectAsState(initial = emptyList())
+    //val courseList = courseSimpleList.map { viewModel.get }
+    val courseList = emptyList<DetailedCourse>()
     LearningTripScaffold(
         title = stringResource(id = R.string.nav_story),
         floatingActionButton = {
@@ -34,58 +50,6 @@ fun StoryScreen(navController: NavController) {
                 )
             }
         }) {
-        val courseList = listOf(
-            DetailedCourse(
-                1, "코스1", listOf(
-                    SimplePlace(
-                        1,
-                        "관광지1",
-                        "14",
-                        "주소",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                    ),
-                    SimplePlace(
-                        2,
-                        "관광지2",
-                        "14",
-                        "주소",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                    ),
-                )
-            ),
-            DetailedCourse(
-                2, "코스2", listOf(
-                    SimplePlace(
-                        3,
-                        "관광지3",
-                        "14",
-                        "주소",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                    ),
-                    SimplePlace(
-                        4,
-                        "관광지4",
-                        "14",
-                        "주소",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                    ),
-                    SimplePlace(
-                        5,
-                        "관광지5",
-                        "14",
-                        "주소",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                    ),
-                    SimplePlace(
-                        6,
-                        "관광지6",
-                        "14",
-                        "주소",
-                        "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                    ),
-                )
-            )
-        )
 
         LazyColumn(modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)) {
             items(courseList) { course ->
