@@ -26,22 +26,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AppDatabase
-import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
-import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AddCourseScreen(
     navController: NavController,
     id: String,
-    viewModel: AddCourseViewModel = viewModel(
-        factory = AddCourseViewModelFactory(
-            CourseRepository(AppDatabase.getDatabase(LocalContext.current).courseDao())
-        )
-    )
+    viewModel: AddCourseViewModel = viewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     if ((id.toIntOrNull() ?: -1) > 0)

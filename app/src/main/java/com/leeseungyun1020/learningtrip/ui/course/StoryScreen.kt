@@ -21,24 +21,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AppDatabase
-import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.model.DetailedCourse
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
-import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModelFactory
 
 @Composable
 fun StoryScreen(
-    navController: NavController, viewModel: CourseViewModel = viewModel(
-        factory = CourseViewModelFactory(
-            CourseRepository(AppDatabase.getDatabase(LocalContext.current).courseDao())
-        )
-    )
+    navController: NavController, viewModel: CourseViewModel = viewModel()
 ) {
-    val courseSimpleList by viewModel.courseList.collectAsState(initial = emptyList())
-    //val courseList = courseSimpleList.map { viewModel.get }
     val courseList = emptyList<DetailedCourse>()
     LearningTripScaffold(
         title = stringResource(id = R.string.nav_story),

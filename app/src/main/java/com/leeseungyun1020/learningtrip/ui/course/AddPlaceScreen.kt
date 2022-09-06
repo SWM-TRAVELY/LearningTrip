@@ -23,13 +23,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AppDatabase
-import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.home.PlaceListView
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
-import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModelFactory
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
@@ -39,10 +37,7 @@ fun AddPlaceScreen(
     navController: NavController,
     viewModel: AddCourseViewModel = viewModel(
         viewModelStoreOwner = navController.previousBackStackEntry
-            ?: LocalViewModelStoreOwner.current!!,
-        factory = AddCourseViewModelFactory(
-            CourseRepository(AppDatabase.getDatabase(LocalContext.current).courseDao())
-        )
+            ?: LocalViewModelStoreOwner.current!!
     )
 ) {
     val database = AppDatabase.getDatabase(LocalContext.current)

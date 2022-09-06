@@ -4,14 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.leeseungyun1020.learningtrip.model.Course
-import com.leeseungyun1020.learningtrip.model.CoursePlace
 import com.leeseungyun1020.learningtrip.model.Place
 
-@Database(entities = [Place::class, Course::class, CoursePlace::class], version = 1)
+@Database(entities = [Place::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun placeDao(): PlaceDao
-    abstract fun courseDao(): CourseDao
 
     companion object {
         @Volatile
