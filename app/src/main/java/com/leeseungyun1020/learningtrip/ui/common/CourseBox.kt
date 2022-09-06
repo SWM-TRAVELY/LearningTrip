@@ -14,29 +14,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.DetailedCourse
+import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 import java.lang.Integer.min
 
 @Composable
-fun CourseBox(modifier: Modifier = Modifier, detailedCourse: DetailedCourse) {
+fun CourseBox(modifier: Modifier = Modifier, course: SimpleCourse) {
     Box(modifier = modifier) {
-        // TODO: 코스 이미지 URL로 교체
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(detailedCourse.placeList.first().imageURL)
+                .data(course.imageURL)
                 .crossfade(true)
                 .build(),
             //TODO: Replace keyword placeholder
             placeholder = painterResource(R.drawable.ic_baseline_image_24),
-            contentDescription = detailedCourse.name,
+            contentDescription = course.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,19 +66,14 @@ fun CourseBox(modifier: Modifier = Modifier, detailedCourse: DetailedCourse) {
                 .padding(start = 12.dp, bottom = 6.dp)
         ) {
             Text(
-                text = detailedCourse.name,
+                text = course.name ?: stringResource(id = R.string.title_course),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 1.dp)
             )
             Row {
-                for (text in detailedCourse.placeList.slice(
-                    0..min(
-                        2,
-                        detailedCourse.placeList.lastIndex
-                    )
-                )
-                    .map { it.name })
+                val placeList = listOfNotNull(course.place1, course.place2, course.place3)
+                for (text in placeList)
                     Text(
                         text = text,
                         fontFamily = notoSansKRFamily,
@@ -94,13 +90,9 @@ fun CourseBox(modifier: Modifier = Modifier, detailedCourse: DetailedCourse) {
 @Composable
 fun CourseBoxPreview() {
     CourseBox(
-        detailedCourse = DetailedCourse(
-            2, "코스2", listOf(
-                SimplePlace("3", "관광지3", "14", "주소", "image3"),
-                SimplePlace("4", "관광지4", "14", "주소", "image4"),
-                SimplePlace("5", "관광지5", "14", "주소", "image5"),
-                SimplePlace("6", "관광지6", "14", "주소", "image6")
-            )
+        course = SimpleCourse(
+            id = 2, name = "코스2", imageURL = "image3",
+            place1 = "관광지1", place2 = "관광지2", place3 = "관광지3"
         )
     )
 }

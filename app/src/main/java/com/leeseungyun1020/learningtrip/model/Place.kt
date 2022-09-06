@@ -33,7 +33,8 @@ data class SimplePlace(
     val name: String,
     val typeId: Int,
     val address: String,
-    val imageURL: String
+    val imageURL: String?,
+    val overview: String? = null,
 ) {
     constructor(id: String, name: String, typeId: String, address: String, imageURL: String) : this(
         id.toInt(),

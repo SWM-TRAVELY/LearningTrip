@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.DetailedCourse
+import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
@@ -27,7 +27,7 @@ import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 @Composable
 fun CourseScreen(navController: NavController, id: String) {
     // TODO: Get course from repository
-    val course = DetailedCourse(
+    val course = Course(
         id.toIntOrNull() ?: -1, "코스1", listOf(
             SimplePlace(
                 1,
@@ -67,16 +67,17 @@ fun CourseScreen(navController: NavController, id: String) {
                 color = MaterialTheme.colorScheme.secondary
             )
 
-            for ((i, place) in course.placeList.withIndex()) {
-                PlaceLocationBox(
-                    simplePlace = place,
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        end = 20.dp,
-                        top = if (i == 0) 18.dp else 30.dp
+            if (course.placeList != null)
+                for ((i, place) in course.placeList.withIndex()) {
+                    PlaceLocationBox(
+                        simplePlace = place,
+                        modifier = Modifier.padding(
+                            start = 16.dp,
+                            end = 20.dp,
+                            top = if (i == 0) 18.dp else 30.dp
+                        )
                     )
-                )
-            }
+                }
             Button(
                 onClick = { navController.navigate("${Screen.AddCourse.root}/${id}") },
                 modifier = Modifier

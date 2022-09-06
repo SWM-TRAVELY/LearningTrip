@@ -9,10 +9,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,8 +17,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.data.AppDatabase
-import com.leeseungyun1020.learningtrip.model.DetailedCourse
+import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
@@ -31,7 +28,7 @@ import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
 fun StoryScreen(
     navController: NavController, viewModel: CourseViewModel = viewModel()
 ) {
-    val courseList = emptyList<DetailedCourse>()
+    val courseList = emptyList<SimpleCourse>()
     LearningTripScaffold(
         title = stringResource(id = R.string.nav_story),
         floatingActionButton = {
@@ -45,7 +42,7 @@ fun StoryScreen(
 
         LazyColumn(modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)) {
             items(courseList) { course ->
-                CourseBox(detailedCourse = course, modifier = Modifier
+                CourseBox(course = course, modifier = Modifier
                     .padding(bottom = 12.dp)
                     .clickable {
                         navController.navigate("${Screen.Course.root}/${course.id}")
