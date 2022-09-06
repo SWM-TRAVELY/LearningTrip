@@ -10,12 +10,15 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
@@ -23,28 +26,14 @@ import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
+import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
 
 @Composable
-fun CourseScreen(navController: NavController, id: String) {
-    // TODO: Get course from repository
-    val course = Course(
-        id.toIntOrNull() ?: -1, "코스1", listOf(
-            SimplePlace(
-                1,
-                "관광지1",
-                "14",
-                "주소",
-                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-            ),
-            SimplePlace(
-                2,
-                "관광지2",
-                "14",
-                "주소",
-                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-            ),
-        )
-    )
+fun CourseScreen(
+    navController: NavController, id: String, viewModel: CourseViewModel = viewModel()
+) {
+    viewModel.loadCourseById(id.toIntOrNull() ?: -1)
+    val course by viewModel.course.observeAsState()
     LearningTripScaffold(
         title = stringResource(id = R.string.title_course),
     ) {
@@ -54,7 +43,7 @@ fun CourseScreen(navController: NavController, id: String) {
             )
         ) {
             Text(
-                text = course.name,
+                text = course?.name ?: stringResource(id = R.string.title_course_error),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -63,21 +52,17 @@ fun CourseScreen(navController: NavController, id: String) {
                 textAlign = TextAlign.Center
             )
             Divider(
-                thickness = 2.dp,
-                color = MaterialTheme.colorScheme.secondary
+                thickness = 2.dp, color = MaterialTheme.colorScheme.secondary
             )
 
-            if (course.placeList != null)
-                for ((i, place) in course.placeList.withIndex()) {
-                    PlaceLocationBox(
-                        simplePlace = place,
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            end = 20.dp,
-                            top = if (i == 0) 18.dp else 30.dp
-                        )
+
+            for ((i, place) in (course?.placeList ?: emptyList()).withIndex()) {
+                PlaceLocationBox(
+                    simplePlace = place, modifier = Modifier.padding(
+                        start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
                     )
-                }
+                )
+            }
             Button(
                 onClick = { navController.navigate("${Screen.AddCourse.root}/${id}") },
                 modifier = Modifier

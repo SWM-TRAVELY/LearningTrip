@@ -50,4 +50,6 @@
     <string name="action_save_course">Save course</string>
     <string name="action_swap">Swap</string>
     <string name="title_add_place">Add place</string>
+    <string name="title_new_course">New course</string>
+    <string name="title_course_error">Error</string>
 </resources>
