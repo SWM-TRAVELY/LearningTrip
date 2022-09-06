@@ -51,6 +51,6 @@
     <string name="action_save_course">코스 저장</string>
     <string name="action_swap">변경</string>
     <string name="title_add_place">관광지 추가</string>
-    <string name="title_new_course">새 코스</string>
+    <string name="title_new_course">코스 이름을 입력하세요</string>
     <string name="title_course_error">오류</string>
 </resources>

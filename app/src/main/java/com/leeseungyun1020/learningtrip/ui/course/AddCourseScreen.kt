@@ -63,6 +63,9 @@ fun AddCourseScreen(
                         keyboardController?.hide()
                     }
                 ),
+                placeholder = {
+                    Text(text = stringResource(id = R.string.title_new_course))
+                },
             )
 
             for ((i, place) in viewModel.modifiedCourseList.withIndex()) {
