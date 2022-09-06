@@ -9,6 +9,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,7 +30,7 @@ import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
 fun StoryScreen(
     navController: NavController, viewModel: CourseViewModel = viewModel()
 ) {
-    val courseList = emptyList<SimpleCourse>()
+    val courseList by viewModel.courseList.observeAsState()
     LearningTripScaffold(
         title = stringResource(id = R.string.nav_story),
         floatingActionButton = {
@@ -41,7 +43,7 @@ fun StoryScreen(
         }) {
 
         LazyColumn(modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)) {
-            items(courseList) { course ->
+            items(courseList ?: emptyList()) { course ->
                 CourseBox(course = course, modifier = Modifier
                     .padding(bottom = 12.dp)
                     .clickable {
