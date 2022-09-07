@@ -53,4 +53,5 @@
     <string name="title_add_place">관광지 추가</string>
     <string name="title_new_course">코스 이름을 입력하세요</string>
     <string name="title_course_error">오류</string>
+    <string name="action_info">정보 보기</string>
 </resources>

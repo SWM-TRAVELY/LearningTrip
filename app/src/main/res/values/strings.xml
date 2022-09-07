@@ -52,4 +52,5 @@
     <string name="title_add_place">Add place</string>
     <string name="title_new_course">Enter new course name</string>
     <string name="title_course_error">Error</string>
+    <string name="action_info">Show information</string>
 </resources>
