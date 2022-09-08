@@ -2,21 +2,14 @@ package com.leeseungyun1020.learningtrip.viewmodel
 
 import android.content.Context
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import com.leeseungyun1020.learningtrip.data.AppDatabase
+import androidx.lifecycle.*
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.opencsv.CSVReader
 import kotlinx.coroutines.launch
 
-class PlaceViewModel(context: Context) : ViewModel() {
-    private val placeDao = AppDatabase.getDatabase(context).placeDao()
-    private val repository: PlaceRepository = PlaceRepository(placeDao)
-
+class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     val isUpdated = MutableLiveData(false)
     val allPlaces = repository.allPlaces.asLiveData()
     val recommendedPlaces = MutableLiveData<List<SimplePlace>>()
@@ -116,5 +109,15 @@ class PlaceViewModel(context: Context) : ViewModel() {
             }
             isUpdated.postValue(true)
         }
+    }
+}
+
+class PlaceViewModelFactory(private val repository: PlaceRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(PlaceViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return PlaceViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

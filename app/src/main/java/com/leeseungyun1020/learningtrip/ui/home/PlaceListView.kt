@@ -67,24 +67,28 @@ fun PlaceListViewPreview() {
                 "1",
                 "관광지1",
                 "14",
+                "주소",
                 "http://tong.visitkorea.or.kr/cms/resource/47/2678647_image2_1.jpg"
             ),
             SimplePlace(
                 "2",
                 "관광지2",
                 "14",
+                "주소",
                 "http://tong.visitkorea.or.kr/cms/resource/47/2678647_image2_1.jpg"
             ),
             SimplePlace(
                 "3",
                 "관광지3",
                 "14",
+                "주소",
                 "http://tong.visitkorea.or.kr/cms/resource/47/2678647_image2_1.jpg"
             ),
             SimplePlace(
                 "4",
                 "관광지4",
                 "14",
+                "주소",
                 "http://tong.visitkorea.or.kr/cms/resource/47/2678647_image2_1.jpg"
             ),
         ),

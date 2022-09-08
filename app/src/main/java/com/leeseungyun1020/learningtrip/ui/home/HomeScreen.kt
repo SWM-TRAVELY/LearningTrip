@@ -4,8 +4,10 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -28,6 +30,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.Keyword
+import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
@@ -97,140 +100,115 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
             )
         }, bodyContent = {
             if (searchText.isEmpty()) {
-                // Keyword List
-                Text(
-                    modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                    text = stringResource(id = R.string.title_recommend_keyword),
-                    color = Gray2, style = MaterialTheme.typography.bodyLarge,
-                )
-                KeywordListView(
-                    modifier = Modifier.padding(top = 8.dp),
-                    innerStartPadding = 16.dp,
-                    keywordList = listOf(
-                        Keyword(
-                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                            "신라"
-                        ),
-                        Keyword(
-                            "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
-                            "백제"
-                        ),
-                        Keyword(
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
-                            "액티비티"
-                        ),
-                        Keyword(
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
-                            "체험"
-                        ),
-                        Keyword(
-                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                            "키워드5"
-                        ),
-                        Keyword(
-                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                            "키워드6"
-                        ),
+                Column(
+                    modifier = Modifier.verticalScroll(
+                        rememberScrollState()
                     )
                 ) {
-                    navController.navigate("${Screen.Search.root}/${it.name}")
-                }
-
-                // Introduce(Banner) Image
-                HorizontalPager(
-                    count = 2,
-                    modifier = Modifier
-                        .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                        .height(104.dp)
-                        .background(color = Gray3)
-                ) { page ->
+                    // Keyword List
                     Text(
-                        text = "Learning Trip - Page: $page",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                        text = stringResource(id = R.string.title_recommend_keyword),
+                        color = Gray2, style = MaterialTheme.typography.bodyLarge,
                     )
-                }
-
-                // Place List
-                Text(
-                    modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                    text = stringResource(id = R.string.title_recommend_place),
-                    color = Gray2, style = MaterialTheme.typography.bodyLarge,
-                )
-                PlaceListView(
-                    modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
-                    innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
-                    placeList = recommendedPlaces ?: listOf(),
-                ) {
-                    navController.navigate("${Screen.Place.root}/${it.id}")
-                }
-
-                // Course List
-                Text(
-                    modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                    text = stringResource(id = R.string.title_recommend_course),
-                    color = Gray2, style = MaterialTheme.typography.bodyLarge,
-                )
-
-                val courseList = listOf(
-                    Course(
-                        "1", "코스1", listOf(
-                            SimplePlace(
-                                1,
-                                "관광지1",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
+                    KeywordListView(
+                        modifier = Modifier.padding(top = 8.dp),
+                        innerStartPadding = 16.dp,
+                        keywordList = listOf(
+                            Keyword(
+                                "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                                "신라"
                             ),
-                            SimplePlace(
-                                2,
-                                "관광지2",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
+                            Keyword(
+                                "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
+                                "백제"
+                            ),
+                            Keyword(
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
+                                "액티비티"
+                            ),
+                            Keyword(
+                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
+                                "체험"
+                            ),
+                            Keyword(
+                                "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                                "키워드5"
+                            ),
+                            Keyword(
+                                "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+                                "키워드6"
                             ),
                         )
-                    ),
-                    Course(
-                        "2", "코스2", listOf(
-                            SimplePlace(
-                                3,
-                                "관광지3",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
-                            SimplePlace(
-                                4,
-                                "관광지4",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
-                            SimplePlace(
-                                5,
-                                "관광지5",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
-                            SimplePlace(
-                                6,
-                                "관광지6",
-                                "14",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54"
-                            ),
-                        )
-                    )
-                )
+                    ) {
+                        navController.navigate("${Screen.Search.root}/${it.name}")
+                    }
 
-                val startIndex = Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2 % courseList.size)
-                HorizontalPager(
-                    count = Int.MAX_VALUE,
-                    contentPadding = PaddingValues(horizontal = 24.dp),
-                    itemSpacing = 8.dp,
-                    state = rememberPagerState(initialPage = startIndex),
-                ) { idx ->
-                    val page = idx % courseList.size
-                    CourseBox(course = courseList[page], modifier = Modifier.clickable {
-                        navController.navigate("${Screen.Course.root}/${courseList[page].id}")
-                    })
+                    // Introduce(Banner) Image
+                    HorizontalPager(
+                        count = 2,
+                        modifier = Modifier
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                            .height(104.dp)
+                            .background(color = Gray3)
+                    ) { page ->
+                        Text(
+                            text = "Learning Trip - Page: $page",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+
+                    // Place List
+                    Text(
+                        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                        text = stringResource(id = R.string.title_recommend_place),
+                        color = Gray2, style = MaterialTheme.typography.bodyLarge,
+                    )
+                    PlaceListView(
+                        modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                        innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
+                        placeList = recommendedPlaces ?: listOf(),
+                    ) {
+                        navController.navigate("${Screen.Place.root}/${it.id}")
+                    }
+
+                    // Course List
+                    Text(
+                        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                        text = stringResource(id = R.string.title_recommend_course),
+                        color = Gray2, style = MaterialTheme.typography.bodyLarge,
+                    )
+
+                    val courseList = listOf(
+                        SimpleCourse(
+                            id = 1,
+                            name = "코스1",
+                            imageURL = "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34",
+                            place1 = "관광지1", place2 = "관광지2", place3 = "관광지3"
+                        ),
+                        SimpleCourse(
+                            id = 2,
+                            name = "코스2",
+                            imageURL = "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54",
+                            place1 = "관광지4", place2 = "관광지5", place3 = null
+                        ),
+                    )
+
+                    val startIndex = Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2 % courseList.size)
+                    HorizontalPager(
+                        count = Int.MAX_VALUE,
+                        contentPadding = PaddingValues(horizontal = 24.dp),
+                        itemSpacing = 8.dp,
+                        state = rememberPagerState(initialPage = startIndex),
+                    ) { idx ->
+                        val page = idx % courseList.size
+                        CourseBox(course = courseList[page], modifier = Modifier.clickable {
+                            navController.navigate("${Screen.Course.root}/${courseList[page].id}")
+                        })
+                    }
                 }
+
             } else {
                 BackHandler {
                     searchText = ""

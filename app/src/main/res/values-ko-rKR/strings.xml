@@ -43,4 +43,15 @@
     <string name="title_related_heritage">관련 문화재</string>
     <string name="title_similar_place">유사 관광지</string>
     <string name="title_nearby_place">주변 관광지</string>
+    <string name="action_add">추가</string>
+    <string name="title_course">코스 요약</string>
+    <string name="desc_place">관광지</string>
+    <string name="action_update_course">코스 수정</string>
+    <string name="title_update_course">코스 수정</string>
+    <string name="action_save_course">코스 저장</string>
+    <string name="action_swap">변경</string>
+    <string name="title_add_place">관광지 추가</string>
+    <string name="title_new_course">코스 이름을 입력하세요</string>
+    <string name="title_course_error">오류</string>
+    <string name="action_info">정보 보기</string>
 </resources>

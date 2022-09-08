@@ -28,31 +28,41 @@ data class Place(
     //val heritageList: List<SimpleHeritage>,
 )
 
-data class SimplePlace(val id: Int, val name: String, val typeId: Int, val imageURL: String) {
-    constructor(id: String, name: String, typeId: String, imageURL: String) : this(
+data class SimplePlace(
+    val id: Int,
+    val name: String,
+    val typeId: Int,
+    val address: String,
+    val imageURL: String?,
+    val overview: String? = null,
+) {
+    constructor(id: String, name: String, typeId: String, address: String, imageURL: String) : this(
         id.toInt(),
         name,
         typeId.toInt(),
+        address,
         imageURL
     )
 
-    constructor(id: Int, name: String, typeId: String, imageURL: String) : this(
+    constructor(id: Int, name: String, typeId: String, address: String, imageURL: String) : this(
         id,
         name,
         typeId.toInt(),
+        address,
         imageURL
     )
 
-    constructor(id: String, name: String, typeId: Int, imageURL: String) : this(
+    constructor(id: String, name: String, typeId: Int, address: String, imageURL: String) : this(
         id.toInt(),
         name,
         typeId,
+        address,
         imageURL
     )
 }
 
 fun Place.toSimplePlace(): SimplePlace {
-    return SimplePlace(id, name, typeId, imageURL)
+    return SimplePlace(id, name, typeId, address, imageURL)
 }
 
 /*

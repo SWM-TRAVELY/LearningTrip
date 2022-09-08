@@ -3,6 +3,7 @@ package com.leeseungyun1020.learningtrip
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,16 +25,24 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.leeseungyun1020.learningtrip.data.AppDatabase
+import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
 class MainActivity : ComponentActivity() {
+    val database by lazy { AppDatabase.getDatabase(this) }
+    val repository by lazy { PlaceRepository(database.placeDao()) }
+    val placeViewModel: PlaceViewModel by viewModels {
+        PlaceViewModelFactory(repository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val placeViewModel = PlaceViewModel(this)
         placeViewModel.updatePlaceData(this)
         setContent {
             MainScreen(placeViewModel)
@@ -136,19 +145,6 @@ fun CategoryScreen(navController: NavController) {
 }
 
 @Composable
-fun StoryScreen(navController: NavController) {
-    Column {
-        Text(text = "Story")
-        Button(onClick = { navController.navigate("${Screen.AddCourse.root}/1") }) {
-            Text(text = "Add Course 1")
-        }
-        Button(onClick = { navController.navigate("${Screen.Course.root}/11") }) {
-            Text(text = "Course 11")
-        }
-    }
-}
-
-@Composable
 fun NearbyScreen(navController: NavController) {
     Text(text = "Nearby")
     CircularProgressIndicator()
@@ -197,29 +193,6 @@ fun AddReviewScreen(navController: NavController, placeId: String) {
 @Composable
 fun HeritageScreen(navController: NavController, id: String) {
     Text(text = "heritage $id")
-}
-
-@Composable
-fun AddCourseScreen(navController: NavController, id: String) {
-    Column {
-        Text(text = "add course $id")
-        Button(onClick = {
-            navController.popBackStack()
-        }) {
-            Text(text = "Save Course $id")
-        }
-    }
-}
-
-@Composable
-fun CourseScreen(navController: NavController, id: String) {
-    Column {
-        Text(text = "course $id")
-        Button(onClick = { navController.navigate("${Screen.AddCourse.root}/${id}") }) {
-            Text(text = "Add Course $id")
-        }
-    }
-
 }
 
 @Composable
