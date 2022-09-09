@@ -171,11 +171,6 @@ fun MyScreen(navController: NavController) {
 }
 
 @Composable
-fun SignInScreen(navController: NavController) {
-    Text(text = "SignIn")
-}
-
-@Composable
 fun SignUpScreen(navController: NavController) {
     Text(text = "SignUp")
 }

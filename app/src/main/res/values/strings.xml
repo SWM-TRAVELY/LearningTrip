@@ -53,4 +53,9 @@
     <string name="title_new_course">Enter new course name</string>
     <string name="title_course_error">Error</string>
     <string name="action_info">Show information</string>
+    <string name="hello">Hello :)</string>
+    <string name="action_kakao_login">Login with Kakao</string>
+    <string name="action_naver_login">Log in with Naver</string>
+    <string name="action_email_login">Login with email</string>
+    <string name="action_email_signup">Signup with email</string>
 </resources>

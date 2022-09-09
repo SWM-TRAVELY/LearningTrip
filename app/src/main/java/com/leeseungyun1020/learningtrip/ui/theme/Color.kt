@@ -14,3 +14,6 @@ val Gray1 = Color(0xFF000000)
 val Gray2 = Color(0xFF757575)
 val Gray3 = Color(0xFFB1B1B1)
 val Gray4 = Color(0xFFDFDFDF)
+
+val KakaoYellow = Color(0xFFFEE500)
+val naverGreen = Color(0xFF03C75A)

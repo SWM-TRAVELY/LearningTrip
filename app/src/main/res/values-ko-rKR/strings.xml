@@ -54,4 +54,9 @@
     <string name="title_new_course">코스 이름을 입력하세요</string>
     <string name="title_course_error">오류</string>
     <string name="action_info">정보 보기</string>
+    <string name="hello">반갑습니다 :)</string>
+    <string name="action_kakao_login">카카오 로그인</string>
+    <string name="action_naver_login">네이버 로그인</string>
+    <string name="action_email_login">이메일로 로그인</string>
+    <string name="action_email_signup">이메일로 가입</string>
 </resources>
