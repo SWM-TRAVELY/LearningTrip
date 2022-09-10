@@ -10,7 +10,7 @@ val PrimaryDark = Color(0xFF569AFF)
 val SecondaryDark = Color(0xFFF8F8FF)
 val TertiaryDark = Color(0xFFFCED9E)
 
-val Gray1 = Color(0xFF000000)
+val Gray1 = Color(0xFFF7F8FA)
 val Gray2 = Color(0xFF757575)
 val Gray3 = Color(0xFFB1B1B1)
 val Gray4 = Color(0xFFDFDFDF)
