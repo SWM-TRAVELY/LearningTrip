@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -33,31 +34,16 @@ import com.leeseungyun1020.learningtrip.viewmodel.SignUpViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.VisualTransformation
+import com.leeseungyun1020.learningtrip.ui.common.SimpleTitleScaffold
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = viewModel()) {
-    Scaffold(topBar = {
-        Column {
-            Text(
-                modifier = Modifier
-                    .height(45.dp)
-                    .fillMaxWidth()
-                    .padding(top = 11.dp),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyLarge,
-                text = stringResource(id = R.string.app_name)
-            )
-            Divider()
-        }
-    }) {
+    SimpleTitleScaffold(title = stringResource(id = R.string.app_name)) {
         var passwordVisible by rememberSaveable { mutableStateOf(false) }
         val focusManager = LocalFocusManager.current
         Column {
             Text(
-                modifier = Modifier
-                    .padding(it)
-                    .padding(top = 35.dp, start = 16.dp, end = 16.dp),
+                modifier = Modifier.padding(top = 35.dp, start = 16.dp, end = 16.dp),
                 text = stringResource(id = R.string.title_signup),
                 style = MaterialTheme.typography.titleLarge
             )
