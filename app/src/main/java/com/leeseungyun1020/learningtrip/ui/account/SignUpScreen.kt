@@ -208,12 +208,15 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = view
                 )
             }
 
-            Button(modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 48.dp, start = 16.dp, end = 16.dp),
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 48.dp, start = 16.dp, end = 16.dp),
                 onClick = {
                     viewModel.onSignUp()
-                }) {
+                },
+                shape = RoundedCornerShape(10.dp),
+            ) {
                 Text(text = stringResource(id = R.string.title_signup))
             }
         }
