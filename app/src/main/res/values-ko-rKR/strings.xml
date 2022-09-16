@@ -74,4 +74,8 @@
     <string name="error_password">비밀번호는 8자 이상이어야 합니다.</string>
     <string name="error_nickname">닉네임은 2자 이상이어야 합니다.</string>
     <string name="error_phone">전화번호는 10자 이상이어야 합니다.</string>
+    <string name="title_permission">권한 확인</string>
+    <string name="title_location_permission">위치 권한 설정</string>
+    <string name="desc_location_permission">주변 관광지 추천, 스티커 수집 기능을 위해 위치 권한 사용이 필요합니다.</string>
+    <string name="action_allow_permission">권한 허용</string>
 </resources>

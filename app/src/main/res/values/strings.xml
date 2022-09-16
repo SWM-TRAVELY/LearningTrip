@@ -73,4 +73,8 @@
     <string name="error_password">The password must be at least 8 characters long.</string>
     <string name="error_nickname">The nickname must be at least 2 characters long.</string>
     <string name="error_phone">The phone must be at least 10 characters long.</string>
+    <string name="title_permission">Check permission</string>
+    <string name="title_location_permission">Set location permission</string>
+    <string name="desc_location_permission">Location permission is required to recommend nearby tourist spots and collect stickers.</string>
+    <string name="action_allow_permission">Allow permission</string>
 </resources>
