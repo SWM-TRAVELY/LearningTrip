@@ -171,21 +171,6 @@ fun MyScreen(navController: NavController) {
 }
 
 @Composable
-fun SignInScreen(navController: NavController) {
-    Text(text = "SignIn")
-}
-
-@Composable
-fun SignUpScreen(navController: NavController) {
-    Text(text = "SignUp")
-}
-
-@Composable
-fun PermissionScreen(navController: NavController) {
-    Text(text = "permission")
-}
-
-@Composable
 fun AddReviewScreen(navController: NavController, placeId: String) {
     Text(text = "add review")
 }
