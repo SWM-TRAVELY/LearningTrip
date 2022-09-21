@@ -151,26 +151,6 @@ fun NearbyScreen(navController: NavController) {
 }
 
 @Composable
-fun MyScreen(navController: NavController) {
-
-    Column {
-        Text(text = "My")
-        Button(onClick = { navController.navigate(Screen.Account.route) }) {
-            Text(text = "Account")
-        }
-        Button(onClick = { navController.navigate(Screen.MyReview.route) }) {
-            Text(text = "My Review")
-        }
-        Button(onClick = { navController.navigate(Screen.Collection.route) }) {
-            Text(text = "Collection")
-        }
-        Button(onClick = { navController.navigate(Screen.NoticeList.route) }) {
-            Text(text = "Notice List")
-        }
-    }
-}
-
-@Composable
 fun AddReviewScreen(navController: NavController, placeId: String) {
     Text(text = "add review")
 }
