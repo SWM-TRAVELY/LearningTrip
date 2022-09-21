@@ -77,4 +77,9 @@
     <string name="title_location_permission">Set location permission</string>
     <string name="desc_location_permission">Location permission is required to recommend nearby tourist spots and collect stickers.</string>
     <string name="action_allow_permission">Allow permission</string>
+    <string name="title_my">My Page</string>
+    <string name="action_detail">Detail</string>
+    <string name="title_collection">Collections</string>
+    <string name="title_review">My reviews</string>
+    <string name="title_notice">Notice</string>
 </resources>

@@ -78,4 +78,9 @@
     <string name="title_location_permission">위치 권한 설정</string>
     <string name="desc_location_permission">주변 관광지 추천, 스티커 수집 기능을 위해 위치 권한 사용이 필요합니다.</string>
     <string name="action_allow_permission">권한 허용</string>
+    <string name="title_my">마이페이지</string>
+    <string name="action_detail">자세히</string>
+    <string name="title_collection">수집함</string>
+    <string name="title_review">내 리뷰</string>
+    <string name="title_notice">공지사항</string>
 </resources>
