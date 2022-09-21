@@ -1,11 +1,11 @@
 package com.leeseungyun1020.learningtrip.ui.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.NavigateNext
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +33,9 @@ fun NameTab(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.padding(horizontal = 16.dp),
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+            .clickable { onMoveClicked() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
@@ -71,12 +73,10 @@ fun NameTab(
             Text(text = email, style = MaterialTheme.typography.labelSmall.copy(color = Gray3))
         }
 
-        IconButton(onClick = onMoveClicked) {
             Icon(
                 imageVector = Icons.Default.NavigateNext,
                 contentDescription = stringResource(id = R.string.action_detail)
             )
-        }
     }
 }
 

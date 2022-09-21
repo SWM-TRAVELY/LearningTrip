@@ -2,6 +2,7 @@ package com.leeseungyun1020.learningtrip.ui.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +27,9 @@ fun MyScreen(navController: NavController) {
                 name = "이승윤",
                 email = "ileilliat@gmail.com",
                 imageURL = "https://avatars.githubusercontent.com/u/34941061",
-                onMoveClicked = { navController.navigate(Screen.Account.route) })
+                onMoveClicked = { navController.navigate(Screen.Account.route) },
+                modifier = Modifier.padding(top = 20.dp, bottom = 13.dp)
+            )
 
             Divider(thickness = 6.dp)
 
