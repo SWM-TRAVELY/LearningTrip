@@ -83,4 +83,9 @@
     <string name="title_collection">수집함</string>
     <string name="title_review">내 리뷰</string>
     <string name="title_notice">공지사항</string>
+    <string name="action_move">이동</string>
+    <string name="title_edit_info">나의 정보 수정</string>
+    <string name="title_change_password">비밀번호 변경</string>
+    <string name="action_signout">로그아웃</string>
+    <string name="action_unregister">회원 탈퇴</string>
 </resources>

@@ -161,11 +161,6 @@ fun HeritageScreen(navController: NavController, id: String) {
 }
 
 @Composable
-fun AccountScreen(navController: NavController) {
-    Text(text = "account")
-}
-
-@Composable
 fun MyReviewScreen(navController: NavController) {
     Column {
         Text(text = "myReview")

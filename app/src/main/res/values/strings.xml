@@ -82,4 +82,9 @@
     <string name="title_collection">Collections</string>
     <string name="title_review">My reviews</string>
     <string name="title_notice">Notice</string>
+    <string name="action_move">Move</string>
+    <string name="title_edit_info">Edit my information</string>
+    <string name="title_change_password">Change password</string>
+    <string name="action_signout">Sign out</string>
+    <string name="action_unregister">Unregister</string>
 </resources>

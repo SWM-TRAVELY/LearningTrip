@@ -15,6 +15,7 @@ import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.permission.PermissionScreen
 import com.leeseungyun1020.learningtrip.ui.place.PlaceScreen
 import com.leeseungyun1020.learningtrip.ui.search.SearchScreen
+import com.leeseungyun1020.learningtrip.ui.settings.AccountScreen
 import com.leeseungyun1020.learningtrip.ui.settings.MyScreen
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
