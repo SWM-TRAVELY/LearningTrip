@@ -152,23 +152,12 @@ fun NearbyScreen(navController: NavController) {
 
 @Composable
 fun AddReviewScreen(navController: NavController, placeId: String) {
-    Text(text = "add review")
+    Text(text = "add review $placeId")
 }
 
 @Composable
 fun HeritageScreen(navController: NavController, id: String) {
     Text(text = "heritage $id")
-}
-
-@Composable
-fun MyReviewScreen(navController: NavController) {
-    Column {
-        Text(text = "myReview")
-        Button(onClick = { navController.navigate("${Screen.Place.root}/101") }) {
-            Text(text = "Place 101 Review")
-        }
-    }
-
 }
 
 @Composable

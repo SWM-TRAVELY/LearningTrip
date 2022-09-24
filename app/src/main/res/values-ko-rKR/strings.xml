@@ -88,4 +88,11 @@
     <string name="title_change_password">비밀번호 변경</string>
     <string name="action_signout">로그아웃</string>
     <string name="action_unregister">회원 탈퇴</string>
+    <string name="title_editable_review">작성 가능한 리뷰</string>
+    <string name="title_written_review">작성한 리뷰</string>
+    <string name="title_my_review">내 리뷰</string>
+    <string name="action_write_review">리뷰 쓰기</string>
+    <string name="action_delete_review">삭제</string>
+    <string name="action_cancel">취소</string>
+    <string name="desc_delete_review">리뷰를 삭제하시겠습니까?</string>
 </resources>
