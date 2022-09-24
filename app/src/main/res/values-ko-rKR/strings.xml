@@ -95,4 +95,9 @@
     <string name="action_delete_review">삭제</string>
     <string name="action_cancel">취소</string>
     <string name="desc_delete_review">리뷰를 삭제하시겠습니까?</string>
+    <string name="title_add_review">리뷰 작성</string>
+    <string name="desc_add_review">이 관광지를 추천하시겠어요?</string>
+    <string name="hint_add_review">관광지에 대한 솔직한 리뷰를 남겨주세요</string>
+    <string name="desc_camera">카메라</string>
+    <string name="action_add_review">리뷰 작성</string>
 </resources>

@@ -94,4 +94,9 @@
     <string name="action_delete_review">Delete review</string>
     <string name="action_cancel">Cancel</string>
     <string name="desc_delete_review">Are you sure to delete the review?</string>
+    <string name="title_add_review">Add review</string>
+    <string name="desc_add_review">Do you recommend this place?</string>
+    <string name="hint_add_review">Please leave a review about the place</string>
+    <string name="desc_camera">Camera</string>
+    <string name="action_add_review">Add review</string>
 </resources>

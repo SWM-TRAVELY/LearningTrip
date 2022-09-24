@@ -151,11 +151,6 @@ fun NearbyScreen(navController: NavController) {
 }
 
 @Composable
-fun AddReviewScreen(navController: NavController, placeId: String) {
-    Text(text = "add review $placeId")
-}
-
-@Composable
 fun HeritageScreen(navController: NavController, id: String) {
     Text(text = "heritage $id")
 }
