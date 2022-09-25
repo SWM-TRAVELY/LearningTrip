@@ -77,4 +77,26 @@
     <string name="title_location_permission">Set location permission</string>
     <string name="desc_location_permission">Location permission is required to recommend nearby tourist spots and collect stickers.</string>
     <string name="action_allow_permission">Allow permission</string>
+    <string name="title_my">My Page</string>
+    <string name="action_detail">Detail</string>
+    <string name="title_collection">Collections</string>
+    <string name="title_review">My reviews</string>
+    <string name="title_notice">Notice</string>
+    <string name="action_move">Move</string>
+    <string name="title_edit_info">Edit my information</string>
+    <string name="title_change_password">Change password</string>
+    <string name="action_signout">Sign out</string>
+    <string name="action_unregister">Unregister</string>
+    <string name="title_editable_review">Editable Reviews</string>
+    <string name="title_written_review">Written Reviews</string>
+    <string name="title_my_review">My review</string>
+    <string name="action_write_review">Write review</string>
+    <string name="action_delete_review">Delete review</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="desc_delete_review">Are you sure to delete the review?</string>
+    <string name="title_add_review">Add review</string>
+    <string name="desc_add_review">Do you recommend this place?</string>
+    <string name="hint_add_review">Please leave a review about the place</string>
+    <string name="desc_camera">Camera</string>
+    <string name="action_add_review">Add review</string>
 </resources>
