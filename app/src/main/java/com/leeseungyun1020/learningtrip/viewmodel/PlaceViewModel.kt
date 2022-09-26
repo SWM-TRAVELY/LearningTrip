@@ -2,7 +2,10 @@ package com.leeseungyun1020.learningtrip.viewmodel
 
 import android.content.Context
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.SimplePlace
@@ -11,11 +14,10 @@ import kotlinx.coroutines.launch
 
 class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     val isUpdated = MutableLiveData(false)
-    val allPlaces = repository.allPlaces.asLiveData()
-    val recommendedPlaces = MutableLiveData<List<SimplePlace>>()
+    val recommendedPlaces = repository.recommededPlaces
     val filteredPlaces = MutableLiveData<List<SimplePlace>>()
     val filteredPlaceNames = MutableLiveData<List<String>>()
-    val placeById = MutableLiveData<Place>()
+    val placeById = repository.searchedPlace
 
     init {
         viewModelScope.launch {
@@ -25,11 +27,11 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     }
 
     fun recommend() = viewModelScope.launch {
-        recommendedPlaces.postValue(repository.recommend())
+        repository.recommend()
     }
 
     fun placeById(id: Int) = viewModelScope.launch {
-        placeById.postValue(repository.placeById(id))
+        repository.placeById(id)
     }
 
     fun placeByKeyword(keyword: String) = viewModelScope.launch {
