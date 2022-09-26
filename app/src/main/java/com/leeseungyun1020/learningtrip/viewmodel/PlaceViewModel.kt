@@ -8,15 +8,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.Place
+import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 import com.leeseungyun1020.learningtrip.model.SimplePlace
+import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import com.opencsv.CSVReader
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     val isUpdated = MutableLiveData(false)
     val recommendedPlaces = repository.recommededPlaces
     val filteredPlaces = MutableLiveData<List<SimplePlace>>()
     val filteredPlaceNames = MutableLiveData<List<String>>()
+    val relatedHeritages = MutableLiveData<List<SimpleHeritage>>()
     val placeById = repository.searchedPlace
 
     init {
@@ -110,6 +118,29 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
                 apply()
             }
             isUpdated.postValue(true)
+        }
+    }
+
+    fun loadRelatedHeritages(placeId: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            RetrofitClient.heritageService.getRelatedHeritage(placeId)
+                .enqueue(object : Callback<List<SimpleHeritage>> {
+                    override fun onFailure(call: Call<List<SimpleHeritage>>, t: Throwable) {
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<SimpleHeritage>>,
+                        response: Response<List<SimpleHeritage>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                relatedHeritages.postValue(body)
+                            }
+                        }
+                    }
+                })
         }
     }
 }

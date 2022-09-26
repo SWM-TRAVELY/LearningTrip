@@ -23,7 +23,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.PlaceReview
-import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
@@ -34,10 +33,13 @@ import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 @Composable
 fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id: String) {
     val place by placeViewModel.placeById.observeAsState()
+    val relatedHeritages by placeViewModel.relatedHeritages.observeAsState()
     var isDescriptionOpen by remember { mutableStateOf(false) }
     var isReviewOpen by remember { mutableStateOf(false) }
-    if (id.isDigitsOnly())
+    if (id.isDigitsOnly()) {
         placeViewModel.placeById(id.toInt())
+        placeViewModel.loadRelatedHeritages(id.toInt())
+    }
     LearningTripScaffold(
         title = stringResource(id = R.string.app_name),
         setDisplayHomeAsUpEnabled = true,
@@ -108,38 +110,28 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                                     .background(color = Gray4)
                             )
 
-                            Text(
-                                text = stringResource(id = R.string.title_related_heritage),
-                                modifier = Modifier.padding(top = 10.dp, start = 16.dp),
-                                style = MaterialTheme.typography.bodyLarge
-                            )
+                            val heritages = relatedHeritages ?: listOf()
+                            if (heritages.isNotEmpty()) {
+                                Text(
+                                    text = stringResource(id = R.string.title_related_heritage),
+                                    modifier = Modifier.padding(top = 10.dp, start = 16.dp),
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
 
-                            val heritages = listOf(
-                                SimpleHeritage(
-                                    id = 1,
-                                    name = "다보탑",
-                                    imageURL = "http://www.cha.go.kr/unisearch/images/national_treasure/1612673.jpg"
-                                ),
-                                SimpleHeritage(
-                                    id = 2,
-                                    name = "석가탑",
-                                    imageURL = "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021070210514100.jpg"
-                                ),
-                            )
-
-                            LazyRow(modifier = Modifier.padding(top = 10.dp)) {
-                                items(count = heritages.size, key = { heritages[it].id }) {
-                                    val modifier = if (it == 0)
-                                        Modifier.padding(start = 16.dp)
-                                    else Modifier
-                                    HeritageBox(
-                                        modifier = modifier
-                                            .padding(end = 8.dp)
-                                            .width(120.dp)
-                                            .height(150.dp)
-                                            .clickable { navController.navigate("${Screen.Heritage.root}/${heritages[it].id}") },
-                                        simpleHeritage = heritages[it]
-                                    )
+                                LazyRow(modifier = Modifier.padding(top = 10.dp)) {
+                                    items(count = heritages.size, key = { heritages[it].id }) {
+                                        val modifier = if (it == 0)
+                                            Modifier.padding(start = 16.dp)
+                                        else Modifier
+                                        HeritageBox(
+                                            modifier = modifier
+                                                .padding(end = 8.dp)
+                                                .width(120.dp)
+                                                .height(150.dp)
+                                                .clickable { navController.navigate("${Screen.Heritage.root}/${heritages[it].id}") },
+                                            simpleHeritage = heritages[it]
+                                        )
+                                    }
                                 }
                             }
 

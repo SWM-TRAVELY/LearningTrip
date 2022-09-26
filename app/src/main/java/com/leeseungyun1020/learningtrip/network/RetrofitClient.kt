@@ -20,4 +20,8 @@ object RetrofitClient {
     val homeService: HomeService by lazy {
         retrofit.create(HomeService::class.java)
     }
+
+    val heritageService: HeritageService by lazy {
+        retrofit.create(HeritageService::class.java)
+    }
 }
