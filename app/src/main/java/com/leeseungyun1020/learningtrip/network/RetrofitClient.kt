@@ -13,7 +13,11 @@ object RetrofitClient {
             .build()
     }
 
-    val placeService by lazy {
+    val placeService: PlaceService by lazy {
         retrofit.create(PlaceService::class.java)
+    }
+
+    val homeService: HomeService by lazy {
+        retrofit.create(HomeService::class.java)
     }
 }

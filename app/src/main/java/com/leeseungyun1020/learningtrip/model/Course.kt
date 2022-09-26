@@ -1,7 +1,6 @@
 package com.leeseungyun1020.learningtrip.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 class Course(
     val id: Int,
@@ -10,10 +9,16 @@ class Course(
 )
 
 data class SimpleCourse(
+    @SerializedName("id")
     val id: Int,
+    @SerializedName("name")
     val name: String,
+    @SerializedName("imageURL")
     val imageURL: String?,
+    @SerializedName("place1")
     val place1: String?,
+    @SerializedName("place2")
     val place2: String?,
+    @SerializedName("place3")
     val place3: String?,
 )
