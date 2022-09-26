@@ -42,7 +42,7 @@ fun PlaceBox(
                 .clip(RoundedCornerShape(5.dp))
         )
 
-        Text(text = simplePlace.name, style = MaterialTheme.typography.bodyMedium)
+        Text(text = simplePlace.name ?: "", style = MaterialTheme.typography.bodyMedium)
     }
 }
 

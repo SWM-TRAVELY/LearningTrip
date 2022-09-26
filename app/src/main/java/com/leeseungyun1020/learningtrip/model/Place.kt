@@ -2,37 +2,60 @@ package com.leeseungyun1020.learningtrip.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity
 data class Place(
+    @SerializedName("id")
     @PrimaryKey val id: Int,
-    val name: String,
-    val typeId: Int,
-    val address: String,
-    val chkInTextbook: Boolean,
-    val latitude: Double,
-    val longitude: Double,
-    val tel: String,
-    val overview: String,
-    val imageURL: String,
-    val restDate: String,
-    val useTime: String,
-    val chkParking: Boolean,
-    val chkBabyCarriage: Boolean,
-    val chkPets: Boolean,
-    val ageAvailable: String,
-    val expGuide: String,
-    val chkWorldCultural: Boolean,
-    val chkWorldNatural: Boolean,
-    val chkWorldRecord: Boolean,
-    //val heritageList: List<SimpleHeritage>,
+    @SerializedName("name")
+    val name: String?,
+    val typeId: Int?,
+    @SerializedName("address")
+    val address: String?,
+    @SerializedName("textbook")
+    val chkInTextbook: Boolean?,
+    @SerializedName("latitude")
+    val latitude: Double?,
+    @SerializedName("longitude")
+    val longitude: Double?,
+    @SerializedName("tel")
+    val tel: String?,
+    @SerializedName("description")
+    val overview: String?,
+    @SerializedName("imageURL")
+    val imageURL: String?,
+    @SerializedName("restDate")
+    val restDate: String?,
+    @SerializedName("useTime")
+    val useTime: String?,
+    @SerializedName("parking")
+    val chkParking: Boolean?,
+    @SerializedName("babyCarriage")
+    val chkBabyCarriage: Boolean?,
+    @SerializedName("pet")
+    val chkPets: Boolean?,
+    @SerializedName("experienceAge")
+    val ageAvailable: String?,
+    @SerializedName("experienceInfo")
+    val expGuide: String?,
+    @SerializedName("worldCulturalHeritage")
+    val chkWorldCultural: Boolean?,
+    @SerializedName("worldNaturalHeritage")
+    val chkWorldNatural: Boolean?,
+    @SerializedName("worldRecordHeritage")
+    val chkWorldRecord: Boolean?,
 )
 
 data class SimplePlace(
+    @SerializedName("id")
     val id: Int,
-    val name: String,
-    val typeId: Int,
-    val address: String,
+    @SerializedName("name")
+    val name: String?,
+    val typeId: Int?,
+    @SerializedName("province")
+    val address: String?,
+    @SerializedName("imageURL")
     val imageURL: String?,
     val overview: String? = null,
 ) {
