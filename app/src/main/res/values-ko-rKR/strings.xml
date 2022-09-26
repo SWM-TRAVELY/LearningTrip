@@ -100,4 +100,5 @@
     <string name="hint_add_review">관광지에 대한 솔직한 리뷰를 남겨주세요</string>
     <string name="desc_camera">카메라</string>
     <string name="action_add_review">리뷰 작성</string>
+    <string name="desc_banner">배너</string>
 </resources>
