@@ -20,10 +20,9 @@ class PlaceRepository(private val placeDao: PlaceDao) {
     suspend fun recommend() {
         withContext(Dispatchers.IO) {
             val dbData = placeDao.recommendedPlace()
-            RetrofitClient.placeService.getRecommendPlaceList()
+            RetrofitClient.homeService.getRecommendPlace()
                 .enqueue(object : Callback<List<SimplePlace>> {
                     override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
-                        Log.d("LSYD", "onFailure: recommend $call $t")
                         recommededPlaces.postValue(dbData)
                     }
 
@@ -33,9 +32,8 @@ class PlaceRepository(private val placeDao: PlaceDao) {
                     ) {
                         if (response.isSuccessful && response.code() == 200) {
                             val body = response.body()
-                            Log.d("LSYD", "onResponse: recommend $body")
                             if (body != null) {
-                                recommededPlaces.postValue(body ?: dbData)
+                                recommededPlaces.postValue(body)
                             }
                         }
                     }
@@ -61,7 +59,7 @@ class PlaceRepository(private val placeDao: PlaceDao) {
                             val body = response.body()
                             Log.d("LSYD", "onResponse: placeById $body")
                             if (body != null) {
-                                searchedPlace.postValue(body ?: dbData)
+                                searchedPlace.postValue(body)
                             }
                         }
                     }

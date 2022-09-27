@@ -11,9 +11,6 @@ interface PlaceService {
         @Path("id") id: Int
     ): retrofit2.Call<Place>
 
-    @GET("/place/recommend")
-    fun getRecommendPlaceList(): retrofit2.Call<List<SimplePlace>>
-
     @GET("/place/related/{id}")
     fun getRelatedPlace(
         @Path("id") id: Int
