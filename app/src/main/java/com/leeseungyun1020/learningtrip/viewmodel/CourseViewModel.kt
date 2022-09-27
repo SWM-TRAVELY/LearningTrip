@@ -1,11 +1,16 @@
 package com.leeseungyun1020.learningtrip.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
-import com.leeseungyun1020.learningtrip.model.SimplePlace
+import com.leeseungyun1020.learningtrip.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class CourseViewModel() : ViewModel() {
+class CourseViewModel : ViewModel() {
 
     private val _courseList = MutableLiveData<List<SimpleCourse>>()
     val courseList: LiveData<List<SimpleCourse>>
@@ -16,34 +21,49 @@ class CourseViewModel() : ViewModel() {
         get() = _course
 
     init {
-        _courseList.value = listOf(
-            SimpleCourse(
-                id = 1,
-                name = "코스1",
-                imageURL = "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34",
-                place1 = "관광지1", place2 = "관광지2", place3 = "관광지3"
-            ),
-        )
+        loadRecommendedCourseList()
+        //TODO: 사용자 추가 제거 가능하게 변경
     }
 
     fun loadCourseById(id: Int) {
-        _course.value = Course(
-            id, "코스1", listOf(
-                SimplePlace(
-                    1,
-                    "관광지1",
-                    "14",
-                    "주소",
-                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                ),
-                SimplePlace(
-                    2,
-                    "관광지2",
-                    "14",
-                    "주소",
-                    "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34"
-                ),
-            )
-        )
+        RetrofitClient.courseService.getCourse(id)
+            .enqueue(object : Callback<Course> {
+                override fun onFailure(call: Call<Course>, t: Throwable) {
+
+                }
+
+                override fun onResponse(
+                    call: Call<Course>,
+                    response: Response<Course>
+                ) {
+                    if (response.isSuccessful && response.code() == 200) {
+                        val body = response.body()
+                        if (body != null) {
+                            _course.postValue(body)
+                        }
+                    }
+                }
+            })
+    }
+
+    fun loadRecommendedCourseList() {
+        RetrofitClient.homeService.getRecommendCourse()
+            .enqueue(object : Callback<List<SimpleCourse>> {
+                override fun onFailure(call: Call<List<SimpleCourse>>, t: Throwable) {
+
+                }
+
+                override fun onResponse(
+                    call: Call<List<SimpleCourse>>,
+                    response: Response<List<SimpleCourse>>
+                ) {
+                    if (response.isSuccessful && response.code() == 200) {
+                        val body = response.body()
+                        if (body != null) {
+                            _courseList.postValue(body)
+                        }
+                    }
+                }
+            })
     }
 }

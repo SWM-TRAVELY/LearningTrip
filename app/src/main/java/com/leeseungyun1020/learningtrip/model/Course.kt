@@ -3,8 +3,11 @@ package com.leeseungyun1020.learningtrip.model
 import com.google.gson.annotations.SerializedName
 
 class Course(
+    @SerializedName("id")
     val id: Int,
+    @SerializedName("name")
     val name: String,
+    @SerializedName("placeList")
     val placeList: List<SimplePlace>?,
 )
 

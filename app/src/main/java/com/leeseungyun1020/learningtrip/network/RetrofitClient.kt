@@ -24,4 +24,8 @@ object RetrofitClient {
     val heritageService: HeritageService by lazy {
         retrofit.create(HeritageService::class.java)
     }
+
+    val courseService: CourseService by lazy {
+        retrofit.create(CourseService::class.java)
+    }
 }
