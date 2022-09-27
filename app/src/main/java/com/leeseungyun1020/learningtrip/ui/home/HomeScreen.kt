@@ -31,7 +31,6 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Keyword
-import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
@@ -186,38 +185,26 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     }
 
                     // Course List
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                        text = stringResource(id = R.string.title_recommend_course),
-                        color = Gray2, style = MaterialTheme.typography.bodyLarge,
-                    )
+                    val courseList = recommendedCourses ?: emptyList()
+                    if (courseList.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                            text = stringResource(id = R.string.title_recommend_course),
+                            color = Gray2, style = MaterialTheme.typography.bodyLarge,
+                        )
 
-                    val courseList = recommendedCourses ?: listOf(
-                        SimpleCourse(
-                            id = 1,
-                            name = "코스1",
-                            imageURL = "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34",
-                            place1 = "관광지1", place2 = "관광지2", place3 = "관광지3"
-                        ),
-                        SimpleCourse(
-                            id = 2,
-                            name = "코스2",
-                            imageURL = "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54",
-                            place1 = "관광지4", place2 = "관광지5", place3 = null
-                        ),
-                    )
-
-                    val startIndex = Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2 % courseList.size)
-                    HorizontalPager(
-                        count = Int.MAX_VALUE,
-                        contentPadding = PaddingValues(horizontal = 24.dp),
-                        itemSpacing = 8.dp,
-                        state = rememberPagerState(initialPage = startIndex),
-                    ) { idx ->
-                        val page = idx % courseList.size
-                        CourseBox(course = courseList[page], modifier = Modifier.clickable {
-                            navController.navigate("${Screen.Course.root}/${courseList[page].id}")
-                        })
+                        val startIndex = Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2 % courseList.size)
+                        HorizontalPager(
+                            count = Int.MAX_VALUE,
+                            contentPadding = PaddingValues(horizontal = 24.dp),
+                            itemSpacing = 8.dp,
+                            state = rememberPagerState(initialPage = startIndex),
+                        ) { idx ->
+                            val page = idx % courseList.size
+                            CourseBox(course = courseList[page], modifier = Modifier.clickable {
+                                navController.navigate("${Screen.Course.root}/${courseList[page].id}")
+                            })
+                        }
                     }
                 }
 
