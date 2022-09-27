@@ -25,6 +25,8 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     val filteredPlaces = MutableLiveData<List<SimplePlace>>()
     val filteredPlaceNames = MutableLiveData<List<String>>()
     val relatedHeritages = MutableLiveData<List<SimpleHeritage>>()
+    val relatedPlaces = MutableLiveData<List<SimplePlace>>()
+    val nearbyPlaces = MutableLiveData<List<SimplePlace>>()
     val placeById = repository.searchedPlace
 
     init {
@@ -32,6 +34,13 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
             filteredPlaces.postValue(repository.placeByKeyword(""))
             filteredPlaceNames.postValue(repository.searchNameByKeyword(""))
         }
+    }
+
+    fun loadPlaceSpecific(id: Int) {
+        placeById(id)
+        loadRelatedHeritages(id)
+        loadRelatedPlaces(id)
+        loadNearbyPlaces(id)
     }
 
     fun recommend() = viewModelScope.launch {
@@ -137,6 +146,52 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
                             val body = response.body()
                             if (body != null) {
                                 relatedHeritages.postValue(body)
+                            }
+                        }
+                    }
+                })
+        }
+    }
+
+    fun loadRelatedPlaces(placeId: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            RetrofitClient.placeService.getRelatedPlace(placeId)
+                .enqueue(object : Callback<List<SimplePlace>> {
+                    override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<SimplePlace>>,
+                        response: Response<List<SimplePlace>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                relatedPlaces.postValue(body)
+                            }
+                        }
+                    }
+                })
+        }
+    }
+
+    fun loadNearbyPlaces(placeId: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            RetrofitClient.placeService.getNearbyPlace(placeId)
+                .enqueue(object : Callback<List<SimplePlace>> {
+                    override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<SimplePlace>>,
+                        response: Response<List<SimplePlace>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                nearbyPlaces.postValue(body)
                             }
                         }
                     }

@@ -23,7 +23,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.PlaceReview
-import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
@@ -34,11 +33,12 @@ import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id: String) {
     val place by placeViewModel.placeById.observeAsState()
     val relatedHeritages by placeViewModel.relatedHeritages.observeAsState()
+    val relatedPlaces by placeViewModel.relatedPlaces.observeAsState()
+    val nearbyPlaces by placeViewModel.nearbyPlaces.observeAsState()
     var isDescriptionOpen by remember { mutableStateOf(false) }
     var isReviewOpen by remember { mutableStateOf(false) }
     if (id.isDigitsOnly()) {
-        placeViewModel.placeById(id.toInt())
-        placeViewModel.loadRelatedHeritages(id.toInt())
+        placeViewModel.loadPlaceSpecific(id.toInt())
     }
     LearningTripScaffold(
         title = stringResource(id = R.string.app_name),
@@ -135,69 +135,25 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                                 }
                             }
 
-                            val relatedPlaces = listOf(
-                                SimplePlace(
-                                    id = 126216,
-                                    typeId = 12,
-                                    name = "경주 석굴암",
-                                    address = "주소",
-                                    imageURL = "http://tong.visitkorea.or.kr/cms/resource/21/2616821_image2_1.jpg"
-                                ),
-                                SimplePlace(
-                                    id = 317503,
-                                    typeId = 12,
-                                    name = "분황사",
-                                    address = "주소",
-                                    imageURL = "http://tong.visitkorea.or.kr/cms/resource/28/2371528_image2_1.jpg"
-                                ),
-                                SimplePlace(
-                                    id = 126175,
-                                    typeId = 12,
-                                    name = "해인사(합천)",
-                                    address = "주소",
-                                    imageURL = "http://tong.visitkorea.or.kr/cms/resource/48/2690648_image2_1.jpg"
-                                ),
-                            )
+                            relatedPlaces?.let {
+                                PlaceListRow(
+                                    modifier = Modifier.padding(top = 16.dp, start = 16.dp),
+                                    title = stringResource(id = R.string.title_similar_place),
+                                    placeStartPadding = 16.dp,
+                                    places = it,
+                                    onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
+                                )
+                            }
 
-                            PlaceListRow(
-                                modifier = Modifier.padding(top = 16.dp, start = 16.dp),
-                                title = stringResource(id = R.string.title_similar_place),
-                                placeStartPadding = 16.dp,
-                                places = relatedPlaces,
-                                onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
-                            )
-
-                            val nearByPlaces = listOf(
-                                SimplePlace(
-                                    id = 128526,
-                                    typeId = 12,
-                                    name = "동궁과 월지",
-                                    address = "주소",
-                                    imageURL = "http://tong.visitkorea.or.kr/cms/resource/61/2612561_image2_1.jpg"
-                                ),
-                                SimplePlace(
-                                    id = 2658227,
-                                    typeId = 12,
-                                    name = "경주 황리단길",
-                                    address = "주소",
-                                    imageURL = "https://www.gyeongju.go.kr/upload/content/thumb/20200320/157B106CC0A14796BB0381097F4B64A5.jpg"
-                                ),
-                                SimplePlace(
-                                    id = 1492402,
-                                    typeId = 12,
-                                    name = "경주 대릉원 일원",
-                                    address = "주소",
-                                    imageURL = "https://www.gyeongju.go.kr/upload/content/thumb/20200317/8206FFCD7CB5400DAA963F3CA1504EFF.png"
-                                ),
-                            )
-
-                            PlaceListRow(
-                                modifier = Modifier.padding(top = 16.dp, start = 16.dp),
-                                title = stringResource(id = R.string.title_nearby_place),
-                                placeStartPadding = 16.dp,
-                                places = nearByPlaces,
-                                onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
-                            )
+                            nearbyPlaces?.let {
+                                PlaceListRow(
+                                    modifier = Modifier.padding(top = 16.dp, start = 16.dp),
+                                    title = stringResource(id = R.string.title_nearby_place),
+                                    placeStartPadding = 16.dp,
+                                    places = it,
+                                    onPlaceClick = { navController.navigate("${Screen.Place.root}/${it.id}") }
+                                )
+                            }
                         }
                     },
                     @Composable {

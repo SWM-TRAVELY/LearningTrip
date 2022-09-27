@@ -57,6 +57,7 @@ data class SimplePlace(
     val address: String?,
     @SerializedName("imageURL")
     val imageURL: String?,
+    @SerializedName("description")
     val overview: String? = null,
 ) {
     constructor(id: String, name: String, typeId: String, address: String, imageURL: String) : this(

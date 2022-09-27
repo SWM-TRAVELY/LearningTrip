@@ -32,7 +32,7 @@ fun PlaceListRow(
         )
 
         LazyRow(modifier = Modifier.padding(top = 10.dp)) {
-            items(count = places.size, key = { places[it].id }) {
+            items(count = places.size /*TODO: key = { places[it].id }*/) {
                 val modifier = if (it == 0)
                     Modifier.padding(start = placeStartPadding)
                 else Modifier
