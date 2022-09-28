@@ -1,6 +1,5 @@
 package com.leeseungyun1020.learningtrip.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.SimplePlace
@@ -14,8 +13,10 @@ import retrofit2.Response
 
 class PlaceRepository(private val placeDao: PlaceDao) {
     val allPlaces: Flow<List<Place>> = placeDao.getAll()
-    val recommededPlaces: MutableLiveData<List<SimplePlace>> = MutableLiveData()
+    val recommendedPlaces: MutableLiveData<List<SimplePlace>> = MutableLiveData()
     val searchedPlace: MutableLiveData<Place> = MutableLiveData()
+    val filteredPlaces: MutableLiveData<List<SimplePlace>> = MutableLiveData()
+    val filteredPlaceNames: MutableLiveData<List<String>> = MutableLiveData()
 
     suspend fun recommend() {
         withContext(Dispatchers.IO) {
@@ -23,7 +24,7 @@ class PlaceRepository(private val placeDao: PlaceDao) {
             RetrofitClient.homeService.getRecommendPlace()
                 .enqueue(object : Callback<List<SimplePlace>> {
                     override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
-                        recommededPlaces.postValue(dbData)
+                        recommendedPlaces.postValue(dbData)
                     }
 
                     override fun onResponse(
@@ -33,7 +34,7 @@ class PlaceRepository(private val placeDao: PlaceDao) {
                         if (response.isSuccessful && response.code() == 200) {
                             val body = response.body()
                             if (body != null) {
-                                recommededPlaces.postValue(body)
+                                recommendedPlaces.postValue(body)
                             }
                         }
                     }
@@ -47,7 +48,6 @@ class PlaceRepository(private val placeDao: PlaceDao) {
             RetrofitClient.placeService.getPlace(id)
                 .enqueue(object : Callback<Place> {
                     override fun onFailure(call: Call<Place>, t: Throwable) {
-                        Log.d("LSYD", "onFailure: placeById $call $t")
                         searchedPlace.postValue(dbData)
                     }
 
@@ -57,7 +57,6 @@ class PlaceRepository(private val placeDao: PlaceDao) {
                     ) {
                         if (response.isSuccessful && response.code() == 200) {
                             val body = response.body()
-                            Log.d("LSYD", "onResponse: placeById $body")
                             if (body != null) {
                                 searchedPlace.postValue(body)
                             }
@@ -67,12 +66,52 @@ class PlaceRepository(private val placeDao: PlaceDao) {
         }
     }
 
-    suspend fun placeByKeyword(keyword: String): List<SimplePlace> {
-        return placeDao.findByKeyword(keyword)
+    suspend fun placeByKeyword(keyword: String) {
+        withContext(Dispatchers.IO) {
+            val dbData = placeDao.findByKeyword(keyword)
+            RetrofitClient.searchService.getSearchedPlaceList(keyword)
+                .enqueue(object : Callback<List<SimplePlace>> {
+                    override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
+                        filteredPlaces.postValue(dbData)
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<SimplePlace>>,
+                        response: Response<List<SimplePlace>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                filteredPlaces.postValue(body)
+                            }
+                        }
+                    }
+                })
+        }
     }
 
-    suspend fun searchNameByKeyword(keyword: String): List<String> {
-        return placeDao.searchNameByKeyword(keyword)
+    suspend fun searchNameByKeyword(keyword: String) {
+        withContext(Dispatchers.IO) {
+            val dbData = placeDao.searchNameByKeyword(keyword)
+            RetrofitClient.searchService.getSearchedKeyword(keyword)
+                .enqueue(object : Callback<List<String>> {
+                    override fun onFailure(call: Call<List<String>>, t: Throwable) {
+                        filteredPlaceNames.postValue(dbData)
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<String>>,
+                        response: Response<List<String>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                filteredPlaceNames.postValue(body)
+                            }
+                        }
+                    }
+                })
+        }
     }
 
     suspend fun insert(place: Place) {

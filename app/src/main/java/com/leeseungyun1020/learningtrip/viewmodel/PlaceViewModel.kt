@@ -21,9 +21,9 @@ import retrofit2.Response
 
 class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     val isUpdated = MutableLiveData(false)
-    val recommendedPlaces = repository.recommededPlaces
-    val filteredPlaces = MutableLiveData<List<SimplePlace>>()
-    val filteredPlaceNames = MutableLiveData<List<String>>()
+    val recommendedPlaces = repository.recommendedPlaces
+    val filteredPlaces = repository.filteredPlaces
+    val filteredPlaceNames = repository.filteredPlaceNames
     val relatedHeritages = MutableLiveData<List<SimpleHeritage>>()
     val relatedPlaces = MutableLiveData<List<SimplePlace>>()
     val nearbyPlaces = MutableLiveData<List<SimplePlace>>()
@@ -31,8 +31,8 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            filteredPlaces.postValue(repository.placeByKeyword(""))
-            filteredPlaceNames.postValue(repository.searchNameByKeyword(""))
+            repository.placeByKeyword("")
+            repository.searchNameByKeyword("")
         }
     }
 
@@ -52,11 +52,11 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     }
 
     fun placeByKeyword(keyword: String) = viewModelScope.launch {
-        filteredPlaces.postValue(repository.placeByKeyword(keyword))
+        repository.placeByKeyword(keyword)
     }
 
     fun placeNameByKeyword(keyword: String) = viewModelScope.launch {
-        filteredPlaceNames.postValue(repository.searchNameByKeyword(keyword))
+        repository.searchNameByKeyword(keyword)
     }
 
     fun insert(place: Place) = viewModelScope.launch {

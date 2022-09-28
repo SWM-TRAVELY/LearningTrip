@@ -28,4 +28,8 @@ object RetrofitClient {
     val courseService: CourseService by lazy {
         retrofit.create(CourseService::class.java)
     }
+
+    val searchService: SearchService by lazy {
+        retrofit.create(SearchService::class.java)
+    }
 }
