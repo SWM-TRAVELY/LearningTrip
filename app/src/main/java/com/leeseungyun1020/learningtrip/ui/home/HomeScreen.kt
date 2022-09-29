@@ -112,38 +112,41 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     )
                 ) {
                     // Keyword List
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                        text = stringResource(id = R.string.title_recommend_keyword),
-                        color = Gray2, style = MaterialTheme.typography.bodyLarge,
+                    val keywordList = recommendedKeywords ?: listOf(
+                        Keyword(
+                            "신라",
+                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+
+                            ),
+                        Keyword(
+                            "백제",
+                            "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
+
+                            ),
+                        Keyword(
+                            "액티비티",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
+
+                            ),
+                        Keyword(
+                            "체험",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
+
+                            ),
                     )
-                    KeywordListView(
-                        modifier = Modifier.padding(top = 8.dp),
-                        innerStartPadding = 16.dp,
-                        keywordList = recommendedKeywords ?: listOf(
-                            Keyword(
-                                "신라",
-                                "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-
-                                ),
-                            Keyword(
-                                "백제",
-                                "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
-
-                                ),
-                            Keyword(
-                                "액티비티",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
-
-                                ),
-                            Keyword(
-                                "체험",
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
-
-                                ),
+                    if (keywordList.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                            text = stringResource(id = R.string.title_recommend_keyword),
+                            color = Gray2, style = MaterialTheme.typography.bodyLarge,
                         )
-                    ) {
-                        navController.navigate("${Screen.Search.root}/${it.name}")
+                        KeywordListView(
+                            modifier = Modifier.padding(top = 8.dp),
+                            innerStartPadding = 16.dp,
+                            keywordList = keywordList,
+                        ) {
+                            navController.navigate("${Screen.Search.root}/${it.name}")
+                        }
                     }
 
                     // Introduce(Banner) Image
