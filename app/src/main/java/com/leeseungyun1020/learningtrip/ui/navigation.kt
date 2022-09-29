@@ -13,6 +13,7 @@ import com.leeseungyun1020.learningtrip.ui.course.CourseScreen
 import com.leeseungyun1020.learningtrip.ui.course.StoryScreen
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.permission.PermissionScreen
+import com.leeseungyun1020.learningtrip.ui.place.HeritageScreen
 import com.leeseungyun1020.learningtrip.ui.place.PlaceScreen
 import com.leeseungyun1020.learningtrip.ui.search.SearchScreen
 import com.leeseungyun1020.learningtrip.ui.settings.AccountScreen

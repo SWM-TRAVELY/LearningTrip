@@ -101,4 +101,6 @@
     <string name="desc_camera">카메라</string>
     <string name="action_add_review">리뷰 작성</string>
     <string name="desc_banner">배너</string>
+    <string name="title_type">종류</string>
+    <string name="title_category">유형</string>
 </resources>

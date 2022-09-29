@@ -19,8 +19,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -33,7 +31,6 @@ import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
-import com.leeseungyun1020.learningtrip.viewmodel.HeritageViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
@@ -151,23 +148,6 @@ fun CategoryScreen(navController: NavController) {
 fun NearbyScreen(navController: NavController) {
     Text(text = "Nearby")
     CircularProgressIndicator()
-}
-
-@Composable
-fun HeritageScreen(navController: NavController, id: String) {
-    val viewModel: HeritageViewModel = viewModel()
-    val heritage by viewModel.heritage.observeAsState()
-    if (id.isDigitsOnly()) {
-        viewModel.loadHeritage(id.toInt())
-    }
-    Column {
-        Text(text = "heritage $id")
-        Text(text = heritage?.name ?: "loading")
-        Text(text = heritage?.imageURL ?: "loading")
-        Text(text = heritage?.category ?: "loading")
-        Text(text = heritage?.description ?: "loading")
-        Text(text = heritage?.type ?: "loading")
-    }
 }
 
 @Composable
