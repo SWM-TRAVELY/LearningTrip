@@ -87,7 +87,7 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
             TopIndicatorTab(
                 titles = listOf(
                     stringResource(id = R.string.description),
-                    stringResource(id = R.string.review)
+                    "",/*TODO: stringResource(id = R.string.review)*/
                 ), pages = listOf(
                     @Composable {
                         Column {
@@ -159,7 +159,8 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                     @Composable {
                         Text(text = "Review")
                     }
-                )
+                ),
+                isMoveAble = listOf(true, false)
             )
         }
     }
