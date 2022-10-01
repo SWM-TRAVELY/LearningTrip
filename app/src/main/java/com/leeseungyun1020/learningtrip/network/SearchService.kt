@@ -5,12 +5,12 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface SearchService {
-    @GET("/search/keyword/{keyword}")
+    @GET("/search/autocomplete/{keyword}")
     fun getSearchedKeyword(
         @Path("keyword") keyword: String
     ): retrofit2.Call<List<String>>
 
-    @GET("/search/place/{keyword}")
+    @GET("/search/result/{keyword}")
     fun getSearchedPlaceList(
         @Path("keyword") keyword: String
     ): retrofit2.Call<List<SimplePlace>>
