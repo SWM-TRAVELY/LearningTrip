@@ -18,12 +18,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
-import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
@@ -32,8 +31,11 @@ import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
 fun CourseScreen(
     navController: NavController, id: String, viewModel: CourseViewModel = viewModel()
 ) {
-    viewModel.loadCourseById(id.toIntOrNull() ?: -1)
+    if (id.isDigitsOnly()) {
+        viewModel.searchById(id.toInt())
+    }
     val course by viewModel.course.observeAsState()
+
     LearningTripScaffold(
         title = stringResource(id = R.string.title_course),
     ) {
