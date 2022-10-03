@@ -16,7 +16,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -24,6 +26,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
+import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 import com.leeseungyun1020.learningtrip.viewmodel.HeritageViewModel
 
 @Composable
@@ -67,12 +70,19 @@ fun HeritageScreen(navController: NavController, id: String) {
                     Box(
                         modifier = Modifier
                             .height(96.dp)
+                            .fillMaxWidth()
                             .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp))
                             .background(Color.White)
+                            .align(Alignment.BottomCenter)
                     ) {
                         Text(
                             text = heritage?.name ?: "",
-                            modifier = Modifier.align(Alignment.Center)
+                            fontSize = 20.sp,
+                            fontFamily = notoSansKRFamily,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .align(Alignment.CenterStart)
+                                .padding(horizontal = 30.dp)
                         )
                     }
                 }
