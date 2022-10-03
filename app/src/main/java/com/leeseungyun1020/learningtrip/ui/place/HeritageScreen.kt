@@ -37,7 +37,7 @@ fun HeritageScreen(navController: NavController, id: String) {
     var isDescriptionOpen by remember { mutableStateOf(false) }
 
     if (id.isDigitsOnly()) {
-        viewModel.loadHeritage(id.toInt())
+        viewModel.searchById(id.toInt())
     }
     LearningTripScaffold(
         title = stringResource(id = R.string.title_heritage_guide),
