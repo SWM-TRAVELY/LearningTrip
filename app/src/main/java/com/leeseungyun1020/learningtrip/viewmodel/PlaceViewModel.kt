@@ -10,14 +10,8 @@ import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 import com.leeseungyun1020.learningtrip.model.SimplePlace
-import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import com.opencsv.CSVReader
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     val isUpdated = MutableLiveData(false)
@@ -31,7 +25,7 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repository.placeByKeyword("")
+            repository.searchByKeyword("")
             repository.searchNameByKeyword("")
         }
     }
@@ -43,16 +37,28 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
         loadNearbyPlaces(id)
     }
 
+    private fun placeById(id: Int) = viewModelScope.launch {
+        repository.searchById(id)
+    }
+
+    private fun loadRelatedHeritages(placeId: Int) = viewModelScope.launch {
+        repository.loadRelatedHeritages(placeId)
+    }
+
+    private fun loadRelatedPlaces(placeId: Int) = viewModelScope.launch {
+        repository.loadRelatedPlaces(placeId)
+    }
+
+    private fun loadNearbyPlaces(placeId: Int) = viewModelScope.launch {
+        repository.loadNearbyPlaces(placeId)
+    }
+
     fun recommend() = viewModelScope.launch {
         repository.recommend()
     }
 
-    fun placeById(id: Int) = viewModelScope.launch {
-        repository.placeById(id)
-    }
-
     fun placeByKeyword(keyword: String) = viewModelScope.launch {
-        repository.placeByKeyword(keyword)
+        repository.searchByKeyword(keyword)
     }
 
     fun placeNameByKeyword(keyword: String) = viewModelScope.launch {
@@ -127,75 +133,6 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
                 apply()
             }
             isUpdated.postValue(true)
-        }
-    }
-
-    fun loadRelatedHeritages(placeId: Int) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            RetrofitClient.heritageService.getRelatedHeritage(placeId)
-                .enqueue(object : Callback<List<SimpleHeritage>> {
-                    override fun onFailure(call: Call<List<SimpleHeritage>>, t: Throwable) {
-
-                    }
-
-                    override fun onResponse(
-                        call: Call<List<SimpleHeritage>>,
-                        response: Response<List<SimpleHeritage>>
-                    ) {
-                        if (response.isSuccessful && response.code() == 200) {
-                            val body = response.body()
-                            if (body != null) {
-                                relatedHeritages.postValue(body)
-                            }
-                        }
-                    }
-                })
-        }
-    }
-
-    fun loadRelatedPlaces(placeId: Int) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            RetrofitClient.placeService.getRelatedPlace(placeId)
-                .enqueue(object : Callback<List<SimplePlace>> {
-                    override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
-
-                    }
-
-                    override fun onResponse(
-                        call: Call<List<SimplePlace>>,
-                        response: Response<List<SimplePlace>>
-                    ) {
-                        if (response.isSuccessful && response.code() == 200) {
-                            val body = response.body()
-                            if (body != null) {
-                                relatedPlaces.postValue(body)
-                            }
-                        }
-                    }
-                })
-        }
-    }
-
-    fun loadNearbyPlaces(placeId: Int) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            RetrofitClient.placeService.getNearbyPlace(placeId)
-                .enqueue(object : Callback<List<SimplePlace>> {
-                    override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
-
-                    }
-
-                    override fun onResponse(
-                        call: Call<List<SimplePlace>>,
-                        response: Response<List<SimplePlace>>
-                    ) {
-                        if (response.isSuccessful && response.code() == 200) {
-                            val body = response.body()
-                            if (body != null) {
-                                nearbyPlaces.postValue(body)
-                            }
-                        }
-                    }
-                })
         }
     }
 }

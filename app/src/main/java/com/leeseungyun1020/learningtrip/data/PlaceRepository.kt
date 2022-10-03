@@ -2,6 +2,7 @@ package com.leeseungyun1020.learningtrip.data
 
 import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.Place
+import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import kotlinx.coroutines.Dispatchers
@@ -13,10 +14,13 @@ import retrofit2.Response
 
 class PlaceRepository(private val placeDao: PlaceDao) {
     val allPlaces: Flow<List<Place>> = placeDao.getAll()
-    val recommendedPlaces: MutableLiveData<List<SimplePlace>> = MutableLiveData()
-    val searchedPlace: MutableLiveData<Place> = MutableLiveData()
-    val filteredPlaces: MutableLiveData<List<SimplePlace>> = MutableLiveData()
-    val filteredPlaceNames: MutableLiveData<List<String>> = MutableLiveData()
+    val recommendedPlaces = MutableLiveData<List<SimplePlace>>()
+    val searchedPlace = MutableLiveData<Place>()
+    val filteredPlaces = MutableLiveData<List<SimplePlace>>()
+    val filteredPlaceNames = MutableLiveData<List<String>>()
+    val relatedHeritages = MutableLiveData<List<SimpleHeritage>>()
+    val relatedPlaces = MutableLiveData<List<SimplePlace>>()
+    val nearbyPlaces = MutableLiveData<List<SimplePlace>>()
 
     suspend fun recommend() {
         withContext(Dispatchers.IO) {
@@ -42,7 +46,7 @@ class PlaceRepository(private val placeDao: PlaceDao) {
         }
     }
 
-    suspend fun placeById(id: Int) {
+    suspend fun searchById(id: Int) {
         withContext(Dispatchers.IO) {
             val dbData = placeDao.getById(id)
             RetrofitClient.placeService.getPlace(id)
@@ -66,7 +70,7 @@ class PlaceRepository(private val placeDao: PlaceDao) {
         }
     }
 
-    suspend fun placeByKeyword(keyword: String) {
+    suspend fun searchByKeyword(keyword: String) {
         withContext(Dispatchers.IO) {
             val dbData = placeDao.findByKeyword(keyword)
             RetrofitClient.searchService.getSearchedPlaceList(keyword)
@@ -116,5 +120,74 @@ class PlaceRepository(private val placeDao: PlaceDao) {
 
     suspend fun insert(place: Place) {
         placeDao.insert(place)
+    }
+
+    suspend fun loadRelatedHeritages(placeId: Int) {
+        withContext(Dispatchers.IO) {
+            RetrofitClient.heritageService.getRelatedHeritage(placeId)
+                .enqueue(object : Callback<List<SimpleHeritage>> {
+                    override fun onFailure(call: Call<List<SimpleHeritage>>, t: Throwable) {
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<SimpleHeritage>>,
+                        response: Response<List<SimpleHeritage>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                relatedHeritages.postValue(body)
+                            }
+                        }
+                    }
+                })
+        }
+    }
+
+    suspend fun loadRelatedPlaces(placeId: Int) {
+        withContext(Dispatchers.IO) {
+            RetrofitClient.placeService.getRelatedPlace(placeId)
+                .enqueue(object : Callback<List<SimplePlace>> {
+                    override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<SimplePlace>>,
+                        response: Response<List<SimplePlace>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                relatedPlaces.postValue(body)
+                            }
+                        }
+                    }
+                })
+        }
+    }
+
+    suspend fun loadNearbyPlaces(placeId: Int) {
+        withContext(Dispatchers.IO) {
+            RetrofitClient.placeService.getNearbyPlace(placeId)
+                .enqueue(object : Callback<List<SimplePlace>> {
+                    override fun onFailure(call: Call<List<SimplePlace>>, t: Throwable) {
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<SimplePlace>>,
+                        response: Response<List<SimplePlace>>
+                    ) {
+                        if (response.isSuccessful && response.code() == 200) {
+                            val body = response.body()
+                            if (body != null) {
+                                nearbyPlaces.postValue(body)
+                            }
+                        }
+                    }
+                })
+        }
     }
 }
