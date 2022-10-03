@@ -2,10 +2,7 @@ package com.leeseungyun1020.learningtrip.viewmodel
 
 import android.content.Context
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.SimpleHeritage
@@ -14,14 +11,17 @@ import com.opencsv.CSVReader
 import kotlinx.coroutines.launch
 
 class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
-    val isUpdated = MutableLiveData(false)
-    val recommendedPlaces = repository.recommendedPlaces
-    val filteredPlaces = repository.filteredPlaces
-    val filteredPlaceNames = repository.filteredPlaceNames
-    val relatedHeritages = MutableLiveData<List<SimpleHeritage>>()
-    val relatedPlaces = MutableLiveData<List<SimplePlace>>()
-    val nearbyPlaces = MutableLiveData<List<SimplePlace>>()
-    val placeById = repository.searchedPlace
+    private val _isUpdated = MutableLiveData(false)
+    val isUpdated: LiveData<Boolean>
+        get() = _isUpdated
+
+    val recommendedPlaces: LiveData<List<SimplePlace>> = repository.recommendedPlaces
+    val filteredPlaces: LiveData<List<SimplePlace>> = repository.filteredPlaces
+    val filteredPlaceNames: LiveData<List<String>> = repository.filteredPlaceNames
+    val relatedHeritages: LiveData<List<SimpleHeritage>> = repository.relatedHeritages
+    val relatedPlaces: LiveData<List<SimplePlace>> = repository.relatedPlaces
+    val nearbyPlaces: LiveData<List<SimplePlace>> = repository.nearbyPlaces
+    val placeById: LiveData<Place> = repository.searchedPlace
 
     init {
         viewModelScope.launch {
@@ -72,7 +72,7 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     fun updatePlaceData(context: Context) {
         val sharedPref = context.getSharedPreferences("place_data", Context.MODE_PRIVATE)
         if (sharedPref.getBoolean("place_data_updated", false)) {
-            isUpdated.postValue(true)
+            _isUpdated.postValue(true)
             return
         }
         viewModelScope.launch {
@@ -132,7 +132,7 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
                 putBoolean("place_data_updated", true)
                 apply()
             }
-            isUpdated.postValue(true)
+            _isUpdated.postValue(true)
         }
     }
 }
