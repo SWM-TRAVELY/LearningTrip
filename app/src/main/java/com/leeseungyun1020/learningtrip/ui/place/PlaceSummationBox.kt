@@ -36,7 +36,7 @@ fun PlaceSummationBox(
 ) {
     Box(
         modifier = modifier
-            .height(96.dp)
+            .defaultMinSize(minHeight = 96.dp)
             .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp))
             .background(Color.White)
     ) {
