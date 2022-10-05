@@ -39,6 +39,7 @@ fun PlaceListRow(
                 PlaceBox(
                     modifier = modifier
                         .padding(end = 8.dp)
+                        .width(160.dp)
                         .clickable { onPlaceClick(places[it]) },
                     imageModifier = Modifier
                         .width(160.dp)
