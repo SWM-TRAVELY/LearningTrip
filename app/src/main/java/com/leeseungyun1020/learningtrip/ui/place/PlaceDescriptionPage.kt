@@ -37,7 +37,7 @@ fun PlaceDescriptionPage(
         )
         Text(
             modifier = Modifier.padding(top = 2.dp),
-            text = place.overview, style = MaterialTheme.typography.bodySmall,
+            text = place.overview ?: "", style = MaterialTheme.typography.bodySmall,
             color = Gray2,
             maxLines = if (!isOpen) 3 else Int.MAX_VALUE,
             overflow = TextOverflow.Ellipsis
@@ -46,17 +46,17 @@ fun PlaceDescriptionPage(
         if (isOpen) {
             // Policy
             val parkingText =
-                if (place.chkParking)
+                if (place.chkParking == true)
                     stringResource(id = R.string.title_available)
                 else
                     stringResource(id = R.string.title_not_available)
             val otherText = "${stringResource(id = R.string.title_pet)} ${
-                if (place.chkPets)
+                if (place.chkPets == true)
                     stringResource(id = R.string.title_available)
                 else
                     stringResource(id = R.string.title_not_available)
             }, ${stringResource(id = R.string.title_baby_carriage)} ${
-                if (place.chkBabyCarriage)
+                if (place.chkBabyCarriage == true)
                     stringResource(id = R.string.title_available)
                 else
                     stringResource(id = R.string.title_not_available)
@@ -65,9 +65,9 @@ fun PlaceDescriptionPage(
                 modifier = Modifier.padding(top = 10.dp),
                 title = stringResource(id = R.string.title_policy),
                 items = listOf(
-                    stringResource(id = R.string.title_use_time) to place.useTime,
-                    stringResource(id = R.string.title_rest_date) to place.restDate,
-                    stringResource(id = R.string.title_telephone) to place.tel,
+                    stringResource(id = R.string.title_use_time) to (place.useTime ?: ""),
+                    stringResource(id = R.string.title_rest_date) to (place.restDate ?: ""),
+                    stringResource(id = R.string.title_telephone) to (place.tel ?: ""),
                     stringResource(id = R.string.title_parking) to parkingText,
                     stringResource(id = R.string.title_other) to otherText,
                 ),
@@ -80,39 +80,40 @@ fun PlaceDescriptionPage(
                 modifier = Modifier.padding(top = 10.dp),
                 title = stringResource(id = R.string.title_exprience_guide),
                 items = listOf(
-                    stringResource(id = R.string.title_recommended_age) to place.ageAvailable,
-                    stringResource(id = R.string.title_exprience_guide) to place.expGuide,
+                    stringResource(id = R.string.title_recommended_age) to (place.ageAvailable
+                        ?: ""),
+                    stringResource(id = R.string.title_exprience_guide) to (place.expGuide ?: ""),
                 ),
                 fontColor = Gray2,
                 showDialog = true
             )
 
             // Heritage Guide
-            if (place.chkWorldCultural || place.chkWorldNatural || place.chkWorldRecord || place.chkInTextbook)
+            if (place.chkWorldCultural == true || place.chkWorldNatural == true || place.chkWorldRecord == true || place.chkInTextbook == true)
                 Text(
                     modifier = Modifier.padding(top = 10.dp, bottom = 2.dp),
                     text = stringResource(id = R.string.title_heritage_guide),
                     style = MaterialTheme.typography.bodyMedium,
                 )
-            if (place.chkWorldCultural)
+            if (place.chkWorldCultural == true)
                 Text(
                     text = "• ${stringResource(id = R.string.title_world_cultural)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = Gray2
                 )
-            if (place.chkWorldNatural)
+            if (place.chkWorldNatural == true)
                 Text(
                     text = "• ${stringResource(id = R.string.title_world_natural)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = Gray2
                 )
-            if (place.chkWorldRecord)
+            if (place.chkWorldRecord == true)
                 Text(
                     text = "• ${stringResource(id = R.string.title_world_record)}",
                     style = MaterialTheme.typography.bodySmall,
                     color = Gray2
                 )
-            if (place.chkInTextbook)
+            if (place.chkInTextbook == true)
                 Text(
                     text = "• ${stringResource(id = R.string.title_textbook)}",
                     style = MaterialTheme.typography.bodySmall,

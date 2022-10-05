@@ -1,7 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.home
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,28 +19,35 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.Keyword
-import com.leeseungyun1020.learningtrip.model.SimpleCourse
-import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray2
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
+import com.leeseungyun1020.learningtrip.viewmodel.HomeViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPagerApi::class)
 @Composable
 fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
+    val homeViewModel: HomeViewModel = viewModel()
+
+    val recommendedKeywords by homeViewModel.recommendedKeywords.observeAsState()
+    val mainBanners by homeViewModel.mainBanners.observeAsState()
+    val recommendedCourses by homeViewModel.recommendedCourses.observeAsState()
+
     val searchedPlaceNames by placeViewModel.filteredPlaceNames.observeAsState()
     val recommendedPlaces by placeViewModel.recommendedPlaces.observeAsState()
     var searchText by rememberSaveable { mutableStateOf("") }
@@ -106,57 +112,67 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     )
                 ) {
                     // Keyword List
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                        text = stringResource(id = R.string.title_recommend_keyword),
-                        color = Gray2, style = MaterialTheme.typography.bodyLarge,
+                    val keywordList = recommendedKeywords ?: listOf(
+                        Keyword(
+                            "신라",
+                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
+
+                            ),
+                        Keyword(
+                            "백제",
+                            "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
+
+                            ),
+                        Keyword(
+                            "액티비티",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
+
+                            ),
+                        Keyword(
+                            "체험",
+                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
+
+                            ),
                     )
-                    KeywordListView(
-                        modifier = Modifier.padding(top = 8.dp),
-                        innerStartPadding = 16.dp,
-                        keywordList = listOf(
-                            Keyword(
-                                "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                                "신라"
-                            ),
-                            Keyword(
-                                "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
-                                "백제"
-                            ),
-                            Keyword(
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
-                                "액티비티"
-                            ),
-                            Keyword(
-                                "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
-                                "체험"
-                            ),
-                            Keyword(
-                                "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                                "키워드5"
-                            ),
-                            Keyword(
-                                "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-                                "키워드6"
-                            ),
+                    if (keywordList.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                            text = stringResource(id = R.string.title_recommend_keyword),
+                            color = Gray2, style = MaterialTheme.typography.bodyLarge,
                         )
-                    ) {
-                        navController.navigate("${Screen.Search.root}/${it.name}")
+                        KeywordListView(
+                            modifier = Modifier.padding(top = 8.dp),
+                            innerStartPadding = 16.dp,
+                            keywordList = keywordList,
+                        ) {
+                            navController.navigate("${Screen.Search.root}/${it.name}")
+                        }
                     }
 
                     // Introduce(Banner) Image
-                    HorizontalPager(
-                        count = 2,
-                        modifier = Modifier
-                            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
-                            .height(104.dp)
-                            .background(color = Gray3)
-                    ) { page ->
-                        Text(
-                            text = "Learning Trip - Page: $page",
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                        )
+                    if ((mainBanners?.size ?: 0) > 0) {
+                        HorizontalPager(
+                            count = mainBanners?.size ?: 0,
+                            modifier = Modifier
+                                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                                .height(104.dp)
+                        ) { page ->
+                            val banner = mainBanners?.getOrNull(page)
+                            if (banner != null) {
+                                AsyncImage(
+                                    model = banner.imageURL,
+                                    contentDescription = stringResource(id = R.string.desc_banner),
+                                    modifier = Modifier.height(104.dp),
+                                    contentScale = ContentScale.FillWidth,
+                                )
+                            } else {
+                                Text(
+                                    text = "Learning Trip - Page: $page",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                )
+                            }
+                        }
                     }
 
                     // Place List
@@ -174,38 +190,26 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     }
 
                     // Course List
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp, start = 16.dp),
-                        text = stringResource(id = R.string.title_recommend_course),
-                        color = Gray2, style = MaterialTheme.typography.bodyLarge,
-                    )
+                    val courseList = recommendedCourses ?: emptyList()
+                    if (courseList.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(top = 8.dp, start = 16.dp),
+                            text = stringResource(id = R.string.title_recommend_course),
+                            color = Gray2, style = MaterialTheme.typography.bodyLarge,
+                        )
 
-                    val courseList = listOf(
-                        SimpleCourse(
-                            id = 1,
-                            name = "코스1",
-                            imageURL = "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=d7036095-6472-4c84-8aee-335314640c34",
-                            place1 = "관광지1", place2 = "관광지2", place3 = "관광지3"
-                        ),
-                        SimpleCourse(
-                            id = 2,
-                            name = "코스2",
-                            imageURL = "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=5dc8cd08-f083-4595-b28d-ad3dbae7bd54",
-                            place1 = "관광지4", place2 = "관광지5", place3 = null
-                        ),
-                    )
-
-                    val startIndex = Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2 % courseList.size)
-                    HorizontalPager(
-                        count = Int.MAX_VALUE,
-                        contentPadding = PaddingValues(horizontal = 24.dp),
-                        itemSpacing = 8.dp,
-                        state = rememberPagerState(initialPage = startIndex),
-                    ) { idx ->
-                        val page = idx % courseList.size
-                        CourseBox(course = courseList[page], modifier = Modifier.clickable {
-                            navController.navigate("${Screen.Course.root}/${courseList[page].id}")
-                        })
+                        val startIndex = Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2 % courseList.size)
+                        HorizontalPager(
+                            count = Int.MAX_VALUE,
+                            contentPadding = PaddingValues(horizontal = 24.dp),
+                            itemSpacing = 8.dp,
+                            state = rememberPagerState(initialPage = startIndex),
+                        ) { idx ->
+                            val page = idx % courseList.size
+                            CourseBox(course = courseList[page], modifier = Modifier.clickable {
+                                navController.navigate("${Screen.Course.root}/${courseList[page].id}")
+                            })
+                        }
                     }
                 }
 

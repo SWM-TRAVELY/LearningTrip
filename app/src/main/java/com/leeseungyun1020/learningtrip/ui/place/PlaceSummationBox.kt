@@ -65,7 +65,7 @@ fun PlaceSummationBox(
                 .padding(bottom = 10.dp, start = 30.dp)
         ) {
             Text(
-                text = place.name,
+                text = place.name ?: "",
                 fontSize = 20.sp,
                 fontFamily = notoSansKRFamily,
                 fontWeight = FontWeight.Bold

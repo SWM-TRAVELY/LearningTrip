@@ -17,6 +17,7 @@ import com.leeseungyun1020.learningtrip.ui.theme.Gray4
 fun TopIndicatorTab(
     titles: List<String>,
     pages: List<@Composable () -> Unit>,
+    isMoveAble: List<Boolean>? = null,
 ) {
     var state by remember { mutableStateOf(0) }
 
@@ -26,7 +27,11 @@ fun TopIndicatorTab(
         titles.forEachIndexed { index, title ->
             Tab(
                 selected = state == index,
-                onClick = { state = index }
+                onClick = {
+                    if (isMoveAble != null && isMoveAble[index] || isMoveAble == null) {
+                        state = index
+                    }
+                }
             ) {
                 Column(
                     Modifier

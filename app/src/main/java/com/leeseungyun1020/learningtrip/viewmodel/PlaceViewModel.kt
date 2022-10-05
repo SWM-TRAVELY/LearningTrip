@@ -5,39 +5,64 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.*
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.Place
+import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.opencsv.CSVReader
 import kotlinx.coroutines.launch
 
 class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
-    val isUpdated = MutableLiveData(false)
-    val allPlaces = repository.allPlaces.asLiveData()
-    val recommendedPlaces = MutableLiveData<List<SimplePlace>>()
-    val filteredPlaces = MutableLiveData<List<SimplePlace>>()
-    val filteredPlaceNames = MutableLiveData<List<String>>()
-    val placeById = MutableLiveData<Place>()
+    private val _isUpdated = MutableLiveData(false)
+    val isUpdated: LiveData<Boolean>
+        get() = _isUpdated
+
+    val recommendedPlaces: LiveData<List<SimplePlace>> = repository.recommendedPlaces
+    val filteredPlaces: LiveData<List<SimplePlace>> = repository.filteredPlaces
+    val filteredPlaceNames: LiveData<List<String>> = repository.filteredPlaceNames
+    val relatedHeritages: LiveData<List<SimpleHeritage>> = repository.relatedHeritages
+    val relatedPlaces: LiveData<List<SimplePlace>> = repository.relatedPlaces
+    val nearbyPlaces: LiveData<List<SimplePlace>> = repository.nearbyPlaces
+    val placeById: LiveData<Place> = repository.searchedPlace
 
     init {
         viewModelScope.launch {
-            filteredPlaces.postValue(repository.placeByKeyword(""))
-            filteredPlaceNames.postValue(repository.searchNameByKeyword(""))
+            repository.searchByKeyword("")
+            repository.searchNameByKeyword("")
         }
     }
 
-    fun recommend() = viewModelScope.launch {
-        recommendedPlaces.postValue(repository.recommend())
+    fun loadPlaceSpecific(id: Int) {
+        placeById(id)
+        loadRelatedHeritages(id)
+        loadRelatedPlaces(id)
+        loadNearbyPlaces(id)
     }
 
-    fun placeById(id: Int) = viewModelScope.launch {
-        placeById.postValue(repository.placeById(id))
+    private fun placeById(id: Int) = viewModelScope.launch {
+        repository.searchById(id)
+    }
+
+    private fun loadRelatedHeritages(placeId: Int) = viewModelScope.launch {
+        repository.loadRelatedHeritages(placeId)
+    }
+
+    private fun loadRelatedPlaces(placeId: Int) = viewModelScope.launch {
+        repository.loadRelatedPlaces(placeId)
+    }
+
+    private fun loadNearbyPlaces(placeId: Int) = viewModelScope.launch {
+        repository.loadNearbyPlaces(placeId)
+    }
+
+    fun recommend() = viewModelScope.launch {
+        repository.recommend()
     }
 
     fun placeByKeyword(keyword: String) = viewModelScope.launch {
-        filteredPlaces.postValue(repository.placeByKeyword(keyword))
+        repository.searchByKeyword(keyword)
     }
 
     fun placeNameByKeyword(keyword: String) = viewModelScope.launch {
-        filteredPlaceNames.postValue(repository.searchNameByKeyword(keyword))
+        repository.searchNameByKeyword(keyword)
     }
 
     fun insert(place: Place) = viewModelScope.launch {
@@ -47,7 +72,7 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
     fun updatePlaceData(context: Context) {
         val sharedPref = context.getSharedPreferences("place_data", Context.MODE_PRIVATE)
         if (sharedPref.getBoolean("place_data_updated", false)) {
-            isUpdated.postValue(true)
+            _isUpdated.postValue(true)
             return
         }
         viewModelScope.launch {
@@ -107,7 +132,7 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
                 putBoolean("place_data_updated", true)
                 apply()
             }
-            isUpdated.postValue(true)
+            _isUpdated.postValue(true)
         }
     }
 }

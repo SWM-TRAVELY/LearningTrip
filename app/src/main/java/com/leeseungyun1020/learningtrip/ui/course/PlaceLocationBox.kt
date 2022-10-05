@@ -58,8 +58,8 @@ fun PlaceLocationBox(simplePlace: SimplePlace, modifier: Modifier = Modifier) {
                 .padding(start = 4.dp)
                 .weight(1f)
         ) {
-            Text(text = simplePlace.name, style = MaterialTheme.typography.bodyLarge)
-            Text(text = simplePlace.address, style = MaterialTheme.typography.bodySmall)
+            Text(text = simplePlace.name ?: "", style = MaterialTheme.typography.bodyLarge)
+            Text(text = simplePlace.address ?: "", style = MaterialTheme.typography.bodySmall)
         }
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)

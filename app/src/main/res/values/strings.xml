@@ -99,4 +99,7 @@
     <string name="hint_add_review">Please leave a review about the place</string>
     <string name="desc_camera">Camera</string>
     <string name="action_add_review">Add review</string>
+    <string name="desc_banner">Banner</string>
+    <string name="title_type">Type</string>
+    <string name="title_category">Category</string>
 </resources>

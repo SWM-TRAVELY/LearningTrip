@@ -151,11 +151,6 @@ fun NearbyScreen(navController: NavController) {
 }
 
 @Composable
-fun HeritageScreen(navController: NavController, id: String) {
-    Text(text = "heritage $id")
-}
-
-@Composable
 fun CollectionScreen(navController: NavController) {
     Column {
         Text(text = "collection")

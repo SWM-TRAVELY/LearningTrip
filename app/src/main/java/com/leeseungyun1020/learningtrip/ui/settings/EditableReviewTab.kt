@@ -45,9 +45,9 @@ fun EditableReviewTab(
                 .padding(start = 10.dp)
                 .weight(1f)
         ) {
-            Text(text = simplePlace.name, style = MaterialTheme.typography.bodyLarge)
+            Text(text = simplePlace.name ?: "", style = MaterialTheme.typography.bodyLarge)
             Text(
-                text = simplePlace.address,
+                text = simplePlace.address ?: "",
                 style = MaterialTheme.typography.bodySmall,
                 color = Gray3,
                 modifier = Modifier.padding(top = 2.dp)

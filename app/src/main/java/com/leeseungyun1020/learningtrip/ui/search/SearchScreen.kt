@@ -26,6 +26,8 @@ fun SearchScreen(navController: NavController, placeViewModel: PlaceViewModel, k
     LearningTripScaffold(
         title = key,
         topBarExtraContent = {},
+        setDisplayHomeAsUpEnabled = true,
+        onHomeAsUpClicked = { navController.popBackStack() },
         bodyContent = {
             Column(
                 modifier = Modifier.verticalScroll(
