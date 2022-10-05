@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -34,9 +32,12 @@ fun SearchScreen(navController: NavController, placeViewModel: PlaceViewModel, k
                     rememberScrollState()
                 )
             ) {
+                // TODO: 코스 검색 결과 표시
+                /*
                 Button(onClick = { navController.navigate("${Screen.Course.root}/200") }) {
                     Text(text = "Course 200")
                 }
+                */
                 PlaceListView(
                     modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
