@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
 
@@ -57,9 +59,11 @@ fun CourseScreen(
 
             for ((i, place) in (course?.placeList ?: emptyList()).withIndex()) {
                 PlaceLocationBox(
-                    simplePlace = place, modifier = Modifier.padding(
-                        start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
-                    )
+                    simplePlace = place, modifier = Modifier
+                        .padding(
+                            start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
+                        )
+                        .clickable { navController.navigate("${Screen.Place.root}/${place.id}") }
                 )
             }
             /*
