@@ -14,9 +14,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.data.AppDatabase
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
@@ -63,7 +70,7 @@ fun MainScreen(placeViewModel: PlaceViewModel) {
                             NavigationScreen.Nearby,
                             NavigationScreen.My
                         )
-                        /*
+
                         NavigationBar(
                             containerColor = Color.Transparent
                         ) {
@@ -99,7 +106,6 @@ fun MainScreen(placeViewModel: PlaceViewModel) {
                                 )
                             }
                         }
-                        */
                     }
                 ) { innerPadding ->
                     NavHost(
