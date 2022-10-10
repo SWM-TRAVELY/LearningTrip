@@ -204,6 +204,7 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                             contentPadding = PaddingValues(horizontal = 24.dp),
                             itemSpacing = 8.dp,
                             state = rememberPagerState(initialPage = startIndex),
+                            modifier = Modifier.padding(top = 10.dp, bottom = 8.dp)
                         ) { idx ->
                             val page = idx % courseList.size
                             CourseBox(course = courseList[page], modifier = Modifier.clickable {

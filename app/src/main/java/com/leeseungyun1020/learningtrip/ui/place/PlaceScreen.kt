@@ -77,7 +77,7 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                             .align(Alignment.BottomCenter)
                             .padding(top = 232.dp),
                         place = it,
-                        placeReview = PlaceReview(place!!.id, 4.88, 100),
+                        placeReview = PlaceReview(place!!.id, 0.0, 0),
                         onPlayClick = { /*TODO*/ },
                         onStickerClick = { /*TODO*/ })
                 }
