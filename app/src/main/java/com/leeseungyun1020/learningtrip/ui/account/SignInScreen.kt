@@ -1,18 +1,16 @@
 package com.leeseungyun1020.learningtrip.ui.account
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,31 +31,45 @@ enum class SignInType {
 fun SignInScreen(navController: NavController) {
     val type = rememberSaveable { mutableStateOf(SignInType.INIT) }
     when (type.value) {
-        SignInType.INIT -> SignInInitScreen(navController, type)
-        SignInType.EMAIL -> SignInEmailScreen(navController, type)
-        SignInType.KAKAO -> SignInKakaoScreen(navController, type)
-        SignInType.NAVER -> SignInNaverScreen(navController, type)
+        SignInType.INIT -> SignInInitScreen(navController) {
+            type.value = it
+        }
+        SignInType.EMAIL -> SignInEmailScreen(navController) {
+            type.value = it
+        }
+        SignInType.KAKAO -> SignInKakaoScreen(navController) {
+            type.value = it
+        }
+        SignInType.NAVER -> SignInNaverScreen(navController) {
+            type.value = it
+        }
     }
 }
 
 @Composable
-fun SignInInitScreen(navController: NavController, type: MutableState<SignInType>) {
+fun SignInInitScreen(
+    navController: NavController,
+    onClick: (SignInType) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(
+                rememberScrollState()
+            )
             .background(color = MaterialTheme.colorScheme.primary),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = stringResource(id = R.string.app_name),
-            modifier = Modifier.padding(top = 140.dp),
-            style = MaterialTheme.typography.titleLarge
+        Image(
+            painter = painterResource(id = R.drawable.app_icon),
+            modifier = Modifier.padding(top = 16.dp),
+            contentDescription = null
         )
         Text(
             text = stringResource(id = R.string.hello), style = MaterialTheme.typography.titleLarge
         )
         SignInButton(
-            onClick = { /*TODO*/ },
+            onClick = { onClick(SignInType.KAKAO) },
             backgroundColor = KakaoYellow,
             textColor = Color(0xD9000000),
             painterId = R.drawable.kakao_icon,
@@ -68,7 +80,7 @@ fun SignInInitScreen(navController: NavController, type: MutableState<SignInType
         )
 
         SignInButton(
-            onClick = { /*TODO*/ },
+            onClick = { onClick(SignInType.NAVER) },
             backgroundColor = naverGreen,
             textColor = Color.White,
             painterId = R.drawable.naver_icon,
@@ -88,7 +100,7 @@ fun SignInInitScreen(navController: NavController, type: MutableState<SignInType
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.clickable {
-                    type.value = SignInType.EMAIL
+                    onClick(SignInType.EMAIL)
                 },
             )
 
@@ -110,34 +122,43 @@ fun SignInInitScreen(navController: NavController, type: MutableState<SignInType
 }
 
 @Composable
-fun SignInEmailScreen(navController: NavController, type: MutableState<SignInType>) {
+fun SignInEmailScreen(
+    navController: NavController,
+    onClick: (SignInType) -> Unit,
+) {
+    BackHandler {
+        onClick(SignInType.INIT)
+    }
     Text(
         text = "Email",
-        modifier = Modifier.clickable {
-            type.value = SignInType.INIT
-        },
     )
 }
 
 
 @Composable
-fun SignInKakaoScreen(navController: NavController, type: MutableState<SignInType>) {
+fun SignInKakaoScreen(
+    navController: NavController,
+    onClick: (SignInType) -> Unit,
+) {
+    BackHandler {
+        onClick(SignInType.INIT)
+    }
     Text(
         text = "Kakao",
-        modifier = Modifier.clickable {
-            type.value = SignInType.INIT
-        },
     )
 }
 
 
 @Composable
-fun SignInNaverScreen(navController: NavController, type: MutableState<SignInType>) {
+fun SignInNaverScreen(
+    navController: NavController,
+    onClick: (SignInType) -> Unit,
+) {
+    BackHandler {
+        onClick(SignInType.INIT)
+    }
     Text(
         text = "Naver",
-        modifier = Modifier.clickable {
-            type.value = SignInType.INIT
-        },
     )
 }
 
