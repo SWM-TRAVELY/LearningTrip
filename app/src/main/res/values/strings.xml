@@ -102,4 +102,7 @@
     <string name="desc_banner">Banner</string>
     <string name="title_type">Type</string>
     <string name="title_category">Category</string>
+    <string name="desc_signin_required">Need signin to use this function</string>
+    <string name="title_signin">Sign In</string>
+    <string name="title_story">Story</string>
 </resources>

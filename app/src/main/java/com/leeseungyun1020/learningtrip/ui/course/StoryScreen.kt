@@ -6,10 +6,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -24,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.ui.Screen
+import com.leeseungyun1020.learningtrip.ui.account.SignInRequiredScreen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
@@ -39,11 +38,12 @@ fun StoryScreen(
     val authViewModel: AuthViewModel = viewModel(
         factory = AuthViewModelFactory(authRepository)
     )
-    //if (true) {
+
     if (!authViewModel.isSingIn()) {
-        Button(onClick = { navController.navigate(Screen.SignIn.route) }) {
-            Text(text = "SIGN IN")
-        }
+        SignInRequiredScreen(
+            navController = navController,
+            name = stringResource(id = R.string.title_story)
+        )
     } else {
         val courseList by viewModel.courseList.observeAsState()
         LearningTripScaffold(
