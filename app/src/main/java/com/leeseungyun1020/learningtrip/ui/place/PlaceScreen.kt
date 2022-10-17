@@ -1,11 +1,11 @@
 package com.leeseungyun1020.learningtrip.ui.place
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -102,11 +102,8 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                                 )
                             }
 
-                            Spacer(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(6.dp)
-                                    .background(color = MaterialTheme.colorScheme.onBackground)
+                            Divider(
+                                thickness = 6.dp
                             )
 
                             val heritages = relatedHeritages ?: listOf()

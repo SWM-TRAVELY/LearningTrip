@@ -10,8 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.leeseungyun1020.learningtrip.ui.theme.Gray2
-import com.leeseungyun1020.learningtrip.ui.theme.Gray4
 
 @Composable
 fun TopIndicatorTab(
@@ -41,7 +39,7 @@ fun TopIndicatorTab(
                             if (state == index)
                                 MaterialTheme.colorScheme.background
                             else
-                                Gray4
+                                MaterialTheme.colorScheme.outlineVariant
                         ),
                 ) {
                     // Top indicator
@@ -64,7 +62,7 @@ fun TopIndicatorTab(
                             .padding(top = 12.dp),
                         style = MaterialTheme.typography.bodyMedium,
                         color = if (state == index) MaterialTheme.colorScheme.primary
-                        else Gray2
+                        else MaterialTheme.colorScheme.outline//Gray2
                     )
                 }
             }
