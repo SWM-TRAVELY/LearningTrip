@@ -4,10 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.leeseungyun1020.learningtrip.model.auth.AuthResponse
-import com.leeseungyun1020.learningtrip.model.auth.SignInRequest
-import com.leeseungyun1020.learningtrip.model.auth.SignUpRequest
-import com.leeseungyun1020.learningtrip.model.auth.TokenResponse
+import com.leeseungyun1020.learningtrip.model.auth.*
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -112,5 +109,43 @@ class AuthRepository(private val context: Context) {
                 }
             }
         )
+    }
+
+    fun autoSignIn() {
+        val refreshToken = loadRefreshToken()
+        if (refreshToken != null) {
+            RetrofitClient.authService.autoSignIn(AutoSignInRequest(refreshToken)).enqueue(
+                object : Callback<AuthResponse<TokenResponse>> {
+                    override fun onFailure(call: Call<AuthResponse<TokenResponse>>, t: Throwable) {
+                        Log.d(TAG, "onFailure: $t")
+                        _isSignIn.value = false
+                    }
+
+                    override fun onResponse(
+                        call: Call<AuthResponse<TokenResponse>>,
+                        response: Response<AuthResponse<TokenResponse>>
+                    ) {
+                        val body = response.body()
+                        Log.d(TAG, "onResponse: $response ${response.body()}")
+                        if (response.isSuccessful && response.code() == 200 && body != null) {
+                            when (body.status) {
+                                200 -> {
+                                    Log.d(TAG, "AUTO SIGN IN SUCCESS")
+                                    saveInitialToken(body.data.refreshToken, body.data.accessToken)
+                                    _isSignIn.value = true
+                                }
+                                else -> {
+                                    deleteToken()
+                                    _isSignIn.value = false
+                                }
+                            }
+                        } else {
+                            deleteToken()
+                            _isSignIn.value = false
+                        }
+                    }
+                }
+            )
+        }
     }
 }

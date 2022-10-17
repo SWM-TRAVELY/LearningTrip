@@ -51,6 +51,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         placeViewModel.updatePlaceData(this)
+        authViewModel.autoSignIn()
         setContent {
             MainScreen(placeViewModel, authViewModel)
         }

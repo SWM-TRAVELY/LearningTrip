@@ -25,6 +25,10 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         authRepository.deleteToken()
     }
 
+    fun autoSignIn() {
+        authRepository.autoSignIn()
+    }
+
 }
 
 class AuthViewModelFactory(private val repository: AuthRepository) : ViewModelProvider.Factory {

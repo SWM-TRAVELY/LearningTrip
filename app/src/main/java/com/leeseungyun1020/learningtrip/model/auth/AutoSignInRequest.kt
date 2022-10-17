@@ -2,7 +2,7 @@ package com.leeseungyun1020.learningtrip.model.auth
 
 import com.google.gson.annotations.SerializedName
 
-data class ReissueTokenResponse(
-    @SerializedName("access_token")
-    val accessToken: String
+data class AutoSignInRequest(
+    @SerializedName("refresh_token")
+    val refreshToken: String
 )
