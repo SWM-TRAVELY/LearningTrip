@@ -65,7 +65,7 @@ fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
             )
 
             Divider(thickness = 6.dp)
-
+/*
             // 나의 정보 수정
             AccountSettingTab(
                 title = stringResource(id = R.string.title_edit_info),
@@ -79,7 +79,7 @@ fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
                 onClick = { /* TODO: 비밀번호 변경 화면으로 이동, navController.navigate() */ },
                 modifier = Modifier.height(53.dp)
             )
-
+*/
             // 로그아웃 / 탈퇴
             Row(
                 modifier = Modifier
@@ -106,7 +106,10 @@ fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
                         .height(10.dp)
                         .width(1.dp)
                 )
-                TextButton(onClick = { /*TODO: 로그아웃 후 회원탈퇴*/ }) {
+                TextButton(onClick = {
+                    authViewModel.signOut()
+                    //TODO: 로그아웃 후 회원탈퇴
+                }) {
                     Text(
                         text = stringResource(id = R.string.action_unregister),
                         style = MaterialTheme.typography.labelSmall.copy(

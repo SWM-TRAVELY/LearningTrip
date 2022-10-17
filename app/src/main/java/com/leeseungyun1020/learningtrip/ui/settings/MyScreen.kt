@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -15,27 +17,31 @@ import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.ui.Screen
+import com.leeseungyun1020.learningtrip.ui.account.SignInRequiredScreen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 
 @Composable
 fun MyScreen(navController: NavController, authViewModel: AuthViewModel) {
-    LearningTripScaffold(
-        title = stringResource(id = R.string.title_my),
-    ) {
-        Column {
-            NameTab(
-                name = "이승윤",
-                email = "ileilliat@gmail.com",
-                imageURL = "https://avatars.githubusercontent.com/u/34941061",
-                level = "장인 탐험가",
-                onMoveClicked = { navController.navigate(Screen.Account.route) },
-                modifier = Modifier.padding(top = 20.dp, bottom = 13.dp)
-            )
+    val isSignIn by authViewModel.isSignIn.observeAsState(false)
 
-            Divider(thickness = 6.dp)
-            // TODO: 마이페이지 구현
+    if (isSignIn) {
+        LearningTripScaffold(
+            title = stringResource(id = R.string.title_my),
+        ) {
+            Column {
+                NameTab(
+                    name = "이승윤",
+                    email = "ileilliat@gmail.com",
+                    imageURL = "https://avatars.githubusercontent.com/u/34941061",
+                    level = "장인 탐험가",
+                    onMoveClicked = { navController.navigate(Screen.Account.route) },
+                    modifier = Modifier.padding(top = 20.dp, bottom = 13.dp)
+                )
+
+                Divider(thickness = 6.dp)
+                // TODO: 마이페이지 구현
 /*
             Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                 SettingIconButton(
@@ -55,10 +61,17 @@ fun MyScreen(navController: NavController, authViewModel: AuthViewModel) {
                 )
             }
 */
-            Divider(thickness = 6.dp)
+                Divider(thickness = 6.dp)
 
+            }
         }
+    } else {
+        SignInRequiredScreen(
+            navController = navController,
+            name = stringResource(id = R.string.title_my)
+        )
     }
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)
