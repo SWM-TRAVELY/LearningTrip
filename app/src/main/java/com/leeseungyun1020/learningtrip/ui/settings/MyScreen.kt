@@ -7,18 +7,23 @@ import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 
 @Composable
-fun MyScreen(navController: NavController) {
+fun MyScreen(navController: NavController, authViewModel: AuthViewModel) {
     LearningTripScaffold(
         title = stringResource(id = R.string.title_my),
     ) {
@@ -60,5 +65,9 @@ fun MyScreen(navController: NavController) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MyScreenPrev() {
-    MyScreen(navController = rememberNavController())
+    val authRepository = AuthRepository(LocalContext.current)
+    val authViewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(authRepository)
+    )
+    MyScreen(navController = rememberNavController(), authViewModel)
 }

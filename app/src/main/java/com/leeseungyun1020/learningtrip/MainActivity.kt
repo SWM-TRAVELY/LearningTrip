@@ -26,33 +26,40 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.data.AppDatabase
+import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
 class MainActivity : ComponentActivity() {
     val database by lazy { AppDatabase.getDatabase(this) }
-    val repository by lazy { PlaceRepository(database.placeDao()) }
+    val placeRepository by lazy { PlaceRepository(database.placeDao()) }
     val placeViewModel: PlaceViewModel by viewModels {
-        PlaceViewModelFactory(repository)
+        PlaceViewModelFactory(placeRepository)
+    }
+    val authRepository by lazy { AuthRepository(this) }
+    val authViewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory(authRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         placeViewModel.updatePlaceData(this)
         setContent {
-            MainScreen(placeViewModel)
+            MainScreen(placeViewModel, authViewModel)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(placeViewModel: PlaceViewModel) {
+fun MainScreen(placeViewModel: PlaceViewModel, authViewModel: AuthViewModel) {
     val navController = rememberNavController()
     val isPlaceUpdated by placeViewModel.isUpdated.observeAsState()
     LearningTripTheme {
@@ -113,7 +120,7 @@ fun MainScreen(placeViewModel: PlaceViewModel) {
                         startDestination = NavigationScreen.Home.route,
                         Modifier.padding(innerPadding)
                     ) {
-                        graph(navController, placeViewModel)
+                        graph(navController, placeViewModel, authViewModel)
                     }
                 }
             } else {

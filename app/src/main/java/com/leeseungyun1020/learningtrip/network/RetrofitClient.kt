@@ -30,4 +30,8 @@ object RetrofitClient {
     val searchService: SearchService by lazy {
         retrofit.create(SearchService::class.java)
     }
+
+    val authService: AuthService by lazy {
+        retrofit.create(AuthService::class.java)
+    }
 }

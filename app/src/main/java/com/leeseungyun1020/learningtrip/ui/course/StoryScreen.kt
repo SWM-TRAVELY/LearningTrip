@@ -31,21 +31,19 @@ import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
 
 @Composable
 fun StoryScreen(
-    navController: NavController, viewModel: CourseViewModel = viewModel(),
+    navController: NavController,
+    authViewModel: AuthViewModel,
+    courseViewModel: CourseViewModel = viewModel(),
+) {
+    val isSignIn by authViewModel.isSignIn.observeAsState(false)
 
-    ) {
-    val authRepository = AuthRepository(LocalContext.current)
-    val authViewModel: AuthViewModel = viewModel(
-        factory = AuthViewModelFactory(authRepository)
-    )
-
-    if (!authViewModel.isSingIn()) {
+    if (!isSignIn) {
         SignInRequiredScreen(
             navController = navController,
             name = stringResource(id = R.string.title_story)
         )
     } else {
-        val courseList by viewModel.courseList.observeAsState()
+        val courseList by courseViewModel.courseList.observeAsState()
         LearningTripScaffold(
             title = stringResource(id = R.string.nav_story),
             floatingActionButton = {
@@ -73,5 +71,9 @@ fun StoryScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun StoryScreenPrev() {
-    StoryScreen(navController = rememberNavController())
+    val authRepository = AuthRepository(LocalContext.current)
+    val authViewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(authRepository)
+    )
+    StoryScreen(navController = rememberNavController(), authViewModel)
 }

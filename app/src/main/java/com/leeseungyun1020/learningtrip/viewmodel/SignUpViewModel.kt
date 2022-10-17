@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.viewmodel
 
+import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -74,13 +75,9 @@ class SignUpViewModel : ViewModel() {
         _isPasswordChecked = passwordCheck == password
 
         _isNameError = name.length < 2
-        _isEmailError = email.length < 5
-        _isPasswordError = password.length < 8
+        _isEmailError = email.length < 5 && !Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        _isPasswordError = password.length < 8 || password.length > 20
         _isNicknameError = nickname.length < 2
-        _isPhoneError = phone.length < 10
-
-        if (!isNameError && !isEmailError && isPasswordChecked && !isPasswordError && !isNicknameError && !isPhoneError) {
-            // TODO: 회원가입
-        }
+        _isPhoneError = phone.length < 10 && !Patterns.PHONE.matcher(phone).matches()
     }
 }

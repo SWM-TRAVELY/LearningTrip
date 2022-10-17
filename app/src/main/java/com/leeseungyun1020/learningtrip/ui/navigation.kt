@@ -20,9 +20,14 @@ import com.leeseungyun1020.learningtrip.ui.settings.AccountScreen
 import com.leeseungyun1020.learningtrip.ui.settings.AddReviewScreen
 import com.leeseungyun1020.learningtrip.ui.settings.MyReviewScreen
 import com.leeseungyun1020.learningtrip.ui.settings.MyScreen
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
-fun NavGraphBuilder.graph(navController: NavController, placeViewModel: PlaceViewModel) {
+fun NavGraphBuilder.graph(
+    navController: NavController,
+    placeViewModel: PlaceViewModel,
+    authViewModel: AuthViewModel
+) {
     composable(NavigationScreen.Home.route) {
         HomeScreen(navController, placeViewModel)
     }
@@ -30,13 +35,13 @@ fun NavGraphBuilder.graph(navController: NavController, placeViewModel: PlaceVie
         CategoryScreen(navController)
     }
     composable(NavigationScreen.Story.route) {
-        StoryScreen(navController)
+        StoryScreen(navController, authViewModel)
     }
     composable(NavigationScreen.Nearby.route) {
         NearbyScreen(navController)
     }
     composable(NavigationScreen.My.route) {
-        MyScreen(navController)
+        MyScreen(navController, authViewModel)
     }
 
     navigation(
@@ -44,10 +49,10 @@ fun NavGraphBuilder.graph(navController: NavController, placeViewModel: PlaceVie
         route = "sign"
     ) {
         composable(Screen.SignIn.route) {
-            SignInScreen(navController)
+            SignInScreen(navController, authViewModel)
         }
         composable(Screen.SignUp.route) {
-            SignUpScreen(navController)
+            SignUpScreen(navController, authViewModel)
         }
     }
 
@@ -87,7 +92,7 @@ fun NavGraphBuilder.graph(navController: NavController, placeViewModel: PlaceVie
     }
 
     composable(Screen.Account.route) {
-        AccountScreen(navController)
+        AccountScreen(navController, authViewModel)
     }
 
     composable(Screen.MyReview.route) {
