@@ -12,6 +12,7 @@ import com.leeseungyun1020.learningtrip.ui.course.AddPlaceScreen
 import com.leeseungyun1020.learningtrip.ui.course.CourseScreen
 import com.leeseungyun1020.learningtrip.ui.course.StoryScreen
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
+import com.leeseungyun1020.learningtrip.ui.nearby.NearbyScreen
 import com.leeseungyun1020.learningtrip.ui.permission.PermissionScreen
 import com.leeseungyun1020.learningtrip.ui.place.HeritageScreen
 import com.leeseungyun1020.learningtrip.ui.place.PlaceScreen

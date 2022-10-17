@@ -75,7 +75,7 @@ fun MainScreen(placeViewModel: PlaceViewModel, authViewModel: AuthViewModel) {
                             NavigationScreen.Category,
                             NavigationScreen.Story,
                             NavigationScreen.Home,
-                            NavigationScreen.Nearby,
+                            // NavigationScreen.Nearby,
                             NavigationScreen.My
                         )
 
@@ -151,12 +151,6 @@ fun CategoryScreen(navController: NavController) {
             Text(text = "Search keyword")
         }
     }
-}
-
-@Composable
-fun NearbyScreen(navController: NavController) {
-    Text(text = "Nearby")
-    CircularProgressIndicator()
 }
 
 @Composable
