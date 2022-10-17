@@ -7,17 +7,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.ui.theme.Gray1
-import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,8 +39,8 @@ fun SignUpTextField(
         colors = TextFieldDefaults.textFieldColors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            containerColor = Gray1,
-            placeholderColor = Gray3
+            containerColor = MaterialTheme.colorScheme.outlineVariant,
+            placeholderColor = MaterialTheme.colorScheme.outline
         ),
         singleLine = true,
         shape = RoundedCornerShape(10.dp),
