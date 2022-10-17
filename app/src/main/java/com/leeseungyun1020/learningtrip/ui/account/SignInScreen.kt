@@ -48,6 +48,7 @@ import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.SimpleTitleScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.KakaoYellow
 import com.leeseungyun1020.learningtrip.ui.theme.naverGreen
+import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 import org.json.JSONObject
@@ -162,6 +163,7 @@ fun SignInEmailScreen(
 ) {
     val focusManager = LocalFocusManager.current
     val isSignIn by viewModel.isSignIn.observeAsState(false)
+    val signInError by viewModel.signInError.observeAsState(false)
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
@@ -172,6 +174,39 @@ fun SignInEmailScreen(
 
     if (isSignIn) {
         navController.popBackStack(NavigationScreen.Home.route, false)
+    }
+
+    if (signInError) {
+        AlertDialog(
+            onDismissRequest = {
+                viewModel.signInError.value = false
+            },
+            title = {
+                Text(
+                    text = stringResource(id = R.string.title_signin),
+                    fontFamily = notoSansKRFamily
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(id = R.string.error_signin),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.signInError.value = false
+                    }
+                ) {
+                    Text(
+                        stringResource(id = R.string.action_confirm),
+                        fontFamily = notoSansKRFamily
+                    )
+                }
+            },
+        )
     }
 
     SimpleTitleScaffold(title = stringResource(id = R.string.title_signin)) {

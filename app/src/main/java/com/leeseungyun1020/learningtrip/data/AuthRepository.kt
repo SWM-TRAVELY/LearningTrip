@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.auth.AuthResponse
+import com.leeseungyun1020.learningtrip.model.auth.SignInRequest
 import com.leeseungyun1020.learningtrip.model.auth.SignUpRequest
 import com.leeseungyun1020.learningtrip.model.auth.TokenResponse
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
@@ -50,7 +51,35 @@ class AuthRepository(private val context: Context) {
     }
 
     fun signIn(email: String, password: String) {
-        _isSignIn.value = true
+        RetrofitClient.authService.signIn(SignInRequest(email, password)).enqueue(
+            object : Callback<AuthResponse<TokenResponse>> {
+                override fun onFailure(call: Call<AuthResponse<TokenResponse>>, t: Throwable) {
+                    signInError.value = true
+                    Log.d(TAG, "onFailure: $t")
+                }
+
+                override fun onResponse(
+                    call: Call<AuthResponse<TokenResponse>>,
+                    response: Response<AuthResponse<TokenResponse>>
+                ) {
+                    val body = response.body()
+                    Log.d(TAG, "onResponse: $response ${response.body()}")
+                    if (response.isSuccessful && response.code() == 200 && body != null) {
+                        when (body.status) {
+                            200 -> {
+                                signInError.value = false
+                                saveInitialToken(body.data.refreshToken, body.data.accessToken)
+                            }
+                            else -> {
+                                signInError.value = true
+                            }
+                        }
+                    } else {
+                        signInError.value = true
+                    }
+                }
+            }
+        )
     }
 
     fun signUp(email: String, password: String, nickname: String, phone: String) {

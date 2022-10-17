@@ -1,6 +1,7 @@
 package com.leeseungyun1020.learningtrip.network
 
 import com.leeseungyun1020.learningtrip.model.auth.AuthResponse
+import com.leeseungyun1020.learningtrip.model.auth.SignInRequest
 import com.leeseungyun1020.learningtrip.model.auth.SignUpRequest
 import com.leeseungyun1020.learningtrip.model.auth.TokenResponse
 import retrofit2.http.Body
@@ -12,6 +13,12 @@ interface AuthService {
     @POST("/user/signup")
     fun signUp(
         @Body signUpRequest: SignUpRequest
+    ): retrofit2.Call<AuthResponse<TokenResponse>>
+
+    @Headers("Accept:application/json", "Content-Type: application/json")
+    @POST("/login")
+    fun signIn(
+        @Body signInRequest: SignInRequest
     ): retrofit2.Call<AuthResponse<TokenResponse>>
 
 }

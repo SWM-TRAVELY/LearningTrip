@@ -107,4 +107,5 @@
     <string name="title_signin">로그인</string>
     <string name="title_story">스토리</string>
     <string name="error_signup">회원가입에 실패하였습니다.</string>
+    <string name="error_signin">로그인에 실패하였습니다.</string>
 </resources>
