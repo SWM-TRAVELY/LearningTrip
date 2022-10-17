@@ -4,8 +4,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.leeseungyun1020.learningtrip.NoticeListScreen
-import com.leeseungyun1020.learningtrip.NoticeScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignInScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignUpScreen
 import com.leeseungyun1020.learningtrip.ui.category.CategoryScreen
@@ -113,9 +111,5 @@ fun NavGraphBuilder.graph(
 
     composable(Screen.NoticeList.route) {
         NoticeListScreen(navController)
-    }
-
-    composable(Screen.Notice.route) {
-        NoticeScreen(navController, it.arguments?.getString("id") ?: "0")
     }
 }

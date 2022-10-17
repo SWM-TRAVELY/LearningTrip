@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
@@ -19,7 +18,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -29,7 +27,6 @@ import com.leeseungyun1020.learningtrip.data.AppDatabase
 import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
-import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.graph
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
@@ -141,20 +138,4 @@ fun DefaultPreview() {
             CircularProgressIndicator()
         }
     }
-}
-
-@Composable
-fun NoticeListScreen(navController: NavController) {
-    Column {
-        Text(text = "noticeList")
-        Button(onClick = { navController.navigate("${Screen.Notice.root}/1") }) {
-            Text(text = "Notice 1")
-        }
-    }
-
-}
-
-@Composable
-fun NoticeScreen(navController: NavController, id: String) {
-    Text(text = "notice $id")
 }

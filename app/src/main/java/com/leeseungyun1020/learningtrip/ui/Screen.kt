@@ -62,7 +62,6 @@ sealed class NavigationScreen(
             Screen.Achievement.route,
             Screen.Sticker.route,
             Screen.NoticeList.route,
-            Screen.Notice.route
         )
     )
 }
@@ -84,5 +83,4 @@ sealed class Screen(val route: String, val root: String) {
     object Achievement : Screen("achievement", "achievement")
     object Sticker : Screen("sticker", "sticker")
     object NoticeList : Screen("noticeList", "noticeList")
-    object Notice : Screen("notice/{id}", "notice")
 }
