@@ -4,7 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.leeseungyun1020.learningtrip.*
+import com.leeseungyun1020.learningtrip.NoticeListScreen
+import com.leeseungyun1020.learningtrip.NoticeScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignInScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignUpScreen
 import com.leeseungyun1020.learningtrip.ui.category.CategoryScreen
@@ -18,10 +19,7 @@ import com.leeseungyun1020.learningtrip.ui.permission.PermissionScreen
 import com.leeseungyun1020.learningtrip.ui.place.HeritageScreen
 import com.leeseungyun1020.learningtrip.ui.place.PlaceScreen
 import com.leeseungyun1020.learningtrip.ui.search.SearchScreen
-import com.leeseungyun1020.learningtrip.ui.settings.AccountScreen
-import com.leeseungyun1020.learningtrip.ui.settings.AddReviewScreen
-import com.leeseungyun1020.learningtrip.ui.settings.MyReviewScreen
-import com.leeseungyun1020.learningtrip.ui.settings.MyScreen
+import com.leeseungyun1020.learningtrip.ui.settings.*
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 

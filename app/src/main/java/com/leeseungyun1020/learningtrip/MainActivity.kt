@@ -144,30 +144,6 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun CollectionScreen(navController: NavController) {
-    Column {
-        Text(text = "collection")
-        Button(onClick = { navController.navigate(Screen.Achievement.route) }) {
-            Text(text = "Achievement")
-        }
-        Button(onClick = { navController.navigate(Screen.Sticker.route) }) {
-            Text(text = "Sticker")
-        }
-    }
-
-}
-
-@Composable
-fun AchievementScreen(navController: NavController) {
-    Text(text = "achievement")
-}
-
-@Composable
-fun StickerScreen(navController: NavController) {
-    Text(text = "sticker")
-}
-
-@Composable
 fun NoticeListScreen(navController: NavController) {
     Column {
         Text(text = "noticeList")
