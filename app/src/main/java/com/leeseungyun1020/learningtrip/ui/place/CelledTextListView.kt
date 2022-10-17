@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
 import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
@@ -25,9 +24,9 @@ import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 fun CelledTextListView(
     modifier: Modifier = Modifier,
     title: String? = null,
-    titleColor: Color = Color.Black,
+    titleColor: Color = MaterialTheme.colorScheme.onBackground,
     items: List<Pair<String, String>>,
-    fontColor: Color = Color.Black,
+    fontColor: Color = MaterialTheme.colorScheme.onBackground,
     showDialog: Boolean = false
 ) {
     var openDialog by remember { mutableStateOf(false) }
@@ -93,7 +92,6 @@ fun CelledTextListView(
                     Text(
                         text = item.second,
                         style = MaterialTheme.typography.bodySmall,
-                        lineHeight = 12.sp,
                         color = fontColor,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis

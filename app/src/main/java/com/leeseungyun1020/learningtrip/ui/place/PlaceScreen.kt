@@ -26,7 +26,6 @@ import com.leeseungyun1020.learningtrip.model.PlaceReview
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
-import com.leeseungyun1020.learningtrip.ui.theme.Gray4
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
 @Composable
@@ -107,7 +106,7 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(6.dp)
-                                    .background(color = Gray4)
+                                    .background(color = MaterialTheme.colorScheme.onBackground)
                             )
 
                             val heritages = relatedHeritages ?: listOf()
