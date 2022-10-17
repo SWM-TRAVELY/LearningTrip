@@ -26,11 +26,11 @@ fun SignInRequiredScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = name, style = MaterialTheme.typography.bodyLarge)
+        Text(text = name, style = MaterialTheme.typography.titleLarge)
         Text(
             modifier = Modifier.padding(top = 8.dp),
             text = stringResource(id = R.string.desc_signin_required),
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyLarge
         )
         Button(
             modifier = Modifier
