@@ -24,6 +24,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
+import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
@@ -86,7 +87,10 @@ fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
                     .height(IntrinsicSize.Min)
                     .align(Alignment.End)
             ) {
-                TextButton(onClick = { authViewModel.signOut() }) {
+                TextButton(onClick = {
+                    authViewModel.signOut()
+                    navController.popBackStack(NavigationScreen.Home.route, false)
+                }) {
                     Text(
                         text = stringResource(id = R.string.action_signout),
                         style = MaterialTheme.typography.labelSmall.copy(
