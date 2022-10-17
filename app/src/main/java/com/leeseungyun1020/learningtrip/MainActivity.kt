@@ -144,16 +144,6 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun CategoryScreen(navController: NavController) {
-    Column {
-        Text(text = "Category")
-        Button(onClick = { navController.navigate("${Screen.Search.root}/keyword") }) {
-            Text(text = "Search keyword")
-        }
-    }
-}
-
-@Composable
 fun CollectionScreen(navController: NavController) {
     Column {
         Text(text = "collection")

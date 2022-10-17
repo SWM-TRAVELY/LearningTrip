@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.leeseungyun1020.learningtrip.*
 import com.leeseungyun1020.learningtrip.ui.account.SignInScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignUpScreen
+import com.leeseungyun1020.learningtrip.ui.category.CategoryScreen
 import com.leeseungyun1020.learningtrip.ui.course.AddCourseScreen
 import com.leeseungyun1020.learningtrip.ui.course.AddPlaceScreen
 import com.leeseungyun1020.learningtrip.ui.course.CourseScreen
