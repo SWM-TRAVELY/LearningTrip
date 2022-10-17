@@ -36,25 +36,19 @@ import com.leeseungyun1020.learningtrip.viewmodel.SignUpViewModel
 
 @Composable
 fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = viewModel()) {
-    SimpleTitleScaffold(title = stringResource(id = R.string.app_name)) {
+    SimpleTitleScaffold(title = stringResource(id = R.string.title_signup)) {
         var passwordVisible by rememberSaveable { mutableStateOf(false) }
         val focusManager = LocalFocusManager.current
         Column(
             Modifier.verticalScroll(rememberScrollState())
         ) {
-            Text(
-                modifier = Modifier.padding(top = 35.dp, start = 16.dp, end = 16.dp),
-                text = stringResource(id = R.string.title_signup),
-                style = MaterialTheme.typography.titleLarge
-            )
-
             SignUpTextField(
                 value = viewModel.name,
                 onValueChange = { viewModel.onUpdateName(it) },
                 hintId = R.string.hint_name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp, start = 16.dp, end = 16.dp),
+                    .padding(top = 60.dp, start = 16.dp, end = 16.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text, imeAction = ImeAction.Next
                 ),
