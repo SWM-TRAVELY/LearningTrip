@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
+import com.leeseungyun1020.learningtrip.network.loadAuthRequiredNetworkData
 import com.leeseungyun1020.learningtrip.network.loadNetworkData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,10 +21,12 @@ class CourseRepository {
         }
     }
 
-    suspend fun loadCourseList(token: String) {
+    suspend fun loadCourseList(token: String, onReloadRequired: () -> Unit) {
         withContext(Dispatchers.IO) {
-            RetrofitClient.courseService.getUserCourseList(token).loadNetworkData(
-                target = storyCourses
+            RetrofitClient.courseService.getUserCourseList(token).loadAuthRequiredNetworkData(
+                target = storyCourses,
+                null,
+                onReloadRequired
             )
         }
     }

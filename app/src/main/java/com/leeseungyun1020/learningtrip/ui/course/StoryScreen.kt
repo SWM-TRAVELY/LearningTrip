@@ -46,7 +46,7 @@ fun StoryScreen(
         val courseList by courseViewModel.courseList.observeAsState()
         val token = authViewModel.token
         if (token != null)
-            courseViewModel.loadCourseList(token)
+            courseViewModel.loadCourseList(token) { authViewModel.reloadToken() }
         LearningTripScaffold(
             title = stringResource(id = R.string.nav_story),
             floatingActionButton = {

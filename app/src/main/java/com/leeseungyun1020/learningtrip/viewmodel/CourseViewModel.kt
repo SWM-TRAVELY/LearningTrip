@@ -22,7 +22,7 @@ class CourseViewModel(private val repository: CourseRepository = CourseRepositor
         repository.searchById(id)
     }
 
-    fun loadCourseList(token: String) = viewModelScope.launch {
-        repository.loadCourseList(token)
+    fun loadCourseList(token: String, onReloadRequired: () -> Unit) = viewModelScope.launch {
+        repository.loadCourseList(token, onReloadRequired)
     }
 }
