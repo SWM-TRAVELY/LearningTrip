@@ -22,16 +22,19 @@ fun <T> Call<T>.loadAuthRequiredNetworkData(
                 call: Call<T>,
                 response: Response<T>
             ) {
-                if (response.isSuccessful && response.body() != null) {
-                    when (response.code()) {
-                        200 -> target.postValue(response.body())
-                        401 -> if (onReloadRequired != null) onReloadRequired()
+                when (response.code()) {
+                    200 -> {
+                        if (response.body() != null)
+                            target.postValue(response.body())
                     }
-                    if (response.code() != 200 && fallback != null) {
-                        target.postValue(fallback)
+                    401 -> {
+                        if (onReloadRequired != null) onReloadRequired()
                     }
-                } else if (fallback != null) {
-                    target.postValue(fallback)
+                    else -> {
+                        if (fallback != null) {
+                            target.postValue(fallback)
+                        }
+                    }
                 }
             }
         }
