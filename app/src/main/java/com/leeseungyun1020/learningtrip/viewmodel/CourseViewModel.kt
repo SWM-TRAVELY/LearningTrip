@@ -18,17 +18,11 @@ class CourseViewModel(private val repository: CourseRepository = CourseRepositor
     val course: LiveData<Course>
         get() = _course
 
-    init {
-        viewModelScope.launch {
-            repository.loadCourseList()
-        }
-    }
-
     fun searchById(id: Int) = viewModelScope.launch {
         repository.searchById(id)
     }
 
-    fun loadCourseList() = viewModelScope.launch {
-        repository.loadCourseList()
+    fun loadCourseList(token: String) = viewModelScope.launch {
+        repository.loadCourseList(token)
     }
 }

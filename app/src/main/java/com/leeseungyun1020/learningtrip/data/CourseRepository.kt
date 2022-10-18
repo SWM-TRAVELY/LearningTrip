@@ -20,10 +20,9 @@ class CourseRepository {
         }
     }
 
-    suspend fun loadCourseList() {
-        // TODO: 사용자별 코스 리스트로 변경
+    suspend fun loadCourseList(token: String) {
         withContext(Dispatchers.IO) {
-            RetrofitClient.homeService.getRecommendCourse().loadNetworkData(
+            RetrofitClient.courseService.getUserCourseList(token).loadNetworkData(
                 target = storyCourses
             )
         }
