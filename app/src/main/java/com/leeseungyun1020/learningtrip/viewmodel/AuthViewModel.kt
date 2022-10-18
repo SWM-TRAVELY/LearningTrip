@@ -8,6 +8,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     val isSignIn = authRepository.isSignIn
     val signInError = authRepository.signInError
     val signUpError = authRepository.signUpError
+    val token = authRepository.loadToken()
 
     fun signInWithTokens(refreshToken: String, token: String) {
         authRepository.saveInitialToken(refreshToken, token)
