@@ -1,6 +1,9 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,9 +11,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -57,14 +63,27 @@ fun StoryScreen(
                     )
                 }
             }) {
-
-            LazyColumn(modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)) {
-                items(courseList ?: emptyList()) { course ->
-                    CourseBox(course = course, modifier = Modifier
-                        .padding(bottom = 12.dp)
-                        .clickable {
-                            navController.navigate("${Screen.Course.root}/${course.id}")
-                        })
+            if (courseList.isNullOrEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        modifier = Modifier.padding(top = 8.dp),
+                        text = stringResource(id = R.string.desc_empty_story),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            } else {
+                LazyColumn(modifier = Modifier.padding(top = 28.dp, start = 20.dp, end = 20.dp)) {
+                    items(courseList ?: emptyList()) { course ->
+                        CourseBox(course = course, modifier = Modifier
+                            .padding(bottom = 12.dp)
+                            .clickable {
+                                navController.navigate("${Screen.Course.root}/${course.id}")
+                            })
+                    }
                 }
             }
         }

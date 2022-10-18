@@ -107,4 +107,5 @@
     <string name="title_story">Story</string>
     <string name="error_signup">Failed to sign up</string>
     <string name="error_signin">Failed to sign in</string>
+    <string name="desc_empty_story">Make your new course!</string>
 </resources>
