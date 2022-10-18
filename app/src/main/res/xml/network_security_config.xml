@@ -4,5 +4,6 @@
         <domain includeSubdomains="true">learningtrip.app</domain>
         <domain includeSubdomains="true">visitkorea.or.kr</domain>
         <domain includeSubdomains="true">cha.go.kr</domain>
+        <domain includeSubdomains="true">kakao.com</domain>
     </domain-config>
 </network-security-config>

@@ -1,11 +1,11 @@
 package com.leeseungyun1020.learningtrip.ui.place
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -26,7 +26,6 @@ import com.leeseungyun1020.learningtrip.model.PlaceReview
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
-import com.leeseungyun1020.learningtrip.ui.theme.Gray4
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
 @Composable
@@ -103,11 +102,8 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                                 )
                             }
 
-                            Spacer(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(6.dp)
-                                    .background(color = Gray4)
+                            Divider(
+                                thickness = 6.dp
                             )
 
                             val heritages = relatedHeritages ?: listOf()

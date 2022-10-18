@@ -2,59 +2,105 @@ package com.leeseungyun1020.learningtrip.ui.account
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ToggleOff
-import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.viewmodel.SignUpViewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.input.VisualTransformation
+import com.leeseungyun1020.learningtrip.data.AuthRepository
+import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.common.SimpleTitleScaffold
+import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
+import com.leeseungyun1020.learningtrip.viewmodel.SignUpViewModel
 
 @Composable
-fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = viewModel()) {
-    SimpleTitleScaffold(title = stringResource(id = R.string.app_name)) {
+fun SignUpScreen(
+    navController: NavController,
+    authViewModel: AuthViewModel,
+    viewModel: SignUpViewModel = viewModel()
+) {
+    SimpleTitleScaffold(title = stringResource(id = R.string.title_signup)) {
+        val isSignIn by authViewModel.isSignIn.observeAsState(false)
+        val signUpError by authViewModel.signUpError.observeAsState(false)
         var passwordVisible by rememberSaveable { mutableStateOf(false) }
         val focusManager = LocalFocusManager.current
-        Column {
-            Text(
-                modifier = Modifier.padding(top = 35.dp, start = 16.dp, end = 16.dp),
-                text = stringResource(id = R.string.title_signup),
-                style = MaterialTheme.typography.titleLarge
-            )
 
+
+        if (isSignIn) {
+            navController.popBackStack(NavigationScreen.Home.route, false)
+        }
+
+        if (signUpError) {
+            AlertDialog(
+                onDismissRequest = {
+                    authViewModel.signUpError.value = false
+                },
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.title_signup),
+                        fontFamily = notoSansKRFamily
+                    )
+                },
+                text = {
+                    Text(
+                        text = stringResource(id = R.string.error_signup),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            authViewModel.signUpError.value = false
+                        }
+                    ) {
+                        Text(
+                            stringResource(id = R.string.action_confirm),
+                            fontFamily = notoSansKRFamily
+                        )
+                    }
+                },
+            )
+        }
+
+        Column(
+            Modifier.verticalScroll(rememberScrollState())
+        ) {
             SignUpTextField(
                 value = viewModel.name,
                 onValueChange = { viewModel.onUpdateName(it) },
                 hintId = R.string.hint_name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp, start = 16.dp, end = 16.dp),
+                    .padding(top = 60.dp, start = 16.dp, end = 16.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text, imeAction = ImeAction.Next
                 ),
@@ -195,6 +241,17 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = view
                 ),
                 keyboardActions = KeyboardActions(onDone = {
                     viewModel.onSignUp()
+                    if (!viewModel.isNameError && !viewModel.isEmailError &&
+                        viewModel.isPasswordChecked && !viewModel.isPasswordError &&
+                        !viewModel.isNicknameError && !viewModel.isPhoneError
+                    ) {
+                        authViewModel.signUp(
+                            viewModel.email,
+                            viewModel.password,
+                            viewModel.nickname,
+                            viewModel.phone
+                        )
+                    }
                 }),
             )
 
@@ -214,6 +271,17 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = view
                     .padding(top = 48.dp, start = 16.dp, end = 16.dp),
                 onClick = {
                     viewModel.onSignUp()
+                    if (!viewModel.isNameError && !viewModel.isEmailError &&
+                        viewModel.isPasswordChecked && !viewModel.isPasswordError &&
+                        !viewModel.isNicknameError && !viewModel.isPhoneError
+                    ) {
+                        authViewModel.signUp(
+                            viewModel.email,
+                            viewModel.password,
+                            viewModel.nickname,
+                            viewModel.phone
+                        )
+                    }
                 },
                 shape = RoundedCornerShape(10.dp),
             ) {
@@ -227,5 +295,9 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = view
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SignUpScreenPrev() {
-    SignUpScreen(navController = rememberNavController())
+    val authRepository = AuthRepository(LocalContext.current)
+    val authViewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(authRepository)
+    )
+    SignUpScreen(navController = rememberNavController(), authViewModel)
 }

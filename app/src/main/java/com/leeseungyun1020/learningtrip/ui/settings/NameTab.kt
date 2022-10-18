@@ -29,13 +29,14 @@ fun NameTab(
     name: String,
     email: String,
     imageURL: String,
+    level: String,
     onMoveClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = 16.dp)
-            .clickable { onMoveClicked() },
+            .clickable { onMoveClicked() }
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
@@ -63,7 +64,7 @@ fun NameTab(
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
                 )
                 LevelBadge(
-                    label = "장인 탐험가",
+                    label = level,
                     modifier = Modifier
                         .padding(start = 8.dp)
                         .align(Alignment.CenterVertically)
@@ -87,6 +88,7 @@ fun NameTabPrev() {
         name = "이승윤",
         email = "example@exmaple.com",
         imageURL = "https://avatars.githubusercontent.com/u/34941061",
+        level = "장인 탐험가",
         onMoveClicked = {},
         modifier = Modifier.fillMaxWidth()
     )

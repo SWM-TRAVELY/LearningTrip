@@ -17,16 +17,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.data.AuthRepository
+import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 
 @Composable
-fun AccountScreen(navController: NavController) {
+fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
     val imageURL = "https://avatars.githubusercontent.com/u/34941061"
     val name = "Name"
     LearningTripScaffold(
@@ -60,7 +65,7 @@ fun AccountScreen(navController: NavController) {
             )
 
             Divider(thickness = 6.dp)
-
+/*
             // 나의 정보 수정
             AccountSettingTab(
                 title = stringResource(id = R.string.title_edit_info),
@@ -74,7 +79,7 @@ fun AccountScreen(navController: NavController) {
                 onClick = { /* TODO: 비밀번호 변경 화면으로 이동, navController.navigate() */ },
                 modifier = Modifier.height(53.dp)
             )
-
+*/
             // 로그아웃 / 탈퇴
             Row(
                 modifier = Modifier
@@ -82,7 +87,10 @@ fun AccountScreen(navController: NavController) {
                     .height(IntrinsicSize.Min)
                     .align(Alignment.End)
             ) {
-                TextButton(onClick = { /*TODO: 로그아웃*/ }) {
+                TextButton(onClick = {
+                    authViewModel.signOut()
+                    navController.popBackStack(NavigationScreen.Home.route, false)
+                }) {
                     Text(
                         text = stringResource(id = R.string.action_signout),
                         style = MaterialTheme.typography.labelSmall.copy(
@@ -98,7 +106,10 @@ fun AccountScreen(navController: NavController) {
                         .height(10.dp)
                         .width(1.dp)
                 )
-                TextButton(onClick = { /*TODO: 로그아웃 후 회원탈퇴*/ }) {
+                TextButton(onClick = {
+                    authViewModel.signOut()
+                    //TODO: 로그아웃 후 회원탈퇴
+                }) {
                     Text(
                         text = stringResource(id = R.string.action_unregister),
                         style = MaterialTheme.typography.labelSmall.copy(
@@ -116,5 +127,9 @@ fun AccountScreen(navController: NavController) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AccountScreenPrev() {
-    AccountScreen(navController = rememberNavController())
+    val authRepository = AuthRepository(LocalContext.current)
+    val authViewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(authRepository)
+    )
+    AccountScreen(navController = rememberNavController(), authViewModel)
 }

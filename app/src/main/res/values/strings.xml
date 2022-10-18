@@ -69,10 +69,10 @@
     <string name="action_show_password">Show password</string>
     <string name="action_hide_password">Hide password</string>
     <string name="error_name">The name must be at least 2 characters long.</string>
-    <string name="error_email">The email must be at least 4 characters long.</string>
+    <string name="error_email">Check email format.</string>
     <string name="error_password">The password must be at least 8 characters long.</string>
     <string name="error_nickname">The nickname must be at least 2 characters long.</string>
-    <string name="error_phone">The phone must be at least 10 characters long.</string>
+    <string name="error_phone">Check phone format.</string>
     <string name="title_permission">Check permission</string>
     <string name="title_location_permission">Set location permission</string>
     <string name="desc_location_permission">Location permission is required to recommend nearby tourist spots and collect stickers.</string>
@@ -102,4 +102,9 @@
     <string name="desc_banner">Banner</string>
     <string name="title_type">Type</string>
     <string name="title_category">Category</string>
+    <string name="desc_signin_required">Need signin to use this function</string>
+    <string name="title_signin">Sign In</string>
+    <string name="title_story">Story</string>
+    <string name="error_signup">Failed to sign up</string>
+    <string name="error_signin">Failed to sign in</string>
 </resources>

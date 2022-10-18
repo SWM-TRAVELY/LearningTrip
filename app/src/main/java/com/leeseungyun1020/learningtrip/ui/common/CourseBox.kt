@@ -14,18 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
-import com.leeseungyun1020.learningtrip.model.SimplePlace
 import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
-import java.lang.Integer.min
 
 @Composable
 fun CourseBox(modifier: Modifier = Modifier, course: SimpleCourse) {
@@ -66,7 +63,7 @@ fun CourseBox(modifier: Modifier = Modifier, course: SimpleCourse) {
                 .padding(start = 12.dp, bottom = 6.dp)
         ) {
             Text(
-                text = course.name ?: stringResource(id = R.string.title_course),
+                text = course.name,
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 1.dp)
@@ -79,7 +76,9 @@ fun CourseBox(modifier: Modifier = Modifier, course: SimpleCourse) {
                         fontFamily = notoSansKRFamily,
                         fontSize = 9.sp,
                         color = Color.White,
-                        modifier = Modifier.padding(end = 20.dp)
+                        modifier = Modifier.padding(end = 20.dp),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
             }
         }
