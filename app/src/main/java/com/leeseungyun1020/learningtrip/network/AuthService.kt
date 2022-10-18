@@ -24,4 +24,9 @@ interface AuthService {
         @Body autoSignInRequest: AutoSignInRequest
     ): retrofit2.Call<AuthResponse<TokenResponse>>
 
+    @Headers("Accept:application/json", "Content-Type: application/json")
+    @POST("/auth/reissue_token")
+    fun reloadToken(
+        @Body reloadTokenRequest: ReloadTokenRequest
+    ): retrofit2.Call<AuthResponse<ReloadTokenResponse>>
 }

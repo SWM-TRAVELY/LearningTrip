@@ -30,6 +30,10 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         authRepository.autoSignIn()
     }
 
+    fun reloadToken() {
+        authRepository.reloadToken()
+    }
+
 }
 
 class AuthViewModelFactory(private val repository: AuthRepository) : ViewModelProvider.Factory {

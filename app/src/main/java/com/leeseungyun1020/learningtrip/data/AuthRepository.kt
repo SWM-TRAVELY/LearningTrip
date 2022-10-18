@@ -148,4 +148,41 @@ class AuthRepository(private val context: Context) {
             )
         }
     }
+
+    fun reloadToken() {
+        val refreshToken = loadRefreshToken()
+        if (refreshToken != null) {
+            RetrofitClient.authService.reloadToken(ReloadTokenRequest(refreshToken)).enqueue(
+                object : Callback<AuthResponse<ReloadTokenResponse>> {
+                    override fun onFailure(
+                        call: Call<AuthResponse<ReloadTokenResponse>>,
+                        t: Throwable
+                    ) {
+                        Log.d(TAG, "onFailure: $t")
+                    }
+
+                    override fun onResponse(
+                        call: Call<AuthResponse<ReloadTokenResponse>>,
+                        response: Response<AuthResponse<ReloadTokenResponse>>
+                    ) {
+                        val body = response.body()
+                        Log.d(TAG, "onResponse: $response ${response.body()}")
+                        if (response.isSuccessful && response.code() == 200 && body != null) {
+                            when (body.status) {
+                                200 -> {
+                                    Log.d(TAG, "REFRESH TOKEN SUCCESS")
+                                    saveToken(body.data.accessToken)
+                                }
+                                else -> {
+                                    deleteToken()
+                                }
+                            }
+                        } else {
+                            deleteToken()
+                        }
+                    }
+                }
+            )
+        }
+    }
 }
