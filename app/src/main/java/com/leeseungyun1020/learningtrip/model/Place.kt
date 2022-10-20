@@ -85,6 +85,27 @@ data class SimplePlace(
     )
 }
 
+data class SimpleCoursePlace(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("name")
+    val name: String?,
+    @SerializedName("address")
+    val address: String?,
+    @SerializedName("imageURL")
+    val imageURL: String?,
+    @SerializedName("description")
+    val overview: String? = null,
+    @SerializedName("day")
+    val day: Int?,
+    @SerializedName("sequence")
+    val sequence: Int?,
+    @SerializedName("distance")
+    val distance: Double?,
+    @SerializedName("time")
+    val time: Int?,
+)
+
 fun Place.toSimplePlace(): SimplePlace {
     return SimplePlace(id, name, typeId, address, imageURL)
 }
