@@ -65,7 +65,8 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        navController.navigate("${Screen.Search.root}/$searchText")
+                        if (searchText.isNotEmpty())
+                            navController.navigate("${Screen.Search.root}/$searchText")
                     },
                 ),
                 modifier = Modifier
