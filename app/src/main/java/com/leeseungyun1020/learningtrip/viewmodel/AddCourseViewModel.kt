@@ -30,8 +30,10 @@ class AddCourseViewModel : ViewModel() {
 
     fun swapPlace(i: Int) {
         val place = _modifiedCourseList?.removeAt(i)
-        if (place != null) {
-            _modifiedCourseList?.add(i + 1, place)
+        val next = _modifiedCourseList?.removeAt(i)
+        if (place != null && next != null) {
+            _modifiedCourseList?.add(i, place.copy(day = next.day, sequence = next.sequence))
+            _modifiedCourseList?.add(i, next.copy(day = place.day, sequence = place.sequence))
         }
     }
 

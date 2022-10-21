@@ -1,11 +1,7 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
-import android.util.Log
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,13 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.data.TAG
+import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
@@ -68,89 +65,111 @@ fun AddCourseScreen(
                 },
             )
 
-            var prevDay = 0
-            for ((i, place) in viewModel.modifiedCourseList.withIndex()) {
-                if (place.day != null && place.day > prevDay) {
-                    prevDay = place.day
-                    Text(text = place.day.toString(), style = MaterialTheme.typography.bodyLarge)
-                    Log.d(TAG, "AddCourseScreen: ${place.day}")
-                }
-                var expanded by remember { mutableStateOf(false) }
-                Box {
-                    PlaceLocationBox(simplePlace = place.toSimplePlace(), modifier = Modifier
-                        .padding(
-                            start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
-                        )
-                        .clickable {
-                            expanded = !expanded
-                        })
-                    Box(modifier = Modifier.align(Alignment.Center)) {
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                            modifier = Modifier.align(Alignment.TopEnd)
-                        ) {
-                            DropdownMenuItem(text = { Text(text = stringResource(id = R.string.action_info)) },
-                                onClick = {
-                                    navController.navigate("${Screen.Place.root}/${place.id}")
-                                },
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Default.Info,
-                                        contentDescription = stringResource(id = R.string.action_delete)
-                                    )
-                                })
-                            DropdownMenuItem(text = { Text(text = stringResource(id = R.string.action_delete)) },
-                                onClick = {
-                                    viewModel.removePlace(i)
-                                },
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Default.Delete,
-                                        contentDescription = stringResource(id = R.string.action_delete)
-                                    )
-                                })
+            val placeListByDay = viewModel.modifiedCourseList.groupBy { it.day }
+            var maxDay by remember {
+                mutableStateOf(placeListByDay.keys.maxByOrNull { it ?: 0 } ?: 1)
+            }
+            for (day in 1..maxDay) {
+                val list = placeListByDay[day] ?: emptyList()
+                Text(
+                    text = day.toString(),
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center
+                )
+                for ((i, place) in list.sortedBy(SimpleCoursePlace::sequence).withIndex()) {
+                    var expanded by remember { mutableStateOf(false) }
+                    Box {
+                        PlaceLocationBox(simplePlace = place.toSimplePlace(), modifier = Modifier
+                            .padding(
+                                start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
+                            )
+                            .clickable {
+                                expanded = !expanded
+                            })
+                        Box(modifier = Modifier.align(Alignment.Center)) {
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false },
+                                modifier = Modifier.align(Alignment.TopEnd)
+                            ) {
+                                DropdownMenuItem(text = { Text(text = stringResource(id = R.string.action_info)) },
+                                    onClick = {
+                                        navController.navigate("${Screen.Place.root}/${place.id}")
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Default.Info,
+                                            contentDescription = stringResource(id = R.string.action_delete)
+                                        )
+                                    })
+                                DropdownMenuItem(text = { Text(text = stringResource(id = R.string.action_delete)) },
+                                    onClick = {
+                                        viewModel.removePlace(i)
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = stringResource(id = R.string.action_delete)
+                                        )
+                                    })
+                            }
                         }
                     }
+
+                    if (i < list.lastIndex) IconButton(
+                        onClick = {
+                            viewModel.swapPlace(i)
+
+                        }, modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.SwapVert,
+                            contentDescription = stringResource(
+                                id = R.string.action_swap
+                            )
+                        )
+                    }
                 }
-
-                if (i < viewModel.modifiedCourseList.lastIndex) IconButton(
+                IconButton(
                     onClick = {
-                        viewModel.swapPlace(i)
-
+                        navController.navigate("${Screen.AddPlace.root}/$day/${list.size}")
                     }, modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.SwapVert, contentDescription = stringResource(
-                            id = R.string.action_swap
+                        imageVector = Icons.Default.Add, contentDescription = stringResource(
+                            id = R.string.action_add
                         )
                     )
                 }
             }
 
-            IconButton(
-                onClick = {
-                    navController.navigate("${Screen.AddPlace.root}/0/${0}")
-                }, modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add, contentDescription = stringResource(
-                        id = R.string.action_add
-                    )
-                )
-            }
-
-            Button(
-                onClick = {
-                    viewModel.updateCourse()
-                    navController.popBackStack()
-                }, modifier = Modifier
+            Row(
+                modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 36.dp)
             ) {
-                Text(text = stringResource(id = R.string.action_save_course))
+                Button(
+                    onClick = {
+                        maxDay += 1
+                    }, modifier = Modifier
+                        .padding(horizontal = 4.dp)
+                ) {
+                    Text(text = stringResource(id = R.string.action_add_day))
+                }
+                Button(
+                    onClick = {
+                        viewModel.updateCourse()
+                        navController.popBackStack()
+                    }, modifier = Modifier
+                        .padding(horizontal = 4.dp)
+                ) {
+                    Text(text = stringResource(id = R.string.action_save_course))
+                }
             }
-
         }
     }
 }

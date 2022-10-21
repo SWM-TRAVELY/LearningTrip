@@ -109,4 +109,5 @@
     <string name="error_signup">회원가입에 실패하였습니다.</string>
     <string name="error_signin">로그인에 실패하였습니다.</string>
     <string name="desc_empty_story">새로운 코스를 만들어보세요!</string>
+    <string name="action_add_day">일자 추가</string>
 </resources>
