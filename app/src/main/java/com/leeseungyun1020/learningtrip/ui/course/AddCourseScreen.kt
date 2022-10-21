@@ -108,7 +108,7 @@ fun AddCourseScreen(
                                     })
                                 DropdownMenuItem(text = { Text(text = stringResource(id = R.string.action_delete)) },
                                     onClick = {
-                                        viewModel.removePlace(i)
+                                        viewModel.removePlace(place)
                                     },
                                     leadingIcon = {
                                         Icon(

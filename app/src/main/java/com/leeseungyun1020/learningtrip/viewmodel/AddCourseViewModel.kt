@@ -37,8 +37,8 @@ class AddCourseViewModel : ViewModel() {
         }
     }
 
-    fun removePlace(i: Int) {
-        _modifiedCourseList?.removeAt(i)
+    fun removePlace(simpleCoursePlace: SimpleCoursePlace) {
+        _modifiedCourseList?.remove(simpleCoursePlace)
     }
 
     fun updateCourse() = viewModelScope.launch(Dispatchers.IO) {
