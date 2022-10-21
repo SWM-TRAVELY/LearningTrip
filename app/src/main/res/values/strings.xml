@@ -110,4 +110,5 @@
     <string name="desc_empty_story">Make your new course!</string>
     <string name="action_add_day">Add day</string>
     <string name="desc_add_place">Search and add place</string>
+    <string name="action_delete_course">Delete course</string>
 </resources>

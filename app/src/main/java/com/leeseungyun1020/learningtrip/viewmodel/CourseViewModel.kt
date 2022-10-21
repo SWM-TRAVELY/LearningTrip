@@ -25,4 +25,8 @@ class CourseViewModel(private val repository: CourseRepository = CourseRepositor
     fun loadCourseList(token: String, onReloadRequired: () -> Unit) = viewModelScope.launch {
         repository.loadCourseList(token, onReloadRequired)
     }
+
+    fun deleteCourse(course: Course, token: String) {
+        repository.deleteCourse(course, token)
+    }
 }

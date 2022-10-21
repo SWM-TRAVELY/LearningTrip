@@ -1,10 +1,9 @@
 package com.leeseungyun1020.learningtrip.network
 
 import com.leeseungyun1020.learningtrip.model.Course
+import com.leeseungyun1020.learningtrip.model.CourseResponse
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface CourseService {
     @GET("/course/{id}")
@@ -17,5 +16,24 @@ interface CourseService {
         @Header("Authorization") token: String
     ): retrofit2.Call<List<SimpleCourse>>
 
+    @Headers("Accept:application/json", "Content-Type: application/json")
+    @POST("/course")
+    fun addCourse(
+        @Body course: Course,
+        @Header("Authorization") token: String
+    ): retrofit2.Call<CourseResponse>
 
+    @Headers("Accept:application/json", "Content-Type: application/json")
+    @PUT("/course")
+    fun updateCourse(
+        @Body course: Course,
+        @Header("Authorization") token: String
+    ): retrofit2.Call<CourseResponse>
+
+    @Headers("Accept:application/json", "Content-Type: application/json")
+    @HTTP(method = "DELETE", path = "/course", hasBody = true)
+    fun deleteCourse(
+        @Body course: Course,
+        @Header("Authorization") token: String
+    ): retrofit2.Call<CourseResponse>
 }

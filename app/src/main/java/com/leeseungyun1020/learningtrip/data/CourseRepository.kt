@@ -6,6 +6,7 @@ import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import com.leeseungyun1020.learningtrip.network.loadAuthRequiredNetworkData
 import com.leeseungyun1020.learningtrip.network.loadNetworkData
+import com.leeseungyun1020.learningtrip.network.sendAuthRequiredData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -28,6 +29,24 @@ class CourseRepository {
                 null,
                 onReloadRequired
             )
+        }
+    }
+
+    fun addCourse(course: Course, token: String) {
+        RetrofitClient.courseService.addCourse(course, token).sendAuthRequiredData {
+
+        }
+    }
+
+    fun updateCourse(course: Course, token: String) {
+        RetrofitClient.courseService.updateCourse(course, token).sendAuthRequiredData {
+
+        }
+    }
+
+    fun deleteCourse(course: Course, token: String) {
+        RetrofitClient.courseService.deleteCourse(course, token).sendAuthRequiredData {
+
         }
     }
 }

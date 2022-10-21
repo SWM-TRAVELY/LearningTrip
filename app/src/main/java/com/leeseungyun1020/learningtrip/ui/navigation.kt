@@ -78,7 +78,7 @@ fun NavGraphBuilder.graph(
     }
 
     composable(Screen.AddCourse.route) {
-        AddCourseScreen(navController, it.arguments?.getString("id") ?: "0")
+        AddCourseScreen(navController, it.arguments?.getString("id") ?: "0", authViewModel)
     }
 
     composable(Screen.AddPlace.route) {
@@ -91,7 +91,7 @@ fun NavGraphBuilder.graph(
     }
 
     composable(Screen.Course.route) {
-        CourseScreen(navController, it.arguments?.getString("id") ?: "0")
+        CourseScreen(navController, it.arguments?.getString("id") ?: "0", authViewModel)
     }
 
     composable(Screen.Account.route) {

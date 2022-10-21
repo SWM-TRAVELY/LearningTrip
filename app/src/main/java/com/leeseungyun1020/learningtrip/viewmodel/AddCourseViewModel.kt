@@ -50,11 +50,23 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
         _modifiedCourseList?.remove(simpleCoursePlace)
     }
 
-    fun updateCourse() = viewModelScope.launch(Dispatchers.IO) {
-
-    }
-
-    fun deleteCourse() = viewModelScope.launch(Dispatchers.IO) {
-
+    fun updateCourse(token: String) {
+        if (course.id == null) {
+            repository.addCourse(
+                Course(
+                    id = null,
+                    name = courseName,
+                    placeList = modifiedCourseList
+                ), token
+            )
+        } else {
+            repository.updateCourse(
+                Course(
+                    id = course.id,
+                    name = courseName,
+                    placeList = modifiedCourseList
+                ), token
+            )
+        }
     }
 }

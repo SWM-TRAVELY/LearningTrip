@@ -17,6 +17,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -27,26 +28,32 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 import kotlin.math.max
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AddCourseScreen(
-    navController: NavController, id: String, viewModel: AddCourseViewModel = viewModel()
+    navController: NavController,
+    id: String,
+    authViewModel: AuthViewModel,
+    addCourseViewModel: AddCourseViewModel = viewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    if ((id.toIntOrNull() ?: -1) > 0) viewModel.loadCourse(id.toInt())
+    if ((id.toIntOrNull() ?: -1) > 0) addCourseViewModel.loadCourse(id.toInt())
     var maxDay by remember {
         mutableStateOf(1)
     }
-    val searchedCourse by viewModel.searchedCourse.observeAsState()
+    val searchedCourse by addCourseViewModel.searchedCourse.observeAsState()
     if (searchedCourse != null) {
-        viewModel.initCourse(searchedCourse!!)
+        addCourseViewModel.initCourse(searchedCourse!!)
         maxDay = max(maxDay, searchedCourse?.placeList?.maxOfOrNull { it.day ?: 1 } ?: 1)
     }
 
@@ -59,9 +66,9 @@ fun AddCourseScreen(
             )
         ) {
             OutlinedTextField(
-                value = viewModel.courseName,
+                value = addCourseViewModel.courseName,
                 onValueChange = {
-                    viewModel.courseName = it
+                    addCourseViewModel.courseName = it
                 },
                 singleLine = true,
                 modifier = Modifier
@@ -76,7 +83,7 @@ fun AddCourseScreen(
                 },
             )
 
-            val placeListByDay = viewModel.modifiedCourseList.groupBy { it.day }
+            val placeListByDay = addCourseViewModel.modifiedCourseList.groupBy { it.day }
 
             for (day in 1..maxDay) {
                 val list = placeListByDay[day] ?: emptyList()
@@ -117,7 +124,7 @@ fun AddCourseScreen(
                                     })
                                 DropdownMenuItem(text = { Text(text = stringResource(id = R.string.action_delete)) },
                                     onClick = {
-                                        viewModel.removePlace(place)
+                                        addCourseViewModel.removePlace(place)
                                     },
                                     leadingIcon = {
                                         Icon(
@@ -131,7 +138,7 @@ fun AddCourseScreen(
 
                     if (i < list.lastIndex) IconButton(
                         onClick = {
-                            viewModel.swapPlace(i)
+                            addCourseViewModel.swapPlace(i)
 
                         }, modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
@@ -171,8 +178,11 @@ fun AddCourseScreen(
                 }
                 Button(
                     onClick = {
-                        viewModel.updateCourse()
-                        navController.popBackStack()
+                        val token = authViewModel.token
+                        if (token != null) {
+                            addCourseViewModel.updateCourse(token)
+                            navController.popBackStack()
+                        }
                     }, modifier = Modifier
                         .padding(horizontal = 4.dp)
                 ) {
@@ -186,5 +196,9 @@ fun AddCourseScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AddCourseScreenPrev() {
-    AddCourseScreen(rememberNavController(), "1")
+    val authRepository = AuthRepository(LocalContext.current)
+    val authViewModel: AuthViewModel = viewModel(
+        factory = AuthViewModelFactory(authRepository)
+    )
+    AddCourseScreen(rememberNavController(), "1", authViewModel)
 }
