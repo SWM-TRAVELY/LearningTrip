@@ -75,7 +75,7 @@ sealed class Screen(val route: String, val root: String) {
     object Heritage : Screen("heritage/{id}", "heritage")
     object Search : Screen("search/{key}", "search")
     object AddCourse : Screen("addCourse/{id}", "addCourse")
-    object AddPlace : Screen("addPlace", "addPlace")
+    object AddPlace : Screen("addPlace/{day}/{sequence}", "addPlace")
     object Course : Screen("course/{id}", "course")
     object Account : Screen("account", "account")
     object MyReview : Screen("myReview", "myReview")

@@ -22,6 +22,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
+import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
@@ -56,10 +58,27 @@ fun CourseScreen(
                 thickness = 2.dp, color = MaterialTheme.colorScheme.secondary
             )
 
-
-            for ((i, place) in (course?.placeList ?: emptyList()).withIndex()) {
+            var prev = 0
+            for ((i, place) in (course?.placeList ?: emptyList()).sortedWith(
+                compareBy(
+                    SimpleCoursePlace::day,
+                    SimpleCoursePlace::sequence
+                )
+            ).withIndex()) {
+                if (place.day != null && place.day > prev) {
+                    prev = place.day
+                    Text(
+                        text = place.day.toString(),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                        textAlign = TextAlign.Center
+                    )
+                }
                 PlaceLocationBox(
-                    simplePlace = place, modifier = Modifier
+                    simplePlace = place.toSimplePlace(), modifier = Modifier
                         .padding(
                             start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
                         )

@@ -1,7 +1,11 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
+import android.util.Log
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,7 +20,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -26,7 +29,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.data.AppDatabase
+import com.leeseungyun1020.learningtrip.data.TAG
+import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
@@ -64,10 +68,16 @@ fun AddCourseScreen(
                 },
             )
 
+            var prevDay = 0
             for ((i, place) in viewModel.modifiedCourseList.withIndex()) {
+                if (place.day != null && place.day > prevDay) {
+                    prevDay = place.day
+                    Text(text = place.day.toString(), style = MaterialTheme.typography.bodyLarge)
+                    Log.d(TAG, "AddCourseScreen: ${place.day}")
+                }
                 var expanded by remember { mutableStateOf(false) }
                 Box {
-                    PlaceLocationBox(simplePlace = place, modifier = Modifier
+                    PlaceLocationBox(simplePlace = place.toSimplePlace(), modifier = Modifier
                         .padding(
                             start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
                         )
@@ -120,7 +130,7 @@ fun AddCourseScreen(
 
             IconButton(
                 onClick = {
-                    navController.navigate(Screen.AddPlace.route)
+                    navController.navigate("${Screen.AddPlace.root}/0/${0}")
                 }, modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Icon(

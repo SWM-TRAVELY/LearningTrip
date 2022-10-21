@@ -8,7 +8,7 @@ class Course(
     @SerializedName("name")
     val name: String,
     @SerializedName("placeList")
-    val placeList: List<SimplePlace>?,
+    val placeList: List<SimpleCoursePlace>?,
 )
 
 data class SimpleCourse(

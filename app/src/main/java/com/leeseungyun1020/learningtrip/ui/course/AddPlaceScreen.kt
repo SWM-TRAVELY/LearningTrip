@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AppDatabase
 import com.leeseungyun1020.learningtrip.data.PlaceRepository
+import com.leeseungyun1020.learningtrip.model.toSimpleCoursePlace
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.home.PlaceListView
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
@@ -35,6 +36,8 @@ import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 @Composable
 fun AddPlaceScreen(
     navController: NavController,
+    day: String,
+    sequence: String,
     viewModel: AddCourseViewModel = viewModel(
         viewModelStoreOwner = navController.previousBackStackEntry
             ?: LocalViewModelStoreOwner.current!!
@@ -106,7 +109,9 @@ fun AddPlaceScreen(
             innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
             placeList = placeList ?: listOf(),
             onPlaceClicked = {
-                viewModel.addPlace(it)
+                val dayInt = day.toIntOrNull() ?: 0
+                val sequenceInt = sequence.toIntOrNull() ?: 0
+                viewModel.addPlace(it.toSimpleCoursePlace(dayInt, sequenceInt))
                 navController.popBackStack()
             })
     }

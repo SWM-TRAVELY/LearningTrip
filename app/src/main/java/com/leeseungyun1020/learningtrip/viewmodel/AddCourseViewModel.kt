@@ -4,16 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Course
-import com.leeseungyun1020.learningtrip.model.SimplePlace
+import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AddCourseViewModel() : ViewModel() {
+class AddCourseViewModel : ViewModel() {
     var course = Course(
         1, "", emptyList()
     )
@@ -26,7 +24,7 @@ class AddCourseViewModel() : ViewModel() {
 
     }
 
-    fun addPlace(place: SimplePlace) {
+    fun addPlace(place: SimpleCoursePlace) {
         _modifiedCourseList?.add(place)
     }
 

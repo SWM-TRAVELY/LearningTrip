@@ -82,7 +82,11 @@ fun NavGraphBuilder.graph(
     }
 
     composable(Screen.AddPlace.route) {
-        AddPlaceScreen(navController)
+        AddPlaceScreen(
+            navController,
+            it.arguments?.getString("day") ?: "0",
+            it.arguments?.getString("sequence") ?: "0"
+        )
     }
 
     composable(Screen.Course.route) {

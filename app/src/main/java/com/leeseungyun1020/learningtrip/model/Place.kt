@@ -90,6 +90,7 @@ data class SimpleCoursePlace(
     val id: Int,
     @SerializedName("name")
     val name: String?,
+    val typeId: Int?,
     @SerializedName("address")
     val address: String?,
     @SerializedName("imageURL")
@@ -105,6 +106,25 @@ data class SimpleCoursePlace(
     @SerializedName("time")
     val time: Int?,
 )
+
+fun SimpleCoursePlace.toSimplePlace(): SimplePlace {
+    return SimplePlace(id, name, typeId, address, imageURL, overview)
+}
+
+fun SimplePlace.toSimpleCoursePlace(day: Int, sequence: Int): SimpleCoursePlace {
+    return SimpleCoursePlace(
+        id,
+        name,
+        typeId,
+        address,
+        imageURL,
+        overview,
+        day,
+        sequence,
+        null,
+        null
+    )
+}
 
 fun Place.toSimplePlace(): SimplePlace {
     return SimplePlace(id, name, typeId, address, imageURL)
