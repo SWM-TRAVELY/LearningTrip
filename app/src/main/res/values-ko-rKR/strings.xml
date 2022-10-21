@@ -110,4 +110,5 @@
     <string name="error_signin">로그인에 실패하였습니다.</string>
     <string name="desc_empty_story">새로운 코스를 만들어보세요!</string>
     <string name="action_add_day">일자 추가</string>
+    <string name="desc_add_place">검색해서 관광지를 추가해보세요</string>
 </resources>

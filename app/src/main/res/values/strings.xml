@@ -109,4 +109,5 @@
     <string name="error_signin">Failed to sign in</string>
     <string name="desc_empty_story">Make your new course!</string>
     <string name="action_add_day">Add day</string>
+    <string name="desc_add_place">Search and add place</string>
 </resources>
