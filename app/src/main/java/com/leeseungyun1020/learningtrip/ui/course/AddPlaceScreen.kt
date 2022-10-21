@@ -15,22 +15,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.data.AppDatabase
-import com.leeseungyun1020.learningtrip.data.PlaceRepository
 import com.leeseungyun1020.learningtrip.model.toSimpleCoursePlace
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.home.PlaceListView
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
-import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,17 +34,12 @@ fun AddPlaceScreen(
     navController: NavController,
     day: String,
     sequence: String,
-    viewModel: AddCourseViewModel = viewModel(
+    placeViewModel: PlaceViewModel,
+    addCourseViewModel: AddCourseViewModel = viewModel(
         viewModelStoreOwner = navController.previousBackStackEntry
             ?: LocalViewModelStoreOwner.current!!
     )
 ) {
-    val database = AppDatabase.getDatabase(LocalContext.current)
-    val repository = PlaceRepository(database.placeDao())
-    val placeViewModel: PlaceViewModel = viewModel(
-        factory = PlaceViewModelFactory(repository)
-    )
-
     var searchText by rememberSaveable { mutableStateOf("") }
     val placeList by placeViewModel.filteredPlaces.observeAsState()
 
@@ -111,7 +102,7 @@ fun AddPlaceScreen(
             onPlaceClicked = {
                 val dayInt = day.toIntOrNull() ?: 0
                 val sequenceInt = sequence.toIntOrNull() ?: 0
-                viewModel.addPlace(it.toSimpleCoursePlace(dayInt, sequenceInt))
+                addCourseViewModel.addPlace(it.toSimpleCoursePlace(dayInt, sequenceInt))
                 navController.popBackStack()
             })
     }

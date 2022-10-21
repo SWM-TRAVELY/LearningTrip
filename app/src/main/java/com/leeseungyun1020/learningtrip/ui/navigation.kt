@@ -85,7 +85,8 @@ fun NavGraphBuilder.graph(
         AddPlaceScreen(
             navController,
             it.arguments?.getString("day") ?: "0",
-            it.arguments?.getString("sequence") ?: "0"
+            it.arguments?.getString("sequence") ?: "0",
+            placeViewModel
         )
     }
 
