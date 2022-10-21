@@ -6,22 +6,28 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AddCourseViewModel : ViewModel() {
+class AddCourseViewModel(private val repository: CourseRepository = CourseRepository()) :
+    ViewModel() {
     var course = Course(
-        1, "", emptyList()
+        null, "", emptyList()
     )
     private val _modifiedCourseList = course.placeList?.toMutableStateList()
     val modifiedCourseList
         get() = _modifiedCourseList?.toList() ?: emptyList()
-    var courseName by mutableStateOf(course.name)
+    var courseName by mutableStateOf(course.name ?: "")
+
+    fun initCourse() {
+
+    }
 
     fun loadCourse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
-
+        repository.searchById(id)
     }
 
     fun addPlace(place: SimpleCoursePlace) {

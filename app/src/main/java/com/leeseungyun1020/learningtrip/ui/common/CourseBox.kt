@@ -63,7 +63,7 @@ fun CourseBox(modifier: Modifier = Modifier, course: SimpleCourse) {
                 .padding(start = 12.dp, bottom = 6.dp)
         ) {
             Text(
-                text = course.name,
+                text = course.name ?: "",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White,
                 modifier = Modifier.padding(bottom = 1.dp)
