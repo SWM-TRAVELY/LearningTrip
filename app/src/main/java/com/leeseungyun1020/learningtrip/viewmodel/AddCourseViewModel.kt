@@ -14,16 +14,19 @@ import kotlinx.coroutines.launch
 
 class AddCourseViewModel(private val repository: CourseRepository = CourseRepository()) :
     ViewModel() {
+    var searchedCourse = repository.searchedCourse
     var course = Course(
         null, "", emptyList()
     )
-    private val _modifiedCourseList = course.placeList?.toMutableStateList()
+    private var _modifiedCourseList = course.placeList?.toMutableStateList()
     val modifiedCourseList
         get() = _modifiedCourseList?.toList() ?: emptyList()
     var courseName by mutableStateOf(course.name ?: "")
 
-    fun initCourse() {
-
+    fun initCourse(newCourse: Course) {
+        course = newCourse
+        _modifiedCourseList = course.placeList?.toMutableStateList()
+        courseName = course.name ?: ""
     }
 
     fun loadCourse(id: Int) = viewModelScope.launch(Dispatchers.IO) {

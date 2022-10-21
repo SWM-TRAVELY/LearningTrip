@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -31,6 +32,7 @@ import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
+import kotlin.math.max
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -39,6 +41,15 @@ fun AddCourseScreen(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     if ((id.toIntOrNull() ?: -1) > 0) viewModel.loadCourse(id.toInt())
+    var maxDay by remember {
+        mutableStateOf(1)
+    }
+    val searchedCourse by viewModel.searchedCourse.observeAsState()
+    if (searchedCourse != null) {
+        viewModel.initCourse(searchedCourse!!)
+        maxDay = max(maxDay, searchedCourse?.placeList?.maxOfOrNull { it.day ?: 1 } ?: 1)
+    }
+
     LearningTripScaffold(
         title = stringResource(id = R.string.title_update_course),
     ) {
@@ -66,9 +77,7 @@ fun AddCourseScreen(
             )
 
             val placeListByDay = viewModel.modifiedCourseList.groupBy { it.day }
-            var maxDay by remember {
-                mutableStateOf(placeListByDay.keys.maxByOrNull { it ?: 0 } ?: 1)
-            }
+
             for (day in 1..maxDay) {
                 val list = placeListByDay[day] ?: emptyList()
                 Text(
