@@ -100,7 +100,7 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                 colors = TextFieldDefaults.textFieldColors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    containerColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.background,
                     placeholderColor = Gray3
                 ),
                 shape = RoundedCornerShape(10.dp)
