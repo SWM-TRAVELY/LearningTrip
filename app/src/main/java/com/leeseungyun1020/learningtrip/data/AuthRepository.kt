@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.auth.*
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
+import com.leeseungyun1020.learningtrip.network.loadAuthRequiredNetworkData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +19,7 @@ class AuthRepository(private val context: Context) {
 
     val signUpError = MutableLiveData<Boolean>(false)
     val signInError = MutableLiveData<Boolean>(false)
+    val user = MutableLiveData<User>()
 
     fun loadToken(): String? {
         val pref = context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
@@ -183,6 +185,14 @@ class AuthRepository(private val context: Context) {
                     }
                 }
             )
+        }
+    }
+
+    fun loadUserInfo() {
+        loadToken()?.let {
+            RetrofitClient.authService.getUserInfo(it).loadAuthRequiredNetworkData(user, null) {
+                reloadToken()
+            }
         }
     }
 }

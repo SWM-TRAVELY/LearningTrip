@@ -1,8 +1,11 @@
 package com.leeseungyun1020.learningtrip.ui.settings
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -25,20 +28,36 @@ import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 @Composable
 fun MyScreen(navController: NavController, authViewModel: AuthViewModel) {
     val isSignIn by authViewModel.isSignIn.observeAsState(false)
+    val user by authViewModel.user.observeAsState()
+    if (user == null) {
+        authViewModel.loadUserInfo()
+    }
 
     if (isSignIn) {
         LearningTripScaffold(
             title = stringResource(id = R.string.title_my),
         ) {
             Column {
-                NameTab(
-                    name = "이승윤",
-                    email = "ileilliat@gmail.com",
-                    imageURL = "https://avatars.githubusercontent.com/u/34941061",
-                    level = "장인 탐험가",
-                    onMoveClicked = { navController.navigate(Screen.Account.route) },
-                    modifier = Modifier.padding(top = 20.dp, bottom = 13.dp)
-                )
+                if (user != null) {
+                    user?.apply {
+                        NameTab(
+                            name = nickname ?: "",
+                            email = email ?: "",
+                            imageURL = imageURL ?: "",
+                            level = level ?: "",
+                            onMoveClicked = { navController.navigate(Screen.Account.route) },
+                            modifier = Modifier.padding(top = 20.dp, bottom = 13.dp)
+                        )
+                    }
+                } else {
+                    Button(
+                        onClick = { authViewModel.signOut() }, modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 48.dp, start = 16.dp, end = 16.dp)
+                    ) {
+                        Text(text = stringResource(id = R.string.action_signout))
+                    }
+                }
 
                 Divider(thickness = 6.dp)
                 // TODO: 마이페이지 구현
