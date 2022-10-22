@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.CourseRepository
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import kotlinx.coroutines.Dispatchers
@@ -22,11 +24,15 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
     val modifiedCourseList
         get() = _modifiedCourseList?.toList() ?: emptyList()
     var courseName by mutableStateOf(course.name ?: "")
+    private var isInit = false
 
     fun initCourse(newCourse: Course) {
-        course = newCourse
-        _modifiedCourseList = course.placeList?.toMutableStateList()
-        courseName = course.name ?: ""
+        if (!isInit) {
+            course = newCourse
+            course.placeList?.let { _modifiedCourseList?.addAll(it) }
+            courseName = course.name ?: ""
+            isInit = true
+        }
     }
 
     fun loadCourse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
@@ -51,6 +57,7 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
     }
 
     fun updateCourse(token: String) {
+        Log.d(TAG, "updateCourse: ${modifiedCourseList}")
         if (course.id == null) {
             repository.addCourse(
                 Course(

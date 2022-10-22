@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -29,6 +30,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.Screen
@@ -47,7 +49,12 @@ fun AddCourseScreen(
     addCourseViewModel: AddCourseViewModel = viewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    if ((id.toIntOrNull() ?: -1) > 0) addCourseViewModel.loadCourse(id.toInt())
+    var isLoaded by remember { mutableStateOf(false) }
+    Log.d(TAG, "AddCourseScreen: $isLoaded")
+    if ((id.toIntOrNull() ?: -1) > 0 && !isLoaded) {
+        addCourseViewModel.loadCourse(id.toInt())
+        isLoaded = true
+    }
     var maxDay by remember {
         mutableStateOf(1)
     }
@@ -84,6 +91,10 @@ fun AddCourseScreen(
             )
 
             val placeListByDay = addCourseViewModel.modifiedCourseList.groupBy { it.day }
+            Log.d(
+                TAG,
+                "AddCourseScreen: place: ${addCourseViewModel.modifiedCourseList.map { it.name }}"
+            )
 
             for (day in 1..maxDay) {
                 val list = placeListByDay[day] ?: emptyList()
