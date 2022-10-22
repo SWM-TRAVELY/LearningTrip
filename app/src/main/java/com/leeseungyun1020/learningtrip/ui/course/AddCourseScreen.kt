@@ -176,7 +176,10 @@ fun AddCourseScreen(
                     }, modifier = Modifier
                         .padding(horizontal = 4.dp)
                 ) {
-                    Text(text = stringResource(id = R.string.action_add_day))
+                    Text(
+                        text = stringResource(id = R.string.action_add_day),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
                 Button(
                     onClick = {
@@ -188,7 +191,10 @@ fun AddCourseScreen(
                     }, modifier = Modifier
                         .padding(horizontal = 4.dp)
                 ) {
-                    Text(text = stringResource(id = R.string.action_save_course))
+                    Text(
+                        text = stringResource(id = R.string.action_save_course),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
         }

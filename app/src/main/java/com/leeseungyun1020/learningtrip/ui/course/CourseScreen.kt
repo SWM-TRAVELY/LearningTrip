@@ -103,9 +103,12 @@ fun CourseScreen(
             ) {
                 Button(
                     onClick = { navController.navigate("${Screen.AddCourse.root}/${id}") },
-                    modifier = Modifier.padding(horizontal = 4.dp)
+                    modifier = Modifier.padding(horizontal = 4.dp),
                 ) {
-                    Text(text = stringResource(id = R.string.action_update_course))
+                    Text(
+                        text = stringResource(id = R.string.action_update_course),
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
                 }
 
                 Button(
@@ -120,7 +123,10 @@ fun CourseScreen(
                     modifier = Modifier
                         .padding(horizontal = 4.dp)
                 ) {
-                    Text(text = stringResource(id = R.string.action_delete_course))
+                    Text(
+                        text = stringResource(id = R.string.action_delete_course),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
 
