@@ -7,6 +7,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,8 +34,10 @@ import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 
 @Composable
 fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
-    val imageURL = "https://avatars.githubusercontent.com/u/34941061"
-    val name = "Name"
+    val user by authViewModel.user.observeAsState()
+    if (user == null)
+        authViewModel.loadUserInfo()
+
     LearningTripScaffold(
         title = stringResource(id = R.string.title_my),
         setDisplayHomeAsUpEnabled = true,
@@ -42,11 +46,11 @@ fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
             // 사용자 정보
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(imageURL)
+                    .data(user?.imageURL)
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(id = R.drawable.ic_baseline_person_24),
-                contentDescription = name,
+                contentDescription = user?.nickname ?: "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .padding(top = 20.dp)
@@ -57,7 +61,7 @@ fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
             )
 
             Text(
-                text = name,
+                text = user?.nickname ?: "",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .padding(top = 14.dp, bottom = 20.dp)
