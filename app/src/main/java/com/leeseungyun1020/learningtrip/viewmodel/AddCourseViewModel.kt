@@ -1,6 +1,5 @@
 package com.leeseungyun1020.learningtrip.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,11 +7,11 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.CourseRepository
-import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.max
 
 class AddCourseViewModel(private val repository: CourseRepository = CourseRepository()) :
     ViewModel() {
@@ -26,11 +25,16 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
     var courseName by mutableStateOf(course.name ?: "")
     private var isInit = false
 
+    private var _maxDay by mutableStateOf(1)
+    val maxDay
+        get() = _maxDay
+
     fun initCourse(newCourse: Course) {
         if (!isInit) {
             course = newCourse
             course.placeList?.let { _modifiedCourseList?.addAll(it) }
             courseName = course.name ?: ""
+            _maxDay = max(maxDay, course.placeList?.maxOfOrNull { it.day ?: 1 } ?: 1)
             isInit = true
         }
     }
@@ -57,7 +61,6 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
     }
 
     fun updateCourse(token: String) {
-        Log.d(TAG, "updateCourse: ${modifiedCourseList}")
         if (course.id == null) {
             repository.addCourse(
                 Course(
@@ -75,5 +78,9 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
                 ), token
             )
         }
+    }
+
+    fun addMaxDay() {
+        _maxDay++
     }
 }
