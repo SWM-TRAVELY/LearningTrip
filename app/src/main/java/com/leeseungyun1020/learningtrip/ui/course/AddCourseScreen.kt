@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -29,6 +30,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
@@ -92,7 +94,7 @@ fun AddCourseScreen(
 
             val placeListByDay = addCourseViewModel.modifiedCourseList.groupBy { it.day }
             for (day in 1..addCourseViewModel.maxDay) {
-                val list = placeListByDay[day] ?: emptyList()
+                val list = placeListByDay[day]?.sortedBy(SimpleCoursePlace::sequence) ?: emptyList()
                 Text(
                     text = day.toString(),
                     style = MaterialTheme.typography.bodyLarge,
@@ -102,7 +104,11 @@ fun AddCourseScreen(
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center
                 )
-                for ((i, place) in list.sortedBy(SimpleCoursePlace::sequence).withIndex()) {
+                Log.d(
+                    TAG,
+                    "${list.sortedBy(SimpleCoursePlace::sequence).map { it.name to it.sequence }}"
+                )
+                for ((i, place) in list.withIndex()) {
                     var expanded by remember { mutableStateOf(false) }
                     Box {
                         PlaceLocationBox(simplePlace = place.toSimplePlace(), modifier = Modifier
@@ -144,8 +150,11 @@ fun AddCourseScreen(
 
                     if (i < list.lastIndex) IconButton(
                         onClick = {
-                            addCourseViewModel.swapPlace(i)
-
+                            addCourseViewModel.swapPlace(place, list[i + 1])
+                            Log.d(
+                                TAG,
+                                "AddCourseScreen: SWAP ${place.name to place.sequence} ${list[i + 1].name to list[i + 1].sequence}"
+                            )
                         }, modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
                         Icon(
@@ -158,7 +167,7 @@ fun AddCourseScreen(
                 }
                 IconButton(
                     onClick = {
-                        navController.navigate("${Screen.AddPlace.root}/$day/${list.size}")
+                        navController.navigate("${Screen.AddPlace.root}/$day/${list.size + 1}")
                     }, modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
                     Icon(

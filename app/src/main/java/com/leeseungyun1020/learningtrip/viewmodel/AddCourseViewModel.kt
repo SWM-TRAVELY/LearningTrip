@@ -47,12 +47,12 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
         _modifiedCourseList?.add(place)
     }
 
-    fun swapPlace(i: Int) {
-        val place = _modifiedCourseList?.removeAt(i)
-        val next = _modifiedCourseList?.removeAt(i)
-        if (place != null && next != null) {
-            _modifiedCourseList?.add(i, place.copy(day = next.day, sequence = next.sequence))
-            _modifiedCourseList?.add(i, next.copy(day = place.day, sequence = place.sequence))
+    fun swapPlace(place: SimpleCoursePlace, next: SimpleCoursePlace) {
+        val delPlace = _modifiedCourseList?.remove(place)
+        val delNext = _modifiedCourseList?.remove(next)
+        if (delPlace == true && delNext == true) {
+            _modifiedCourseList?.add(place.copy(day = next.day, sequence = next.sequence))
+            _modifiedCourseList?.add(next.copy(day = place.day, sequence = place.sequence))
         }
     }
 
