@@ -40,6 +40,7 @@ fun CourseScreen(
     navController: NavController,
     id: String,
     authViewModel: AuthViewModel,
+    isEditable: Boolean = true,
     courseViewModel: CourseViewModel = viewModel()
 ) {
     if (id.isDigitsOnly()) {
@@ -71,8 +72,7 @@ fun CourseScreen(
             var prev = 0
             for ((i, place) in (course?.placeList ?: emptyList()).sortedWith(
                 compareBy(
-                    SimpleCoursePlace::day,
-                    SimpleCoursePlace::sequence
+                    SimpleCoursePlace::day, SimpleCoursePlace::sequence
                 )
             ).withIndex()) {
                 if (place.day != null && place.day > prev) {
@@ -87,13 +87,11 @@ fun CourseScreen(
                         textAlign = TextAlign.Center
                     )
                 }
-                PlaceLocationBox(
-                    simplePlace = place.toSimplePlace(), modifier = Modifier
-                        .padding(
-                            start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
-                        )
-                        .clickable { navController.navigate("${Screen.Place.root}/${place.id}") }
-                )
+                PlaceLocationBox(simplePlace = place.toSimplePlace(), modifier = Modifier
+                    .padding(
+                        start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
+                    )
+                    .clickable { navController.navigate("${Screen.Place.root}/${place.id}?isCopy=true") })
             }
 
             Row(
@@ -102,11 +100,11 @@ fun CourseScreen(
                     .padding(top = 36.dp)
             ) {
                 Button(
-                    onClick = { navController.navigate("${Screen.AddCourse.root}/${id}") },
+                    onClick = { navController.navigate("${Screen.AddCourse.root}/${id}?isCopy=${!isEditable}") },
                     modifier = Modifier.padding(horizontal = 4.dp),
                 ) {
                     Text(
-                        text = stringResource(id = R.string.action_update_course),
+                        text = stringResource(id = if (isEditable) R.string.action_update_course else R.string.action_copy_course),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }
@@ -114,14 +112,11 @@ fun CourseScreen(
                 Button(
                     onClick = {
                         val token = authViewModel.token
-                        if (token != null)
-                            course?.let {
-                                courseViewModel.deleteCourse(it, token)
-                                navController.popBackStack()
-                            }
-                    },
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp)
+                        if (token != null) course?.let {
+                            courseViewModel.deleteCourse(it, token)
+                            navController.popBackStack()
+                        }
+                    }, modifier = Modifier.padding(horizontal = 4.dp)
                 ) {
                     Text(
                         text = stringResource(id = R.string.action_delete_course),

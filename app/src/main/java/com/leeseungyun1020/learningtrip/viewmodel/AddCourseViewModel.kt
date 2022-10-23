@@ -29,9 +29,9 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
     val maxDay
         get() = _maxDay
 
-    fun initCourse(newCourse: Course) {
+    fun initCourse(newCourse: Course, isCopy: Boolean) {
         if (!isInit) {
-            course = newCourse
+            course = if (isCopy) Course(null, newCourse.name, newCourse.placeList) else newCourse
             course.placeList?.let { _modifiedCourseList?.addAll(it) }
             courseName = course.name ?: ""
             _maxDay = max(maxDay, course.placeList?.maxOfOrNull { it.day ?: 1 } ?: 1)

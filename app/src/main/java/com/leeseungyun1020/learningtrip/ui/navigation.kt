@@ -3,6 +3,7 @@ package com.leeseungyun1020.learningtrip.ui
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.leeseungyun1020.learningtrip.ui.account.SignInScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignUpScreen
@@ -77,8 +78,16 @@ fun NavGraphBuilder.graph(
         SearchScreen(navController, placeViewModel, it.arguments?.getString("key") ?: "")
     }
 
-    composable(Screen.AddCourse.route) {
-        AddCourseScreen(navController, it.arguments?.getString("id") ?: "0", authViewModel)
+    composable(
+        Screen.AddCourse.route,
+        arguments = listOf(navArgument("isCopy") { defaultValue = false })
+    ) {
+        AddCourseScreen(
+            navController,
+            it.arguments?.getString("id") ?: "0",
+            authViewModel,
+            it.arguments?.getBoolean("isCopy") ?: false
+        )
     }
 
     composable(Screen.AddPlace.route) {
@@ -90,8 +99,16 @@ fun NavGraphBuilder.graph(
         )
     }
 
-    composable(Screen.Course.route) {
-        CourseScreen(navController, it.arguments?.getString("id") ?: "0", authViewModel)
+    composable(
+        Screen.Course.route,
+        arguments = listOf(navArgument("isEditable") { defaultValue = true })
+    ) {
+        CourseScreen(
+            navController,
+            it.arguments?.getString("id") ?: "0",
+            authViewModel,
+            it.arguments?.getBoolean("isEditable") ?: true
+        )
     }
 
     composable(Screen.Account.route) {

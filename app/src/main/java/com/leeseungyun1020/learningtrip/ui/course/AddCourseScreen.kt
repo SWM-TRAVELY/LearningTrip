@@ -31,6 +31,7 @@ import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import com.leeseungyun1020.learningtrip.model.toSimplePlace
+import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
@@ -43,6 +44,7 @@ fun AddCourseScreen(
     navController: NavController,
     id: String,
     authViewModel: AuthViewModel,
+    isCopy: Boolean = false,
     addCourseViewModel: AddCourseViewModel = viewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -56,8 +58,10 @@ fun AddCourseScreen(
 
     val searchedCourse by addCourseViewModel.searchedCourse.observeAsState()
     if (searchedCourse != null && !isInit) {
-        addCourseViewModel.initCourse(searchedCourse!!)
-        isInit = true
+        searchedCourse?.run {
+            addCourseViewModel.initCourse(this, isCopy)
+            isInit = true
+        }
     }
 
     LearningTripScaffold(
@@ -187,6 +191,8 @@ fun AddCourseScreen(
                         if (token != null) {
                             addCourseViewModel.updateCourse(token)
                             navController.popBackStack()
+                            if (isCopy)
+                                navController.navigate(NavigationScreen.Story.route)
                         }
                     }, modifier = Modifier
                         .padding(horizontal = 4.dp)
