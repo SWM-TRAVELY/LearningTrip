@@ -1,6 +1,5 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -30,7 +29,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
-import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
 import com.leeseungyun1020.learningtrip.model.toSimplePlace
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
@@ -39,6 +37,7 @@ import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -66,8 +65,11 @@ fun AddCourseScreen(
         }
     }
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
     LearningTripScaffold(
         title = stringResource(id = R.string.title_update_course),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) {
         Column(
             modifier = Modifier.verticalScroll(
@@ -103,10 +105,6 @@ fun AddCourseScreen(
                         .padding(vertical = 16.dp),
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center
-                )
-                Log.d(
-                    TAG,
-                    "${list.sortedBy(SimpleCoursePlace::sequence).map { it.name to it.sequence }}"
                 )
                 for ((i, place) in list.withIndex()) {
                     var expanded by remember { mutableStateOf(false) }
@@ -151,10 +149,6 @@ fun AddCourseScreen(
                     if (i < list.lastIndex) IconButton(
                         onClick = {
                             addCourseViewModel.swapPlace(place, list[i + 1])
-                            Log.d(
-                                TAG,
-                                "AddCourseScreen: SWAP ${place.name to place.sequence} ${list[i + 1].name to list[i + 1].sequence}"
-                            )
                         }, modifier = Modifier.align(Alignment.CenterHorizontally)
                     ) {
                         Icon(
@@ -194,14 +188,23 @@ fun AddCourseScreen(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
+                val errorMsg = stringResource(id = R.string.error_empty_course)
                 Button(
                     onClick = {
-                        val token = authViewModel.token
-                        if (token != null) {
-                            addCourseViewModel.updateCourse(token)
-                            navController.popBackStack()
-                            if (isCopy)
-                                navController.navigate(NavigationScreen.Story.route)
+                        if (addCourseViewModel.checkUpdateCourse()) {
+                            val token = authViewModel.token
+                            if (token != null) {
+                                addCourseViewModel.updateCourse(token)
+                                navController.popBackStack()
+                                if (isCopy)
+                                    navController.navigate(NavigationScreen.Story.route)
+                            }
+                        } else {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    errorMsg,
+                                )
+                            }
                         }
                     }, modifier = Modifier
                         .padding(horizontal = 4.dp)

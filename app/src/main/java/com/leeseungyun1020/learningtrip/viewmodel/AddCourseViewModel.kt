@@ -80,6 +80,10 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
         }
     }
 
+    fun checkUpdateCourse(): Boolean {
+        return courseName.isNotEmpty() && modifiedCourseList.isNotEmpty()
+    }
+
     fun addMaxDay() {
         _maxDay++
     }

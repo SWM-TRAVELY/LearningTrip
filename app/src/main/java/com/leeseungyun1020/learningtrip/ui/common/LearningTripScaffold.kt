@@ -24,6 +24,7 @@ fun LearningTripScaffold(
     setDisplayHomeAsUpEnabled: Boolean = false,
     setBodyContentInnerPadding: Boolean = true,
     onHomeAsUpClicked: () -> Unit = {},
+    snackbarHost: @Composable () -> Unit = {},
     topBarExtraContent: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     bodyContent: @Composable () -> Unit,
@@ -65,6 +66,7 @@ fun LearningTripScaffold(
                 topBarExtraContent()
             }
         },
+        snackbarHost = snackbarHost,
         floatingActionButton = floatingActionButton,
         content = { innerPadding ->
             val modifier =
