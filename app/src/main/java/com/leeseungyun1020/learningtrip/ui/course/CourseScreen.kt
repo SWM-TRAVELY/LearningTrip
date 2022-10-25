@@ -86,6 +86,15 @@ fun CourseScreen(
                         color = MaterialTheme.colorScheme.primary,
                         textAlign = TextAlign.Center
                     )
+                } else if (place.distance != null) {
+                    Text(
+                        text = String.format("%.2f", place.distance) + "km",
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        textAlign = TextAlign.Center
+                    )
                 }
                 PlaceLocationBox(simplePlace = place.toSimplePlace(), modifier = Modifier
                     .padding(
