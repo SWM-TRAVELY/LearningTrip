@@ -81,7 +81,7 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
                     for (data in it) {
                         if (!data[0].isDigitsOnly())
                             continue
-                        val id: Int = data[0].toInt()
+                        val id: Long = data[0].toLong()
                         val name: String = data[2]
                         val typeId: Int = data[1].toInt()
                         val address: String = data[3]

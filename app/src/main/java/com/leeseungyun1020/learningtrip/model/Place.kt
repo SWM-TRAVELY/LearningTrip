@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Place(
     @SerializedName("id")
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: Long,
     @SerializedName("name")
     val name: String?,
     val typeId: Int?,
@@ -49,7 +49,7 @@ data class Place(
 
 data class SimplePlace(
     @SerializedName("id")
-    val id: Int,
+    val id: Long,
     @SerializedName("name")
     val name: String?,
     val typeId: Int?,
@@ -61,14 +61,14 @@ data class SimplePlace(
     val overview: String? = null,
 ) {
     constructor(id: String, name: String, typeId: String, address: String, imageURL: String) : this(
-        id.toInt(),
+        id.toLong(),
         name,
         typeId.toInt(),
         address,
         imageURL
     )
 
-    constructor(id: Int, name: String, typeId: String, address: String, imageURL: String) : this(
+    constructor(id: Long, name: String, typeId: String, address: String, imageURL: String) : this(
         id,
         name,
         typeId.toInt(),
@@ -77,7 +77,7 @@ data class SimplePlace(
     )
 
     constructor(id: String, name: String, typeId: Int, address: String, imageURL: String) : this(
-        id.toInt(),
+        id.toLong(),
         name,
         typeId,
         address,
@@ -87,7 +87,7 @@ data class SimplePlace(
 
 data class SimpleCoursePlace(
     @SerializedName("id")
-    val id: Int,
+    val id: Long,
     @SerializedName("name")
     val name: String?,
     val typeId: Int?,

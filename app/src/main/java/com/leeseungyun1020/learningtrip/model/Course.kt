@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class Course(
     @SerializedName("id")
-    val id: Int?,
+    val id: Long?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("placeList")
@@ -13,7 +13,7 @@ class Course(
 
 data class SimpleCourse(
     @SerializedName("id")
-    val id: Int?,
+    val id: Long?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("imageURL")
