@@ -114,4 +114,5 @@
     <string name="action_delete_course">코스 삭제</string>
     <string name="action_copy_course">코스 복사</string>
     <string name="error_empty_course">코스 이름과 관광지를 추가하였는지 확인해보세요</string>
+    <string name="desc_time_minute">분</string>
 </resources>

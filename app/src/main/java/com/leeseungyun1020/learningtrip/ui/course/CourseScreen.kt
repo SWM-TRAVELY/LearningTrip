@@ -86,9 +86,14 @@ fun CourseScreen(
                         color = MaterialTheme.colorScheme.primary,
                         textAlign = TextAlign.Center
                     )
-                } else if (place.distance != null) {
+                } else if (place.distance != null && place.time != null) {
                     Text(
-                        text = String.format("%.2f", place.distance) + "km",
+                        text = "${
+                            String.format(
+                                "%.2f",
+                                place.distance
+                            )
+                        }km (${place.time}${stringResource(id = R.string.desc_time_minute)})",
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier
                             .fillMaxWidth()

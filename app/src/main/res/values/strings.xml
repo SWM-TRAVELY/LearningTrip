@@ -113,4 +113,5 @@
     <string name="action_delete_course">Delete course</string>
     <string name="action_copy_course">Copy course</string>
     <string name="error_empty_course">Please check course name or add place</string>
+    <string name="desc_time_minute">min</string>
 </resources>
