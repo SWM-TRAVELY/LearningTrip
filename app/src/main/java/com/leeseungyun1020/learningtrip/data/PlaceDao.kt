@@ -15,13 +15,13 @@ interface PlaceDao {
     @Query("SELECT * FROM place")
     fun getAll(): Flow<List<Place>>
 
-    @Query("SELECT id, name, typeId, address, imageURL FROM place ORDER BY RANDOM() LIMIT 4")
+    @Query("SELECT id, name, typeId, address, imageURL, overview FROM place ORDER BY RANDOM() LIMIT 4")
     suspend fun recommendedPlace(): List<SimplePlace>
 
     @Query("SELECT * FROM place WHERE id = :id")
     suspend fun getById(id: Int): Place
 
-    @Query("SELECT id, name, typeId, address, imageURL FROM place WHERE name LIKE '%' || :keyword || '%' OR address LIKE '%' || :keyword || '%' LIMIT 16")
+    @Query("SELECT id, name, typeId, address, imageURL, overview FROM place WHERE name LIKE '%' || :keyword || '%' OR address LIKE '%' || :keyword || '%' LIMIT 16")
     suspend fun findByKeyword(keyword: String): List<SimplePlace>
 
     @Query("SELECT name FROM place WHERE name LIKE '%' || :keyword || '%' LIMIT 16")
