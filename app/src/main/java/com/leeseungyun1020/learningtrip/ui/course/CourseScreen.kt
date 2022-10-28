@@ -87,13 +87,21 @@ fun CourseScreen(
                         textAlign = TextAlign.Center
                     )
                 } else if (place.distance != null && place.time != null) {
+                    val hour = place.time / 60
+                    val minute = place.time % 60
+                    val time = if (hour > 0)
+                        "$hour${stringResource(id = R.string.desc_time_hour)} $minute${
+                            stringResource(
+                                id = R.string.desc_time_minute
+                            )
+                        }" else "$minute${stringResource(id = R.string.desc_time_minute)}"
                     Text(
                         text = "${
                             String.format(
                                 "%.2f",
                                 place.distance
                             )
-                        }km (${place.time}${stringResource(id = R.string.desc_time_minute)})",
+                        }km ($time)",
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier
                             .fillMaxWidth()
