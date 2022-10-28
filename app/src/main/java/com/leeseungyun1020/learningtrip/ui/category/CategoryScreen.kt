@@ -34,7 +34,8 @@ fun CategoryScreen(navController: NavController) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .padding(start = 16.dp, end = 16.dp),
+        contentPadding = PaddingValues(top = 16.dp)
     ) {
         val keywordList = categoryList ?: listOf(
             Keyword(
