@@ -116,4 +116,6 @@
     <string name="error_empty_course">코스 이름과 관광지를 추가하였는지 확인해보세요</string>
     <string name="desc_time_minute">분</string>
     <string name="desc_time_hour">시간</string>
+    <string name="title_info_change">내 정보 변경</string>
+    <string name="action_update">수정</string>
 </resources>

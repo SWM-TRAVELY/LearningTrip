@@ -115,4 +115,6 @@
     <string name="error_empty_course">Please check course name or add place</string>
     <string name="desc_time_minute">min</string>
     <string name="desc_time_hour">hour</string>
+    <string name="title_info_change">Change my info</string>
+    <string name="action_update">Update</string>
 </resources>

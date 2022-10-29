@@ -134,4 +134,8 @@ fun NavGraphBuilder.graph(
     composable(Screen.NoticeList.route) {
         NoticeListScreen(navController)
     }
+
+    composable(Screen.InfoChange.route) {
+        InfoChangeScreen(navController, authViewModel)
+    }
 }
