@@ -39,6 +39,10 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         authRepository.loadUserInfo()
     }
 
+    fun updateUserInfo(nickname: String, phone: String) {
+        authRepository.updateUserInfo(nickname, phone)
+    }
+
 }
 
 class AuthViewModelFactory(private val repository: AuthRepository) : ViewModelProvider.Factory {

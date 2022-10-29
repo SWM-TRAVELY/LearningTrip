@@ -195,4 +195,19 @@ class AuthRepository(private val context: Context) {
             }
         }
     }
+
+    fun updateUserInfo(nickname: String, phone: String) {
+        loadToken()?.let {
+            RetrofitClient.authService.updateUserInfo(
+                UpdateUserInfoRequest(
+                    listOf(
+                        "nickname",
+                        "phone"
+                    ), listOf(nickname, phone)
+                ), it
+            ).loadAuthRequiredNetworkData(user, null) {
+                reloadToken()
+            }
+        }
+    }
 }

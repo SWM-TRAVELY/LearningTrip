@@ -30,4 +30,11 @@ interface AuthService {
 
     @GET("/user/info")
     fun getUserInfo(@Header("Authorization") token: String): retrofit2.Call<User>
+
+    @Headers("Accept:application/json", "Content-Type: application/json")
+    @PATCH("/user/info")
+    fun updateUserInfo(
+        @Body updateUserInfoRequest: UpdateUserInfoRequest,
+        @Header("Authorization") token: String
+    ): retrofit2.Call<User>
 }
