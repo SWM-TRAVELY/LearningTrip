@@ -27,6 +27,7 @@ import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
 import com.leeseungyun1020.learningtrip.ui.NavigationScreen
+import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
@@ -69,14 +70,14 @@ fun AccountScreen(navController: NavController, authViewModel: AuthViewModel) {
             )
 
             Divider(thickness = 6.dp)
-/*
+
             // 나의 정보 수정
             AccountSettingTab(
                 title = stringResource(id = R.string.title_edit_info),
-                onClick = { /* TODO: 정보 수정 화면으로 이동, navController.navigate() */ },
+                onClick = { navController.navigate(Screen.InfoChange.route) },
                 modifier = Modifier.height(53.dp)
             )
-
+/*
             // 비밀번호 변경
             AccountSettingTab(
                 title = stringResource(id = R.string.title_change_password),
