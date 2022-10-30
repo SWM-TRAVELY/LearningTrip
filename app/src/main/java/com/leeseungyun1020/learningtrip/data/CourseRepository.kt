@@ -22,14 +22,12 @@ class CourseRepository {
         }
     }
 
-    suspend fun loadCourseList(token: String, onReloadRequired: () -> Unit) {
-        withContext(Dispatchers.IO) {
-            RetrofitClient.courseService.getUserCourseList(token).loadAuthRequiredNetworkData(
-                target = storyCourses,
-                null,
-                onReloadRequired
-            )
-        }
+    fun loadCourseList(token: String, onReloadRequired: () -> Unit) {
+        RetrofitClient.courseService.getUserCourseList(token).loadAuthRequiredNetworkData(
+            target = storyCourses,
+            null,
+            onReloadRequired
+        )
     }
 
     fun addCourse(course: Course, token: String) {
