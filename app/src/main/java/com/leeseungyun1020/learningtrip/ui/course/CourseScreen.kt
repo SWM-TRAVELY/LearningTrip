@@ -47,6 +47,7 @@ fun CourseScreen(
         courseViewModel.searchById(id.toInt())
     }
     val course by courseViewModel.course.observeAsState()
+    val isSignIn by authViewModel.isSignIn.observeAsState()
 
     LearningTripScaffold(
         title = stringResource(id = R.string.title_course),
@@ -116,38 +117,40 @@ fun CourseScreen(
                     .clickable { navController.navigate("${Screen.Place.root}/${place.id}?isCopy=true") })
             }
 
-            Row(
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 36.dp)
-            ) {
-                Button(
-                    onClick = { navController.navigate("${Screen.AddCourse.root}/${id}?isCopy=${!isEditable}") },
-                    modifier = Modifier.padding(horizontal = 4.dp),
+            if (isSignIn == true) {
+                Row(
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 36.dp)
                 ) {
-                    Text(
-                        text = stringResource(id = if (isEditable) R.string.action_update_course else R.string.action_copy_course),
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
+                    Button(
+                        onClick = { navController.navigate("${Screen.AddCourse.root}/${id}?isCopy=${!isEditable}") },
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                    ) {
+                        Text(
+                            text = stringResource(id = if (isEditable) R.string.action_update_course else R.string.action_copy_course),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
 
-                Button(
-                    onClick = {
-                        val token = authViewModel.token
-                        if (token != null) course?.let {
-                            courseViewModel.deleteCourse(it, token)
-                            navController.popBackStack()
+                    if (isEditable) {
+                        Button(
+                            onClick = {
+                                val token = authViewModel.token
+                                if (token != null) course?.let {
+                                    courseViewModel.deleteCourse(it, token)
+                                    navController.popBackStack()
+                                }
+                            }, modifier = Modifier.padding(horizontal = 4.dp)
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.action_delete_course),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
                         }
-                    }, modifier = Modifier.padding(horizontal = 4.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.action_delete_course),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+                    }
                 }
             }
-
-
         }
     }
 
