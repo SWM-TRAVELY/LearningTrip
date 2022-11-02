@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.leeseungyun1020.learningtrip.model.Place
 
-@Database(entities = [Place::class], version = 1)
+@Database(entities = [Place::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun placeDao(): PlaceDao
 
