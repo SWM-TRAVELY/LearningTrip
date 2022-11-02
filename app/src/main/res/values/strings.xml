@@ -117,4 +117,10 @@
     <string name="desc_time_hour">hour</string>
     <string name="title_info_change">Change my info</string>
     <string name="action_update">Update</string>
+    <string name="desc_name">Enter your name</string>
+    <string name="desc_email" translatable="false">example@example.com</string>
+    <string name="desc_phone" translatable="false">010-XXXX-XXXX</string>
+    <string name="desc_password">Enter 8 or more letters and numbers</string>
+    <string name="desc_password_check">Enter a password again</string>
+    <string name="desc_nickname">Enter your nickname</string>
 </resources>

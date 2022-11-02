@@ -100,7 +100,7 @@ fun SignUpScreen(
                 hintId = R.string.hint_name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 60.dp, start = 16.dp, end = 16.dp),
+                    .padding(top = 32.dp, start = 16.dp, end = 16.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text, imeAction = ImeAction.Next
                 ),
@@ -116,6 +116,13 @@ fun SignUpScreen(
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_name),
                     color = MaterialTheme.colorScheme.error
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_name),
                 )
             }
 
@@ -141,6 +148,13 @@ fun SignUpScreen(
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_email),
                     color = MaterialTheme.colorScheme.error
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_email),
                 )
             }
 
@@ -176,6 +190,13 @@ fun SignUpScreen(
                     text = stringResource(id = R.string.error_password),
                     color = MaterialTheme.colorScheme.error
                 )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_password),
+                )
             }
 
             SignUpTextField(
@@ -202,6 +223,13 @@ fun SignUpScreen(
                     text = stringResource(id = R.string.error_password_check),
                     color = MaterialTheme.colorScheme.error
                 )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_password_check),
+                )
             }
 
             SignUpTextField(
@@ -226,6 +254,13 @@ fun SignUpScreen(
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_nickname),
                     color = MaterialTheme.colorScheme.error
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_nickname),
                 )
             }
 
@@ -262,6 +297,13 @@ fun SignUpScreen(
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_phone),
                     color = MaterialTheme.colorScheme.error
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_phone),
                 )
             }
 
