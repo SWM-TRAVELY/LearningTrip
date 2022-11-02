@@ -29,14 +29,14 @@ class AuthRepository(private val context: Context) {
     val signInError = MutableLiveData<Boolean>(false)
     val user = MutableLiveData<User>()
 
-    fun loadToken(): String? {
-        val pref = context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
+    private fun loadToken(): String? {
         val token = pref.getString("token", null)
+        Log.d(TAG, "loadToken: $token")
         _token.value = token
         return token
     }
 
-    fun loadRefreshToken(): String? {
+    private fun loadRefreshToken(): String? {
         return pref.getString("refreshToken", null)
     }
 
@@ -47,6 +47,7 @@ class AuthRepository(private val context: Context) {
     }
 
     fun saveInitialToken(refreshToken: String, token: String) {
+        Log.d(TAG, "saveInitialToken: $refreshToken, $token")
         pref.edit().putString("refreshToken", refreshToken).putString("token", token).apply()
         _token.value = token
         _isSignIn.value = true
@@ -72,7 +73,7 @@ class AuthRepository(private val context: Context) {
                     response: Response<AuthResponse<TokenResponse>>
                 ) {
                     val body = response.body()
-                    Log.d(TAG, "onResponse: $response ${response.body()}")
+                    Log.d(TAG, "signin-onResponse: $response ${response.body()}")
                     if (response.isSuccessful && response.code() == 200 && body != null) {
                         when (body.status) {
                             200 -> {
@@ -97,7 +98,7 @@ class AuthRepository(private val context: Context) {
             object : Callback<AuthResponse<TokenResponse>> {
                 override fun onFailure(call: Call<AuthResponse<TokenResponse>>, t: Throwable) {
                     signUpError.value = true
-                    Log.d(TAG, "onFailure: $t")
+                    Log.d(TAG, "signup-onFailure: $t")
                 }
 
                 override fun onResponse(
@@ -105,10 +106,11 @@ class AuthRepository(private val context: Context) {
                     response: Response<AuthResponse<TokenResponse>>
                 ) {
                     val body = response.body()
-                    Log.d(TAG, "onResponse: $response ${response.body()}")
+                    Log.d(TAG, "signup-onResponse: $response ${response.body()}")
                     if (response.isSuccessful && response.code() == 200 && body != null) {
                         when (body.status) {
                             200 -> {
+                                Log.d(TAG, "signup: 200")
                                 signUpError.value = false
                                 saveInitialToken(body.data.refreshToken, body.data.accessToken)
                                 loadUserInfo()
@@ -131,7 +133,7 @@ class AuthRepository(private val context: Context) {
             RetrofitClient.authService.autoSignIn(AutoSignInRequest(refreshToken)).enqueue(
                 object : Callback<AuthResponse<TokenResponse>> {
                     override fun onFailure(call: Call<AuthResponse<TokenResponse>>, t: Throwable) {
-                        Log.d(TAG, "onFailure: $t")
+                        Log.d(TAG, "auto-onFailure: $t")
                         _isSignIn.value = false
                     }
 
@@ -140,7 +142,7 @@ class AuthRepository(private val context: Context) {
                         response: Response<AuthResponse<TokenResponse>>
                     ) {
                         val body = response.body()
-                        Log.d(TAG, "onResponse: $response ${response.body()}")
+                        Log.d(TAG, "auto-onResponse: $response ${response.body()}")
                         if (response.isSuccessful && response.code() == 200 && body != null) {
                             when (body.status) {
                                 200 -> {
@@ -172,7 +174,7 @@ class AuthRepository(private val context: Context) {
                         call: Call<AuthResponse<ReloadTokenResponse>>,
                         t: Throwable
                     ) {
-                        Log.d(TAG, "onFailure: $t")
+                        Log.d(TAG, "reload-onFailure: $t")
                     }
 
                     override fun onResponse(
@@ -180,7 +182,7 @@ class AuthRepository(private val context: Context) {
                         response: Response<AuthResponse<ReloadTokenResponse>>
                     ) {
                         val body = response.body()
-                        Log.d(TAG, "onResponse: $response ${response.body()}")
+                        Log.d(TAG, "reload-onResponse: $response ${response.body()}")
                         if (response.isSuccessful && response.code() == 200 && body != null) {
                             when (body.status) {
                                 200 -> {

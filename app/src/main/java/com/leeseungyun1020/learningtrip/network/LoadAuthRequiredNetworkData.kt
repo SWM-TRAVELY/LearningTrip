@@ -16,7 +16,7 @@ fun <T> Call<T>.loadAuthRequiredNetworkData(
     this.enqueue(
         object : Callback<T> {
             override fun onFailure(call: Call<T>, t: Throwable) {
-                Log.d(TAG, "onFailure: ${t.message}")
+                Log.d(TAG, "authReq-onFailure: ${t.message}")
                 if (fallback != null)
                     target.postValue(fallback)
             }
@@ -25,7 +25,7 @@ fun <T> Call<T>.loadAuthRequiredNetworkData(
                 call: Call<T>,
                 response: Response<T>
             ) {
-                Log.d(TAG, "onResponse: ${response.code()}: ${response.body()}")
+                Log.d(TAG, "authReq-onResponse: ${response.code()}: ${response.body()}")
                 when (response.code()) {
                     200 -> {
                         if (response.body() != null)
