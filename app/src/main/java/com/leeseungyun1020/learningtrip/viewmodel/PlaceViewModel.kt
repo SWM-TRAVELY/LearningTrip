@@ -65,74 +65,83 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
         repository.searchNameByKeyword(keyword)
     }
 
-    fun insert(place: Place) = viewModelScope.launch {
+    private fun insert(place: Place) = viewModelScope.launch {
         repository.insert(place)
+    }
+
+    private fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
     }
 
     fun updatePlaceData(context: Context) {
         val sharedPref = context.getSharedPreferences("place_data", Context.MODE_PRIVATE)
-        if (sharedPref.getBoolean("place_data_updated", false)) {
-            _isUpdated.postValue(true)
-            return
-        }
-        viewModelScope.launch {
-            context.assets.open("TourAPI12_a.csv").bufferedReader().apply {
-                CSVReader(this).use {
-                    for (data in it) {
-                        if (!data[0].isDigitsOnly())
-                            continue
-                        val id: Long = data[0].toLong()
-                        val name: String = data[2]
-                        val typeId: Int = data[1].toInt()
-                        val address: String = data[3]
-                        val chkInTextbook: Boolean = data[4].toBoolean()
-                        val latitude: Double = data[5].toDoubleOrNull() ?: 0.0
-                        val longitude: Double = data[6].toDoubleOrNull() ?: 0.0
-                        val tel: String = data[7]
-                        val overview: String = data[8]
-                        val imageURL: String = data[9]
-                        val restDate: String = data[10]
-                        val useTime: String = data[11]
-                        val chkParking: Boolean = data[12].toBoolean()
-                        val chkBabyCarriage: Boolean = data[13].toBoolean()
-                        val chkPets: Boolean = data[14].toBoolean()
-                        val ageAvailable: String = data[15]
-                        val expGuide: String = data[16]
-                        val chkWorldCultural: Boolean = data[17].toBoolean()
-                        val chkWorldNatural: Boolean = data[18].toBoolean()
-                        val chkWorldRecord: Boolean = data[19].toBoolean()
-                        val place = Place(
-                            id,
-                            name,
-                            typeId,
-                            address,
-                            chkInTextbook,
-                            latitude,
-                            longitude,
-                            tel,
-                            overview,
-                            imageURL,
-                            restDate,
-                            useTime,
-                            chkParking,
-                            chkBabyCarriage,
-                            chkPets,
-                            ageAvailable,
-                            expGuide,
-                            chkWorldCultural,
-                            chkWorldNatural,
-                            chkWorldRecord
-                        )
-                        insert(place)
-                    }
-                }
-            }.close()
-
-            with(sharedPref.edit()) {
-                putBoolean("place_data_updated", true)
-                apply()
+        when (sharedPref.getString("version", "1.0.0")) {
+            "1.1.0" -> {
+                _isUpdated.postValue(true)
+                return
             }
-            _isUpdated.postValue(true)
+            else -> {
+                deleteAll()
+                viewModelScope.launch {
+                    context.assets.open("TourAPI12_a.csv").bufferedReader().apply {
+                        CSVReader(this).use {
+                            for (data in it) {
+                                if (!data[0].isDigitsOnly())
+                                    continue
+                                val id: Long = data[0].toLong()
+                                val name: String = data[2]
+                                val typeId: Int = data[1].toInt()
+                                val address: String = data[3]
+                                val chkInTextbook: Boolean = data[4].toBoolean()
+                                val latitude: Double = data[5].toDoubleOrNull() ?: 0.0
+                                val longitude: Double = data[6].toDoubleOrNull() ?: 0.0
+                                val tel: String = data[7]
+                                val overview: String = data[8]
+                                val imageURL: String = data[9]
+                                val restDate: String = data[10]
+                                val useTime: String = data[11]
+                                val chkParking: Boolean = data[12].toBoolean()
+                                val chkBabyCarriage: Boolean = data[13].toBoolean()
+                                val chkPets: Boolean = data[14].toBoolean()
+                                val ageAvailable: String = data[15]
+                                val expGuide: String = data[16]
+                                val chkWorldCultural: Boolean = data[17].toBoolean()
+                                val chkWorldNatural: Boolean = data[18].toBoolean()
+                                val chkWorldRecord: Boolean = data[19].toBoolean()
+                                val place = Place(
+                                    id,
+                                    name,
+                                    typeId,
+                                    address,
+                                    chkInTextbook,
+                                    latitude,
+                                    longitude,
+                                    tel,
+                                    overview,
+                                    imageURL,
+                                    restDate,
+                                    useTime,
+                                    chkParking,
+                                    chkBabyCarriage,
+                                    chkPets,
+                                    ageAvailable,
+                                    expGuide,
+                                    chkWorldCultural,
+                                    chkWorldNatural,
+                                    chkWorldRecord
+                                )
+                                insert(place)
+                            }
+                        }
+                    }.close()
+
+                    with(sharedPref.edit()) {
+                        putBoolean("place_data_updated", true)
+                        apply()
+                    }
+                    _isUpdated.postValue(true)
+                }
+            }
         }
     }
 }

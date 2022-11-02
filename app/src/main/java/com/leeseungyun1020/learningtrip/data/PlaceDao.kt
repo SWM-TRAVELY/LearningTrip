@@ -26,4 +26,7 @@ interface PlaceDao {
 
     @Query("SELECT name FROM place WHERE name LIKE '%' || :keyword || '%' LIMIT 16")
     suspend fun searchNameByKeyword(keyword: String): List<String>
+
+    @Query("DELETE FROM place")
+    suspend fun deleteAll()
 }
