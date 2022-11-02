@@ -102,7 +102,7 @@ data class SimpleCoursePlace(
     @SerializedName("sequence")
     val sequence: Int?,
     @SerializedName("distance")
-    val distance: Double?,
+    val distance: Int?,
     @SerializedName("time")
     val time: Int?,
 )

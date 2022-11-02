@@ -96,13 +96,14 @@ fun CourseScreen(
                                 id = R.string.desc_time_minute
                             )
                         }" else "$minute${stringResource(id = R.string.desc_time_minute)}"
+                    val distance = if (place.distance >= 1000) "${
+                        String.format(
+                            "%.2f",
+                            place.distance / 1000.0
+                        )
+                    }km" else "${place.distance}m"
                     Text(
-                        text = "${
-                            String.format(
-                                "%.2f",
-                                place.distance
-                            )
-                        }km ($time)",
+                        text = "$distance ($time)",
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier
                             .fillMaxWidth()
