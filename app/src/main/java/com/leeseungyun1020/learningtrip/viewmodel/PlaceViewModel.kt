@@ -78,11 +78,11 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
         when (sharedPref.getString("version", "1.0.0")) {
             "1.1.0" -> {
                 _isUpdated.postValue(true)
-                return
             }
             else -> {
                 deleteAll()
                 viewModelScope.launch {
+                    // TODO: CSV 파일 교체
                     context.assets.open("TourAPI12_a.csv").bufferedReader().apply {
                         CSVReader(this).use {
                             for (data in it) {
@@ -135,10 +135,7 @@ class PlaceViewModel(private val repository: PlaceRepository) : ViewModel() {
                         }
                     }.close()
 
-                    with(sharedPref.edit()) {
-                        putBoolean("place_data_updated", true)
-                        apply()
-                    }
+                    sharedPref.edit().putString("version", "1.1.0").apply()
                     _isUpdated.postValue(true)
                 }
             }
