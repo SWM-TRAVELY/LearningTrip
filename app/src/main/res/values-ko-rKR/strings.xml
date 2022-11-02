@@ -105,7 +105,7 @@
     <string name="title_category">유형</string>
     <string name="desc_signin_required">기능 사용을 위해 로그인이 필요합니다.</string>
     <string name="title_signin">로그인</string>
-    <string name="title_story">스토리</string>
+    <string name="title_story">코스</string>
     <string name="error_signup">회원가입에 실패하였습니다.</string>
     <string name="error_signin">로그인에 실패하였습니다.</string>
     <string name="desc_empty_story">새로운 코스를 만들어보세요!</string>
