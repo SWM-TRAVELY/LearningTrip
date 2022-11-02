@@ -11,11 +11,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val AUTH_PREF = "auth"
+
 class AuthRepository(private val context: Context) {
-    private val _isSignIn = MutableLiveData<Boolean>(loadToken() != null)
-    private val AUTH_PREF = "auth"
+    private val _isSignIn = MutableLiveData<Boolean>(false)
+    private val _token = MutableLiveData<String?>()
+
     val isSignIn: LiveData<Boolean>
         get() = _isSignIn
+    val token: LiveData<String?>
+        get() = _token
+    private val pref by lazy {
+        context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
+    }
 
     val signUpError = MutableLiveData<Boolean>(false)
     val signInError = MutableLiveData<Boolean>(false)
@@ -23,29 +31,31 @@ class AuthRepository(private val context: Context) {
 
     fun loadToken(): String? {
         val pref = context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
-        return pref.getString("token", null)
+        val token = pref.getString("token", null)
+        _token.value = token
+        return token
     }
 
     fun loadRefreshToken(): String? {
-        val pref = context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
         return pref.getString("refreshToken", null)
     }
 
     fun saveToken(token: String) {
-        val pref = context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
         pref.edit().putString("token", token).apply()
+        _token.value = token
         _isSignIn.value = true
     }
 
     fun saveInitialToken(refreshToken: String, token: String) {
-        val pref = context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
         pref.edit().putString("refreshToken", refreshToken).putString("token", token).apply()
+        _token.value = token
         _isSignIn.value = true
     }
 
     fun deleteToken() {
-        val pref = context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
         pref.edit().remove("token").remove("refreshToken").apply()
+        Log.d(TAG, "deleteToken: ${pref.getString("token", null)}")
+        _token.value = null
         _isSignIn.value = false
     }
 
@@ -68,6 +78,7 @@ class AuthRepository(private val context: Context) {
                             200 -> {
                                 signInError.value = false
                                 saveInitialToken(body.data.refreshToken, body.data.accessToken)
+                                loadUserInfo()
                             }
                             else -> {
                                 signInError.value = true
@@ -100,6 +111,7 @@ class AuthRepository(private val context: Context) {
                             200 -> {
                                 signUpError.value = false
                                 saveInitialToken(body.data.refreshToken, body.data.accessToken)
+                                loadUserInfo()
                             }
                             else -> {
                                 signUpError.value = true
@@ -134,7 +146,7 @@ class AuthRepository(private val context: Context) {
                                 200 -> {
                                     Log.d(TAG, "AUTO SIGN IN SUCCESS")
                                     saveInitialToken(body.data.refreshToken, body.data.accessToken)
-                                    _isSignIn.value = true
+                                    loadUserInfo()
                                 }
                                 else -> {
                                     deleteToken()

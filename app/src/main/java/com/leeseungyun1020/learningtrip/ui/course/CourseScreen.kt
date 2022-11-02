@@ -134,12 +134,15 @@ fun CourseScreen(
                     }
 
                     if (isEditable) {
+                        val token by authViewModel.token.observeAsState()
                         Button(
                             onClick = {
-                                val token = authViewModel.token
-                                if (token != null) course?.let {
-                                    courseViewModel.deleteCourse(it, token)
-                                    navController.popBackStack()
+
+                                token?.let { token ->
+                                    course?.let {
+                                        courseViewModel.deleteCourse(it, token)
+                                        navController.popBackStack()
+                                    }
                                 }
                             }, modifier = Modifier.padding(horizontal = 4.dp)
                         ) {

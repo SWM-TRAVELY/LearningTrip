@@ -189,12 +189,12 @@ fun AddCourseScreen(
                     )
                 }
                 val errorMsg = stringResource(id = R.string.error_empty_course)
+                val token by authViewModel.token.observeAsState()
                 Button(
                     onClick = {
                         if (addCourseViewModel.checkUpdateCourse()) {
-                            val token = authViewModel.token
-                            if (token != null) {
-                                addCourseViewModel.updateCourse(token)
+                            token?.let {
+                                addCourseViewModel.updateCourse(it)
                                 navController.popBackStack()
                                 if (isCopy)
                                     navController.navigate(NavigationScreen.Story.route)
