@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#FF2169F4</color>
+    <color name="secondary">#FFF0F0FF</color>
+    <color name="tertiary">#FFFFE974</color>
+    <color name="primary_dark">#FF569AFF</color>
+    <color name="secondary_dark">#FFF8F8FF</color>
+    <color name="tertiary_dark">#FFFCED9E</color>
 </resources>
+
+    <!--
+    val Primary = Color(0xFF2169F4)
+    val Secondary = Color(0xFFF0F0FF)
+    val Tertiary = Color(0xFFFFE974)
+
+    val PrimaryDark = Color(0xFF569AFF)
+    val SecondaryDark = Color(0xFFF8F8FF)
+    val TertiaryDark = Color(0xFFFCED9E)
+    -->

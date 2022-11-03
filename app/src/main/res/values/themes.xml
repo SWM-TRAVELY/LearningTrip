@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.LearningTrip" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.LearningTrip" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/tertiary</item>
+    </style>
 </resources>
