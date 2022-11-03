@@ -123,4 +123,8 @@
     <string name="desc_password">Enter 8 or more letters and numbers</string>
     <string name="desc_password_check">Enter a password again</string>
     <string name="desc_nickname">Enter your nickname</string>
+    <string name="title_select_date">Date</string>
+    <string name="title_select_location">Location</string>
+    <string name="title_select_grade">Grade</string>
+    <string name="title_select_keyword">Keyword</string>
 </resources>

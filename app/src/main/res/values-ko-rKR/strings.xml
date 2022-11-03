@@ -122,4 +122,8 @@
     <string name="desc_password">영문과 숫자를 포함하여 8자 이상을 입력하세요</string>
     <string name="desc_password_check">비밀번호를 다시 입력해주세요</string>
     <string name="desc_nickname">닉네임을 입력해주세요</string>
+    <string name="title_select_date">기간</string>
+    <string name="title_select_location">장소</string>
+    <string name="title_select_grade">학년</string>
+    <string name="title_select_keyword">키워드</string>
 </resources>

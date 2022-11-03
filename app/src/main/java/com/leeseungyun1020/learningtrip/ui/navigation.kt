@@ -8,10 +8,7 @@ import androidx.navigation.navigation
 import com.leeseungyun1020.learningtrip.ui.account.SignInScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignUpScreen
 import com.leeseungyun1020.learningtrip.ui.category.CategoryScreen
-import com.leeseungyun1020.learningtrip.ui.course.AddCourseScreen
-import com.leeseungyun1020.learningtrip.ui.course.AddPlaceScreen
-import com.leeseungyun1020.learningtrip.ui.course.CourseScreen
-import com.leeseungyun1020.learningtrip.ui.course.StoryScreen
+import com.leeseungyun1020.learningtrip.ui.course.*
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.nearby.NearbyScreen
 import com.leeseungyun1020.learningtrip.ui.permission.PermissionScreen
@@ -137,5 +134,9 @@ fun NavGraphBuilder.graph(
 
     composable(Screen.InfoChange.route) {
         InfoChangeScreen(navController, authViewModel)
+    }
+
+    composable(Screen.CourseRequest.route) {
+        CourseRequestScreen(navController)
     }
 }

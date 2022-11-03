@@ -84,4 +84,5 @@ sealed class Screen(val route: String, val root: String) {
     object Sticker : Screen("sticker", "sticker")
     object NoticeList : Screen("noticeList", "noticeList")
     object InfoChange : Screen("infoChange", "infoChange")
+    object CourseRequest : Screen("courseRequestScreen", "courseRequestScreen")
 }
