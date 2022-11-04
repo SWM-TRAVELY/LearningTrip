@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.LearningTrip" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:colorPrimary">@color/primary</item>
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/tertiary</item>
+        <item name="android:colorSecondary" tools:targetApi="n_mr1">@color/secondary</item>
     </style>
 </resources>

@@ -58,7 +58,11 @@ fun StoryScreen(
         LearningTripScaffold(
             title = stringResource(id = R.string.nav_story),
             floatingActionButton = {
-                FloatingActionButton(onClick = { navController.navigate("${Screen.AddCourse.root}/-1") }) {
+                FloatingActionButton(
+                    onClick = { navController.navigate("${Screen.AddCourse.root}/-1") },
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = stringResource(id = R.string.action_add)
