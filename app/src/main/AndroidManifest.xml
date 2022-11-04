@@ -32,4 +32,8 @@
         </activity>
     </application>
 
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
+
 </manifest>
