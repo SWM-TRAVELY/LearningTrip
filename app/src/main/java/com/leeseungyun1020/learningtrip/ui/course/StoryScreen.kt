@@ -91,16 +91,16 @@ fun StoryScreen(
                                 .padding(bottom = 12.dp)
                                 .height(100.dp)
                                 .clip(RoundedCornerShape(5.dp))
-                                .background(MaterialTheme.colorScheme.tertiary)
+                                .background(MaterialTheme.colorScheme.secondary)
                                 .clickable {
                                     navController.navigate(Screen.CourseRequest.route)
                                 }
                         ) {
                             Text(
-                                text = stringResource(id = R.string.title_recommend_course),
+                                text = stringResource(id = R.string.title_request_course),
                                 modifier = Modifier.align(Alignment.Center),
                                 style = MaterialTheme.typography.titleLarge,
-                                color = MaterialTheme.colorScheme.onTertiary
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }

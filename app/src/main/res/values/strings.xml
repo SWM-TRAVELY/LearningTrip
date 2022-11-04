@@ -127,4 +127,5 @@
     <string name="title_select_location">Location</string>
     <string name="title_select_grade">Grade</string>
     <string name="title_select_keyword">Keyword</string>
+    <string name="title_request_course">View recommended course</string>
 </resources>
