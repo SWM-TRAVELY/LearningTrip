@@ -1,4 +1,4 @@
-package com.leeseungyun1020.learningtrip.model
+package com.leeseungyun1020.learningtrip.model.course
 
 import com.google.gson.annotations.SerializedName
 

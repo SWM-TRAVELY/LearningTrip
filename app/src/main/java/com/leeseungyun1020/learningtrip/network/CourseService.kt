@@ -1,8 +1,8 @@
 package com.leeseungyun1020.learningtrip.network
 
 import com.leeseungyun1020.learningtrip.model.Course
-import com.leeseungyun1020.learningtrip.model.CourseResponse
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
+import com.leeseungyun1020.learningtrip.model.course.CourseResponse
 import retrofit2.http.*
 
 interface CourseService {
