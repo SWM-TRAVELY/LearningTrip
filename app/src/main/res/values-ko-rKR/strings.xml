@@ -127,4 +127,5 @@
     <string name="title_select_grade">학년</string>
     <string name="title_select_keyword">키워드</string>
     <string name="title_request_course">추천 코스 보기</string>
+    <string name="action_recommend_course">코스 추천 받기</string>
 </resources>
