@@ -99,7 +99,7 @@ fun StoryScreen(
                             Text(
                                 text = stringResource(id = R.string.title_request_course),
                                 modifier = Modifier.align(Alignment.Center),
-                                style = MaterialTheme.typography.titleLarge,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.primary
                             )
                         }
