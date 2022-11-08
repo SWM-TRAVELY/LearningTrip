@@ -20,7 +20,7 @@ sealed class NavigationScreen(
     object Story :
         NavigationScreen(
             "story",
-            R.string.nav_story,
+            R.string.nav_my_course,
             R.drawable.ic_story,
             listOf(
                 "story",

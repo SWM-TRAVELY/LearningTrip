@@ -56,7 +56,7 @@ fun StoryScreen(
             courseViewModel.loadCourseList(it) { authViewModel.reloadToken() }
         }
         LearningTripScaffold(
-            title = stringResource(id = R.string.nav_story),
+            title = stringResource(id = R.string.nav_my_course),
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = { navController.navigate("${Screen.AddCourse.root}/-1") },
