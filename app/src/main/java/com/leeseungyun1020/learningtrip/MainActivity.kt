@@ -1,7 +1,6 @@
 package com.leeseungyun1020.learningtrip
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
@@ -70,11 +69,11 @@ fun MainScreen(placeViewModel: PlaceViewModel, authViewModel: AuthViewModel) {
                 Scaffold(
                     bottomBar = {
                         val items = listOf(
+                            NavigationScreen.Home,
                             NavigationScreen.Category,
                             NavigationScreen.Story,
-                            NavigationScreen.Home,
                             // NavigationScreen.Nearby,
-                            NavigationScreen.My
+                            NavigationScreen.Settings
                         )
 
                         NavigationBar(

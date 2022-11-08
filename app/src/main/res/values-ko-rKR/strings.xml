@@ -12,7 +12,7 @@
     <string name="nav_category">카테고리</string>
     <string name="nav_my_course">내 코스</string>
     <string name="nav_nearby">주변</string>
-    <string name="nav_my">마이</string>
+    <string name="nav_settings">설정</string>
     <string name="action_play">음성 재생</string>
     <string name="action_sticker">스티커</string>
     <string name="star">별점</string>

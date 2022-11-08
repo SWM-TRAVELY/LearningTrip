@@ -11,7 +11,7 @@
     <string name="nav_category">Category</string>
     <string name="nav_my_course">My course</string>
     <string name="nav_nearby">Nearby</string>
-    <string name="nav_my">My</string>
+    <string name="nav_settings">Settings</string>
     <string name="action_play">Voice Play</string>
     <string name="action_sticker">Sticker</string>
     <string name="star">star</string>

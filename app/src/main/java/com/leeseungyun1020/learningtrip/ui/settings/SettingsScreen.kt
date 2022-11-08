@@ -26,7 +26,7 @@ import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 
 @Composable
-fun MyScreen(navController: NavController, authViewModel: AuthViewModel) {
+fun SettingsScreen(navController: NavController, authViewModel: AuthViewModel) {
     val isSignIn by authViewModel.isSignIn.observeAsState(false)
     val user by authViewModel.user.observeAsState()
     if (user == null) {
@@ -95,10 +95,10 @@ fun MyScreen(navController: NavController, authViewModel: AuthViewModel) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun MyScreenPrev() {
+fun SettingsScreenPrev() {
     val authRepository = AuthRepository(LocalContext.current)
     val authViewModel: AuthViewModel = viewModel(
         factory = AuthViewModelFactory(authRepository)
     )
-    MyScreen(navController = rememberNavController(), authViewModel)
+    SettingsScreen(navController = rememberNavController(), authViewModel)
 }

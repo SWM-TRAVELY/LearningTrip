@@ -31,13 +31,13 @@ fun NavGraphBuilder.graph(
         CategoryScreen(navController)
     }
     composable(NavigationScreen.Story.route) {
-        StoryScreen(navController, authViewModel)
+        MyCourseScreen(navController, authViewModel)
     }
     composable(NavigationScreen.Nearby.route) {
         NearbyScreen(navController)
     }
-    composable(NavigationScreen.My.route) {
-        MyScreen(navController, authViewModel)
+    composable(NavigationScreen.Settings.route) {
+        SettingsScreen(navController, authViewModel)
     }
 
     navigation(

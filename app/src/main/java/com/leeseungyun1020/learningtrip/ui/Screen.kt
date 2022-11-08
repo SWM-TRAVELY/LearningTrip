@@ -50,9 +50,9 @@ sealed class NavigationScreen(
             listOf("nearby")
         )
 
-    object My : NavigationScreen(
+    object Settings : NavigationScreen(
         "my",
-        R.string.nav_my,
+        R.string.nav_settings,
         R.drawable.ic_my,
         listOf(
             "my",

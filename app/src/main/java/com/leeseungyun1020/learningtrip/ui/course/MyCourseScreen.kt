@@ -37,7 +37,7 @@ import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
 
 @Composable
-fun StoryScreen(
+fun MyCourseScreen(
     navController: NavController,
     authViewModel: AuthViewModel,
     courseViewModel: CourseViewModel = viewModel(),
@@ -113,10 +113,10 @@ fun StoryScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun StoryScreenPrev() {
+fun MyCourseScreenPrev() {
     val authRepository = AuthRepository(LocalContext.current)
     val authViewModel: AuthViewModel = viewModel(
         factory = AuthViewModelFactory(authRepository)
     )
-    StoryScreen(navController = rememberNavController(), authViewModel)
+    MyCourseScreen(navController = rememberNavController(), authViewModel)
 }
