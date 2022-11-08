@@ -52,7 +52,7 @@
     <string name="action_swap">변경</string>
     <string name="title_add_place">관광지 추가</string>
     <string name="title_new_course">코스 이름을 입력하세요</string>
-    <string name="title_course_error">오류</string>
+    <string name="title_course_error">로딩 중</string>
     <string name="action_info">정보 보기</string>
     <string name="hello">반갑습니다 :)</string>
     <string name="action_kakao_login">카카오 로그인</string>

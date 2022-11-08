@@ -51,7 +51,7 @@
     <string name="action_swap">Swap</string>
     <string name="title_add_place">Add place</string>
     <string name="title_new_course">Enter new course name</string>
-    <string name="title_course_error">Error</string>
+    <string name="title_course_error">Loading</string>
     <string name="action_info">Show information</string>
     <string name="hello">Hello :)</string>
     <string name="action_kakao_login">Login with Kakao</string>
