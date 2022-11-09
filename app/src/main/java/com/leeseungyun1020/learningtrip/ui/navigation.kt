@@ -139,4 +139,8 @@ fun NavGraphBuilder.graph(
     composable(Screen.CourseRequest.route) {
         CourseRequestScreen(navController)
     }
+
+    composable(Screen.RecommendedCourse.route) {
+        RecommendedCourseScreen(navController)
+    }
 }

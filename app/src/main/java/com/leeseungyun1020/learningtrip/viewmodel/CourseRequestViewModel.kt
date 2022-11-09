@@ -83,4 +83,10 @@ class CourseRequestViewModel : ViewModel() {
         _grade = result.grades.firstOrNull()?.name ?: _grade
         _gradeOption = result.grades.firstOrNull()?.options?.firstOrNull() ?: ""
     }
+
+    fun onRequestCourse(move: () -> Unit) {
+        if (_locationOption.isNotEmpty() && _gradeOption.isNotEmpty()) {
+            move()
+        }
+    }
 }
