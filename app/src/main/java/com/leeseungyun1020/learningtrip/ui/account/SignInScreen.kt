@@ -335,7 +335,7 @@ fun SignInOAuthScreen(
                 ): Boolean {
                     Log.d("LSYD", "shouldOverrideUrlLoading: ${request.url}")
                     val intent = Intent.parseUri(request.url.toString(), Intent.URI_INTENT_SCHEME)
-
+                    Log.d(TAG, "shouldOverrideUrlLoading: $intent")
                     if (intent.resolveActivity(context.packageManager) != null) {
                         startActivity(context, intent, null)
                         Log.d(TAG, "ACTIVITY: ${intent.`package`}")
@@ -347,7 +347,7 @@ fun SignInOAuthScreen(
             loadUrl(authURL)
         }
     }, update = {
-        it.loadUrl(authURL)
+
     })
 }
 
