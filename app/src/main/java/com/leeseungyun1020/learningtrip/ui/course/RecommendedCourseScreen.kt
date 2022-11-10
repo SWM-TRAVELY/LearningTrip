@@ -43,7 +43,7 @@ fun RecommendedCourseScreen(
                 CourseBox(course = course, modifier = Modifier
                     .padding(bottom = 12.dp)
                     .clickable {
-                        navController.navigate("${Screen.Course.root}/${course.id}")
+                        navController.navigate("${Screen.Course.root}/${course.id}?isEditable=false")
                     })
             }
         }
