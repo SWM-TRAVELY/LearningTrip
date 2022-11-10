@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 class CourseRepository {
     val searchedCourse = MutableLiveData<Course>()
     val storyCourses = MutableLiveData<List<SimpleCourse>>()
+    val recommendedCourses = MutableLiveData<List<SimpleCourse>>()
 
     suspend fun searchById(id: Int) {
         withContext(Dispatchers.IO) {
@@ -46,5 +47,12 @@ class CourseRepository {
         RetrofitClient.courseService.deleteCourse(course, token).sendAuthRequiredData {
 
         }
+    }
+
+    fun loadRecommendedCourseList() {
+        // TODO: 맞춤 코스 추천 API로 변경
+        RetrofitClient.homeService.getRecommendCourse().loadNetworkData(
+            target = recommendedCourses
+        )
     }
 }

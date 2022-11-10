@@ -7,10 +7,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.leeseungyun1020.learningtrip.data.CourseRepository
+import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.model.course.CourseOptionResponse
 import com.leeseungyun1020.learningtrip.model.course.GroupItem
 
-class CourseRequestViewModel : ViewModel() {
+class CourseRequestViewModel(private val repository: CourseRepository = CourseRepository()) :
+    ViewModel() {
     private var _start by mutableStateOf(MaterialDatePicker.todayInUtcMilliseconds())
     val start: Long
         get() = _start
@@ -34,6 +37,10 @@ class CourseRequestViewModel : ViewModel() {
     private var _gradeOption by mutableStateOf("")
     val gradeOption: String
         get() = _gradeOption
+
+    private val _courseList = repository.recommendedCourses
+    val courseList: LiveData<List<SimpleCourse>>
+        get() = _courseList
 
     fun onUpdateRange(start: Long, end: Long) {
         _start = start
@@ -86,6 +93,7 @@ class CourseRequestViewModel : ViewModel() {
 
     fun onRequestCourse(move: () -> Unit) {
         if (_locationOption.isNotEmpty() && _gradeOption.isNotEmpty()) {
+            repository.loadRecommendedCourseList()
             move()
         }
     }

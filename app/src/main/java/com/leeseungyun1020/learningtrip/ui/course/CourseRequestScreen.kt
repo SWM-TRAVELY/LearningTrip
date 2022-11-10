@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.viewmodel.CourseRequestViewModel
 import java.util.*
@@ -270,9 +269,7 @@ fun CourseRequestScreen(
                 .padding(top = 32.dp),
             onClick = {
                 courseRequestViewModel.onRequestCourse {
-                    navController.navigate(Screen.RecommendedCourse.route) {
-                        popUpTo(NavigationScreen.Story.route)
-                    }
+                    navController.navigate(Screen.RecommendedCourse.route)
                 }
             },
             shape = RoundedCornerShape(10.dp),

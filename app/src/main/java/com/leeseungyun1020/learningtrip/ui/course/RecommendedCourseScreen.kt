@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -11,20 +12,25 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.ui.NavigationScreen
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.CourseBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
-import com.leeseungyun1020.learningtrip.viewmodel.CourseViewModel
+import com.leeseungyun1020.learningtrip.viewmodel.CourseRequestViewModel
 
 @Composable
 fun RecommendedCourseScreen(
     navController: NavController,
-    courseViewModel: CourseViewModel = viewModel(),
+    courseRequestViewModel: CourseRequestViewModel = viewModel(
+        viewModelStoreOwner = navController.previousBackStackEntry
+            ?: LocalViewModelStoreOwner.current!!
+    ),
 ) {
-    val courseList by courseViewModel.courseList.observeAsState()
+    val courseList by courseRequestViewModel.courseList.observeAsState()
     LearningTripScaffold(
         title = stringResource(id = R.string.title_recommend_course),
     ) {
@@ -42,5 +48,9 @@ fun RecommendedCourseScreen(
             }
         }
 
+    }
+
+    BackHandler {
+        navController.popBackStack(NavigationScreen.Story.route, false)
     }
 }
