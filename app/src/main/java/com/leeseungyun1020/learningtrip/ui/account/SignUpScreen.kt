@@ -61,7 +61,7 @@ fun SignUpScreen(
         if (signUpError) {
             AlertDialog(
                 onDismissRequest = {
-                    authViewModel.signUpError.value = false
+                    authViewModel.refreshSignUpError()
                 },
                 title = {
                     Text(
@@ -79,7 +79,7 @@ fun SignUpScreen(
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            authViewModel.signUpError.value = false
+                            authViewModel.refreshSignUpError()
                         }
                     ) {
                         Text(

@@ -43,6 +43,14 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         authRepository.updateUserInfo(nickname, phone)
     }
 
+    fun refreshSignInError() {
+        authRepository.refreshSignInError()
+    }
+
+    fun refreshSignUpError() {
+        authRepository.refreshSignUpError()
+    }
+
 }
 
 class AuthViewModelFactory(private val repository: AuthRepository) : ViewModelProvider.Factory {

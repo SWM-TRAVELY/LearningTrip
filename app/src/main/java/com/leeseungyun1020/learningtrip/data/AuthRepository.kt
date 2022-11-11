@@ -25,9 +25,16 @@ class AuthRepository(private val context: Context) {
         context.getSharedPreferences(AUTH_PREF, Context.MODE_PRIVATE)
     }
 
-    val signUpError = MutableLiveData<Boolean>(false)
-    val signInError = MutableLiveData<Boolean>(false)
-    val user = MutableLiveData<User>()
+    private val _signUpError = MutableLiveData<Boolean>(false)
+    private val _signInError = MutableLiveData<Boolean>(false)
+    private val _user = MutableLiveData<User>()
+
+    val signUpError: LiveData<Boolean>
+        get() = _signUpError
+    val signInError: LiveData<Boolean>
+        get() = _signInError
+    val user: LiveData<User>
+        get() = _user
 
     private fun loadToken(): String? {
         val token = pref.getString("token", null)
@@ -64,7 +71,7 @@ class AuthRepository(private val context: Context) {
         RetrofitClient.authService.signIn(SignInRequest(email, password)).enqueue(
             object : Callback<AuthResponse<TokenResponse>> {
                 override fun onFailure(call: Call<AuthResponse<TokenResponse>>, t: Throwable) {
-                    signInError.value = true
+                    _signInError.value = true
                     Log.d(TAG, "onFailure: $t")
                 }
 
@@ -77,16 +84,16 @@ class AuthRepository(private val context: Context) {
                     if (response.isSuccessful && response.code() == 200 && body != null) {
                         when (body.status) {
                             200 -> {
-                                signInError.value = false
+                                _signInError.value = false
                                 saveInitialToken(body.data.refreshToken, body.data.accessToken)
                                 loadUserInfo()
                             }
                             else -> {
-                                signInError.value = true
+                                _signInError.value = true
                             }
                         }
                     } else {
-                        signInError.value = true
+                        _signInError.value = true
                     }
                 }
             }
@@ -97,7 +104,7 @@ class AuthRepository(private val context: Context) {
         RetrofitClient.authService.signUp(SignUpRequest(email, password, nickname, phone)).enqueue(
             object : Callback<AuthResponse<TokenResponse>> {
                 override fun onFailure(call: Call<AuthResponse<TokenResponse>>, t: Throwable) {
-                    signUpError.value = true
+                    _signUpError.value = true
                     Log.d(TAG, "signup-onFailure: $t")
                 }
 
@@ -111,16 +118,16 @@ class AuthRepository(private val context: Context) {
                         when (body.status) {
                             200 -> {
                                 Log.d(TAG, "signup: 200")
-                                signUpError.value = false
+                                _signUpError.value = false
                                 saveInitialToken(body.data.refreshToken, body.data.accessToken)
                                 loadUserInfo()
                             }
                             else -> {
-                                signUpError.value = true
+                                _signUpError.value = true
                             }
                         }
                     } else {
-                        signUpError.value = true
+                        _signUpError.value = true
                     }
                 }
             }
@@ -204,7 +211,7 @@ class AuthRepository(private val context: Context) {
 
     fun loadUserInfo() {
         loadToken()?.let {
-            RetrofitClient.authService.getUserInfo(it).loadAuthRequiredNetworkData(user, null) {
+            RetrofitClient.authService.getUserInfo(it).loadAuthRequiredNetworkData(_user, null) {
                 reloadToken()
             }
         }
@@ -219,9 +226,17 @@ class AuthRepository(private val context: Context) {
                         "phone"
                     ), listOf(nickname, phone)
                 ), it
-            ).loadAuthRequiredNetworkData(user, null) {
+            ).loadAuthRequiredNetworkData(_user, null) {
                 reloadToken()
             }
         }
+    }
+
+    fun refreshSignInError() {
+        _signInError.value = false
+    }
+
+    fun refreshSignUpError() {
+        _signUpError.value = false
     }
 }

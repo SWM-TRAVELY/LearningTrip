@@ -67,7 +67,7 @@ fun SignInScreen(
 ) {
     val type = rememberSaveable { mutableStateOf(SignInType.INIT) }
     when (type.value) {
-        SignInType.INIT -> SignInInitScreen(navController, authViewModel) {
+        SignInType.INIT -> SignInInitScreen(navController) {
             type.value = it
         }
         SignInType.EMAIL -> SignInEmailScreen(navController, authViewModel) {
@@ -85,7 +85,6 @@ fun SignInScreen(
 @Composable
 fun SignInInitScreen(
     navController: NavController,
-    viewModel: AuthViewModel,
     onClick: (SignInType) -> Unit
 ) {
     Column(
@@ -182,7 +181,7 @@ fun SignInEmailScreen(
     if (signInError) {
         AlertDialog(
             onDismissRequest = {
-                viewModel.signInError.value = false
+                viewModel.refreshSignInError()
             },
             title = {
                 Text(
@@ -200,7 +199,7 @@ fun SignInEmailScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        viewModel.signInError.value = false
+                        viewModel.refreshSignInError()
                     }
                 ) {
                     Text(
