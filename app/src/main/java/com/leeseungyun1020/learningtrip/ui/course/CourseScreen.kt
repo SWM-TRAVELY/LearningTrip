@@ -41,10 +41,12 @@ fun CourseScreen(
     id: String,
     authViewModel: AuthViewModel,
     isEditable: Boolean = true,
+    isUser: Boolean = false,
     courseViewModel: CourseViewModel = viewModel()
 ) {
+    val token by authViewModel.token.observeAsState()
     if (id.isDigitsOnly()) {
-        courseViewModel.searchById(id.toInt())
+        courseViewModel.searchById(id.toInt(), isUser, token)
     }
     val course by courseViewModel.course.observeAsState()
     val isSignIn by authViewModel.isSignIn.observeAsState()
@@ -115,7 +117,7 @@ fun CourseScreen(
                     .padding(
                         start = 16.dp, end = 20.dp, top = if (i == 0) 18.dp else 30.dp
                     )
-                    .clickable { navController.navigate("${Screen.Place.root}/${place.id}?isCopy=true") })
+                    .clickable { navController.navigate("${Screen.Place.root}/${place.id}") })
             }
 
             if (isSignIn == true) {
@@ -125,7 +127,7 @@ fun CourseScreen(
                         .padding(top = 36.dp)
                 ) {
                     Button(
-                        onClick = { navController.navigate("${Screen.AddCourse.root}/${id}?isCopy=${!isEditable}") },
+                        onClick = { navController.navigate("${Screen.AddCourse.root}/${id}?isCopy=${!isEditable}&isUser=${isUser}") },
                         modifier = Modifier.padding(horizontal = 4.dp),
                     ) {
                         Text(
@@ -135,7 +137,6 @@ fun CourseScreen(
                     }
 
                     if (isEditable) {
-                        val token by authViewModel.token.observeAsState()
                         Button(
                             onClick = {
 
@@ -167,5 +168,11 @@ fun CourseScreenPrev() {
     val authViewModel: AuthViewModel = viewModel(
         factory = AuthViewModelFactory(authRepository)
     )
-    CourseScreen(navController = rememberNavController(), "1", authViewModel)
+    CourseScreen(
+        navController = rememberNavController(),
+        id = "1",
+        authViewModel = authViewModel,
+        isEditable = true,
+        isUser = false
+    )
 }

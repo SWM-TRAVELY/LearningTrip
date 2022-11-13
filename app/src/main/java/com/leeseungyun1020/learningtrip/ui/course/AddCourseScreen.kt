@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -46,15 +47,19 @@ fun AddCourseScreen(
     id: String,
     authViewModel: AuthViewModel,
     isCopy: Boolean = false,
+    isUser: Boolean = false,
     addCourseViewModel: AddCourseViewModel = viewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var isLoaded by remember { mutableStateOf(false) }
     var isInit by remember { mutableStateOf(false) }
+    val token by authViewModel.token.observeAsState()
 
-    if ((id.toIntOrNull() ?: -1) > 0 && !isLoaded) {
-        addCourseViewModel.loadCourse(id.toInt())
-        isLoaded = true
+    if (id.isDigitsOnly() && !isLoaded && token != null) {
+        token?.let { token ->
+            addCourseViewModel.loadCourse(id.toInt(), isUser, token)
+            isLoaded = true
+        }
     }
 
     val searchedCourse by addCourseViewModel.searchedCourse.observeAsState()
@@ -189,7 +194,6 @@ fun AddCourseScreen(
                     )
                 }
                 val errorMsg = stringResource(id = R.string.error_empty_course)
-                val token by authViewModel.token.observeAsState()
                 Button(
                     onClick = {
                         if (addCourseViewModel.checkUpdateCourse()) {
@@ -226,5 +230,11 @@ fun AddCourseScreenPrev() {
     val authViewModel: AuthViewModel = viewModel(
         factory = AuthViewModelFactory(authRepository)
     )
-    AddCourseScreen(rememberNavController(), "1", authViewModel)
+    AddCourseScreen(
+        navController = rememberNavController(),
+        id = "1",
+        authViewModel = authViewModel,
+        isCopy = false,
+        isUser = true
+    )
 }
