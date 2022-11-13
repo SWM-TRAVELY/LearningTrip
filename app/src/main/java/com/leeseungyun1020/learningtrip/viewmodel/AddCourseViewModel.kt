@@ -5,12 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCoursePlace
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.math.max
 
 class AddCourseViewModel(private val repository: CourseRepository = CourseRepository()) :
@@ -39,8 +36,8 @@ class AddCourseViewModel(private val repository: CourseRepository = CourseReposi
         }
     }
 
-    fun loadCourse(id: Int) = viewModelScope.launch(Dispatchers.IO) {
-        repository.searchById(id)
+    fun loadCourse(id: Int, isUser: Boolean, token: String) {
+        repository.searchById(id, isUser, token)
     }
 
     fun addPlace(place: SimpleCoursePlace) {

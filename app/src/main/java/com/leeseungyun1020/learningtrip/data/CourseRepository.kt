@@ -7,20 +7,21 @@ import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import com.leeseungyun1020.learningtrip.network.loadAuthRequiredNetworkData
 import com.leeseungyun1020.learningtrip.network.loadNetworkData
 import com.leeseungyun1020.learningtrip.network.sendAuthRequiredData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class CourseRepository {
     val searchedCourse = MutableLiveData<Course>()
     val storyCourses = MutableLiveData<List<SimpleCourse>>()
     val recommendedCourses = MutableLiveData<List<SimpleCourse>>()
 
-    suspend fun searchById(id: Int) {
-        withContext(Dispatchers.IO) {
+    fun searchById(id: Int, isUser: Boolean, token: String? = null) {
+        if (!isUser)
             RetrofitClient.courseService.getCourse(id).loadNetworkData(
                 target = searchedCourse
             )
-        }
+        else if (token != null)
+            RetrofitClient.courseService.getUserCourse(id, token).loadAuthRequiredNetworkData(
+                target = searchedCourse
+            )
     }
 
     fun loadCourseList(token: String, onReloadRequired: () -> Unit) {
