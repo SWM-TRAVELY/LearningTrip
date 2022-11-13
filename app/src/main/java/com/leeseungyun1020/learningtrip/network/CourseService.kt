@@ -11,6 +11,12 @@ interface CourseService {
         @Path("id") id: Int
     ): retrofit2.Call<Course>
 
+    @GET("/course/user/{id}")
+    fun getUserCourse(
+        @Path("id") id: Int,
+        @Header("Authorization") token: String
+    ): retrofit2.Call<Course>
+
     @GET("/course/list")
     fun getUserCourseList(
         @Header("Authorization") token: String
