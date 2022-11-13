@@ -59,7 +59,7 @@ fun MyCourseScreen(
             title = stringResource(id = R.string.nav_my_course),
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { navController.navigate("${Screen.AddCourse.root}/-1") },
+                    onClick = { navController.navigate("${Screen.AddCourse.root}/-1?isCopy=false&&isUser=false") },
                     containerColor = MaterialTheme.colorScheme.secondary,
                     contentColor = MaterialTheme.colorScheme.primary,
                 ) {
@@ -82,7 +82,7 @@ fun MyCourseScreen(
                         CourseBox(course = course, modifier = Modifier
                             .padding(bottom = 12.dp)
                             .clickable {
-                                navController.navigate("${Screen.Course.root}/${course.id}")
+                                navController.navigate("${Screen.Course.root}/${course.id}?isEditable=true&isUser=true")
                             })
                     } else {
                         Box(

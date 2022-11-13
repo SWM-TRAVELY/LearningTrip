@@ -209,7 +209,7 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                         ) { idx ->
                             val page = idx % courseList.size
                             CourseBox(course = courseList[page], modifier = Modifier.clickable {
-                                navController.navigate("${Screen.Course.root}/${courseList[page].id}?isEditable=false")
+                                navController.navigate("${Screen.Course.root}/${courseList[page].id}?isEditable=false&isUser=false")
                             })
                         }
                     }
