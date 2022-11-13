@@ -1,10 +1,9 @@
 package com.leeseungyun1020.learningtrip.ui
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
+import android.util.Log
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import androidx.navigation.navigation
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.ui.account.SignInScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignUpScreen
 import com.leeseungyun1020.learningtrip.ui.category.CategoryScreen
@@ -77,13 +76,23 @@ fun NavGraphBuilder.graph(
 
     composable(
         Screen.AddCourse.route,
-        arguments = listOf(navArgument("isCopy") { defaultValue = false })
+        arguments = listOf(
+            navArgument("isCopy") {
+                defaultValue = false
+                type = NavType.BoolType
+            },
+            navArgument("isUser") {
+                defaultValue = false
+                type = NavType.BoolType
+            }
+        )
     ) {
         AddCourseScreen(
             navController,
             it.arguments?.getString("id") ?: "0",
             authViewModel,
-            it.arguments?.getBoolean("isCopy") ?: false
+            it.arguments?.getBoolean("isCopy") ?: false,
+            it.arguments?.getBoolean("isUser") ?: false
         )
     }
 
@@ -98,13 +107,28 @@ fun NavGraphBuilder.graph(
 
     composable(
         Screen.Course.route,
-        arguments = listOf(navArgument("isEditable") { defaultValue = true })
+        arguments = listOf(
+            navArgument("isEditable") {
+                defaultValue = true
+                type = NavType.BoolType
+            },
+            navArgument("isUser") {
+                defaultValue = false
+                type = NavType.BoolType
+            })
     ) {
+        Log.d(
+            TAG,
+            "graph: isEditable: ${it.arguments?.getBoolean("isEditable")} isUser: ${
+                it.arguments?.getBoolean("isUser")
+            }"
+        )
         CourseScreen(
             navController,
             it.arguments?.getString("id") ?: "0",
             authViewModel,
-            it.arguments?.getBoolean("isEditable") ?: true
+            it.arguments?.getBoolean("isEditable") ?: true,
+            it.arguments?.getBoolean("isUser") ?: false
         )
     }
 
