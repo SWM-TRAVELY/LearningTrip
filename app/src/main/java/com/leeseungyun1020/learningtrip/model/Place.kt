@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Place(
     @SerializedName("id")
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: Long,
     @SerializedName("name")
     val name: String?,
     val typeId: Int?,
@@ -49,7 +49,7 @@ data class Place(
 
 data class SimplePlace(
     @SerializedName("id")
-    val id: Int,
+    val id: Long,
     @SerializedName("name")
     val name: String?,
     val typeId: Int?,
@@ -61,14 +61,14 @@ data class SimplePlace(
     val overview: String? = null,
 ) {
     constructor(id: String, name: String, typeId: String, address: String, imageURL: String) : this(
-        id.toInt(),
+        id.toLong(),
         name,
         typeId.toInt(),
         address,
         imageURL
     )
 
-    constructor(id: Int, name: String, typeId: String, address: String, imageURL: String) : this(
+    constructor(id: Long, name: String, typeId: String, address: String, imageURL: String) : this(
         id,
         name,
         typeId.toInt(),
@@ -77,11 +77,52 @@ data class SimplePlace(
     )
 
     constructor(id: String, name: String, typeId: Int, address: String, imageURL: String) : this(
-        id.toInt(),
+        id.toLong(),
         name,
         typeId,
         address,
         imageURL
+    )
+}
+
+data class SimpleCoursePlace(
+    @SerializedName("id")
+    val id: Long,
+    @SerializedName("name")
+    val name: String?,
+    val typeId: Int?,
+    @SerializedName("address")
+    val address: String?,
+    @SerializedName("imageURL")
+    val imageURL: String?,
+    @SerializedName("description")
+    val overview: String? = null,
+    @SerializedName("day")
+    val day: Int?,
+    @SerializedName("sequence")
+    val sequence: Int?,
+    @SerializedName("distance")
+    val distance: Int?,
+    @SerializedName("time")
+    val time: Int?,
+)
+
+fun SimpleCoursePlace.toSimplePlace(): SimplePlace {
+    return SimplePlace(id, name, typeId, address, imageURL, overview)
+}
+
+fun SimplePlace.toSimpleCoursePlace(day: Int, sequence: Int): SimpleCoursePlace {
+    return SimpleCoursePlace(
+        id,
+        name,
+        typeId,
+        address,
+        imageURL,
+        overview,
+        day,
+        sequence,
+        null,
+        null
     )
 }
 

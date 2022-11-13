@@ -60,6 +60,10 @@ class PlaceRepository(private val placeDao: PlaceDao) {
         placeDao.insert(place)
     }
 
+    suspend fun deleteAll() {
+        placeDao.deleteAll()
+    }
+
     suspend fun loadRelatedHeritages(placeId: Int) {
         withContext(Dispatchers.IO) {
             RetrofitClient.heritageService.getRelatedHeritage(placeId).loadNetworkData(

@@ -20,7 +20,7 @@ sealed class NavigationScreen(
     object Story :
         NavigationScreen(
             "story",
-            R.string.nav_story,
+            R.string.nav_my_course,
             R.drawable.ic_story,
             listOf(
                 "story",
@@ -50,9 +50,9 @@ sealed class NavigationScreen(
             listOf("nearby")
         )
 
-    object My : NavigationScreen(
+    object Settings : NavigationScreen(
         "my",
-        R.string.nav_my,
+        R.string.nav_settings,
         R.drawable.ic_my,
         listOf(
             "my",
@@ -74,13 +74,16 @@ sealed class Screen(val route: String, val root: String) {
     object AddReview : Screen("addReview/{placeId}", "addReview")
     object Heritage : Screen("heritage/{id}", "heritage")
     object Search : Screen("search/{key}", "search")
-    object AddCourse : Screen("addCourse/{id}", "addCourse")
-    object AddPlace : Screen("addPlace", "addPlace")
-    object Course : Screen("course/{id}", "course")
+    object AddCourse : Screen("addCourse/{id}?isCopy={isCopy}&isUser={isUser}", "addCourse")
+    object AddPlace : Screen("addPlace/{day}/{sequence}", "addPlace")
+    object Course : Screen("course/{id}?isEditable={isEditable}&isUser={isUser}", "course")
     object Account : Screen("account", "account")
     object MyReview : Screen("myReview", "myReview")
     object Collection : Screen("collection", "collection")
     object Achievement : Screen("achievement", "achievement")
     object Sticker : Screen("sticker", "sticker")
     object NoticeList : Screen("noticeList", "noticeList")
+    object InfoChange : Screen("infoChange", "infoChange")
+    object CourseRequest : Screen("courseRequestScreen", "courseRequestScreen")
+    object RecommendedCourse : Screen("recommendedCourse", "recommendedCourse")
 }

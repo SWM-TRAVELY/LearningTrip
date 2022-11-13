@@ -8,6 +8,8 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     val isSignIn = authRepository.isSignIn
     val signInError = authRepository.signInError
     val signUpError = authRepository.signUpError
+    val token = authRepository.token
+    val user = authRepository.user
 
     fun signInWithTokens(refreshToken: String, token: String) {
         authRepository.saveInitialToken(refreshToken, token)
@@ -27,6 +29,26 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun autoSignIn() {
         authRepository.autoSignIn()
+    }
+
+    fun reloadToken() {
+        authRepository.reloadToken()
+    }
+
+    fun loadUserInfo() {
+        authRepository.loadUserInfo()
+    }
+
+    fun updateUserInfo(nickname: String, phone: String) {
+        authRepository.updateUserInfo(nickname, phone)
+    }
+
+    fun refreshSignInError() {
+        authRepository.refreshSignInError()
+    }
+
+    fun refreshSignUpError() {
+        authRepository.refreshSignUpError()
     }
 
 }

@@ -61,7 +61,7 @@ fun SignUpScreen(
         if (signUpError) {
             AlertDialog(
                 onDismissRequest = {
-                    authViewModel.signUpError.value = false
+                    authViewModel.refreshSignUpError()
                 },
                 title = {
                     Text(
@@ -79,7 +79,7 @@ fun SignUpScreen(
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            authViewModel.signUpError.value = false
+                            authViewModel.refreshSignUpError()
                         }
                     ) {
                         Text(
@@ -100,7 +100,7 @@ fun SignUpScreen(
                 hintId = R.string.hint_name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 60.dp, start = 16.dp, end = 16.dp),
+                    .padding(top = 32.dp, start = 16.dp, end = 16.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text, imeAction = ImeAction.Next
                 ),
@@ -115,7 +115,16 @@ fun SignUpScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_name),
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_name),
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
 
@@ -140,7 +149,16 @@ fun SignUpScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_email),
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_email),
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
 
@@ -174,7 +192,16 @@ fun SignUpScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_password),
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_password),
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
 
@@ -200,7 +227,16 @@ fun SignUpScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_password_check),
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_password_check),
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
 
@@ -225,7 +261,16 @@ fun SignUpScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_nickname),
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_nickname),
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
 
@@ -261,7 +306,16 @@ fun SignUpScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp, start = 16.dp, end = 16.dp),
                     text = stringResource(id = R.string.error_phone),
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    text = stringResource(id = R.string.desc_phone),
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
 

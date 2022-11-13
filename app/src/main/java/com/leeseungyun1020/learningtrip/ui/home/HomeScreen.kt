@@ -65,7 +65,8 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        navController.navigate("${Screen.Search.root}/$searchText")
+                        if (searchText.isNotEmpty())
+                            navController.navigate("${Screen.Search.root}/$searchText")
                     },
                 ),
                 modifier = Modifier
@@ -99,7 +100,7 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                 colors = TextFieldDefaults.textFieldColors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    containerColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.background,
                     placeholderColor = Gray3
                 ),
                 shape = RoundedCornerShape(10.dp)
@@ -208,7 +209,7 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                         ) { idx ->
                             val page = idx % courseList.size
                             CourseBox(course = courseList[page], modifier = Modifier.clickable {
-                                navController.navigate("${Screen.Course.root}/${courseList[page].id}")
+                                navController.navigate("${Screen.Course.root}/${courseList[page].id}?isEditable=false&isUser=false")
                             })
                         }
                     }

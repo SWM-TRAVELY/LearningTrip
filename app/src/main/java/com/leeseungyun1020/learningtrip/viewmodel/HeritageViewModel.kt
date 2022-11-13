@@ -1,15 +1,15 @@
 package com.leeseungyun1020.learningtrip.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.HeritageRepository
-import kotlinx.coroutines.launch
+import com.leeseungyun1020.learningtrip.model.Heritage
 
 class HeritageViewModel(private val repository: HeritageRepository = HeritageRepository()) :
     ViewModel() {
-    val heritage = repository.searchedHeritage
+    val heritage: LiveData<Heritage>
+        get() = repository.searchedHeritage
 
-    fun searchById(id: Int) = viewModelScope.launch {
-        repository.searchById(id)
-    }
+    fun searchById(id: Int) = repository.searchById(id)
+
 }

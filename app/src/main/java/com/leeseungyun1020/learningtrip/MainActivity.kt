@@ -1,7 +1,6 @@
 package com.leeseungyun1020.learningtrip
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
@@ -18,6 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -34,7 +34,7 @@ import com.leeseungyun1020.learningtrip.viewmodel.AuthViewModelFactory
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     val database by lazy { AppDatabase.getDatabase(this) }
     val placeRepository by lazy { PlaceRepository(database.placeDao()) }
     val placeViewModel: PlaceViewModel by viewModels {
@@ -69,11 +69,11 @@ fun MainScreen(placeViewModel: PlaceViewModel, authViewModel: AuthViewModel) {
                 Scaffold(
                     bottomBar = {
                         val items = listOf(
+                            NavigationScreen.Home,
                             NavigationScreen.Category,
                             NavigationScreen.Story,
-                            NavigationScreen.Home,
                             // NavigationScreen.Nearby,
-                            NavigationScreen.My
+                            NavigationScreen.Settings
                         )
 
                         NavigationBar(

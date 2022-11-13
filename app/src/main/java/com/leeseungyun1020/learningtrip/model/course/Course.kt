@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName
 
 class Course(
     @SerializedName("id")
-    val id: Int,
+    val id: Long?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("placeList")
-    val placeList: List<SimplePlace>?,
+    val placeList: List<SimpleCoursePlace>?,
 )
 
 data class SimpleCourse(
     @SerializedName("id")
-    val id: Int,
+    val id: Long?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("imageURL")
     val imageURL: String?,
     @SerializedName("place1")

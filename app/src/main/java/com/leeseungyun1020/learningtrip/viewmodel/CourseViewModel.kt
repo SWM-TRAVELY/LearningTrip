@@ -2,11 +2,9 @@ package com.leeseungyun1020.learningtrip.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.leeseungyun1020.learningtrip.data.CourseRepository
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
-import kotlinx.coroutines.launch
 
 class CourseViewModel(private val repository: CourseRepository = CourseRepository()) : ViewModel() {
 
@@ -18,17 +16,15 @@ class CourseViewModel(private val repository: CourseRepository = CourseRepositor
     val course: LiveData<Course>
         get() = _course
 
-    init {
-        viewModelScope.launch {
-            repository.loadCourseList()
-        }
+    fun searchById(id: Int, isUser: Boolean, token: String?) {
+        repository.searchById(id, isUser, token)
     }
 
-    fun searchById(id: Int) = viewModelScope.launch {
-        repository.searchById(id)
+    fun loadCourseList(token: String, onReloadRequired: () -> Unit) {
+        repository.loadCourseList(token, onReloadRequired)
     }
 
-    fun loadCourseList() = viewModelScope.launch {
-        repository.loadCourseList()
+    fun deleteCourse(course: Course, token: String) {
+        repository.deleteCourse(course, token)
     }
 }

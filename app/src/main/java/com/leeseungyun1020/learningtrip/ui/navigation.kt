@@ -1,16 +1,13 @@
 package com.leeseungyun1020.learningtrip.ui
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
+import android.util.Log
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.ui.account.SignInScreen
 import com.leeseungyun1020.learningtrip.ui.account.SignUpScreen
 import com.leeseungyun1020.learningtrip.ui.category.CategoryScreen
-import com.leeseungyun1020.learningtrip.ui.course.AddCourseScreen
-import com.leeseungyun1020.learningtrip.ui.course.AddPlaceScreen
-import com.leeseungyun1020.learningtrip.ui.course.CourseScreen
-import com.leeseungyun1020.learningtrip.ui.course.StoryScreen
+import com.leeseungyun1020.learningtrip.ui.course.*
 import com.leeseungyun1020.learningtrip.ui.home.HomeScreen
 import com.leeseungyun1020.learningtrip.ui.nearby.NearbyScreen
 import com.leeseungyun1020.learningtrip.ui.permission.PermissionScreen
@@ -33,13 +30,13 @@ fun NavGraphBuilder.graph(
         CategoryScreen(navController)
     }
     composable(NavigationScreen.Story.route) {
-        StoryScreen(navController, authViewModel)
+        MyCourseScreen(navController, authViewModel)
     }
     composable(NavigationScreen.Nearby.route) {
         NearbyScreen(navController)
     }
-    composable(NavigationScreen.My.route) {
-        MyScreen(navController, authViewModel)
+    composable(NavigationScreen.Settings.route) {
+        SettingsScreen(navController, authViewModel)
     }
 
     navigation(
@@ -77,16 +74,62 @@ fun NavGraphBuilder.graph(
         SearchScreen(navController, placeViewModel, it.arguments?.getString("key") ?: "")
     }
 
-    composable(Screen.AddCourse.route) {
-        AddCourseScreen(navController, it.arguments?.getString("id") ?: "0")
+    composable(
+        Screen.AddCourse.route,
+        arguments = listOf(
+            navArgument("isCopy") {
+                defaultValue = false
+                type = NavType.BoolType
+            },
+            navArgument("isUser") {
+                defaultValue = false
+                type = NavType.BoolType
+            }
+        )
+    ) {
+        AddCourseScreen(
+            navController,
+            it.arguments?.getString("id") ?: "0",
+            authViewModel,
+            it.arguments?.getBoolean("isCopy") ?: false,
+            it.arguments?.getBoolean("isUser") ?: false
+        )
     }
 
     composable(Screen.AddPlace.route) {
-        AddPlaceScreen(navController)
+        AddPlaceScreen(
+            navController,
+            it.arguments?.getString("day") ?: "0",
+            it.arguments?.getString("sequence") ?: "0",
+            placeViewModel
+        )
     }
 
-    composable(Screen.Course.route) {
-        CourseScreen(navController, it.arguments?.getString("id") ?: "0")
+    composable(
+        Screen.Course.route,
+        arguments = listOf(
+            navArgument("isEditable") {
+                defaultValue = true
+                type = NavType.BoolType
+            },
+            navArgument("isUser") {
+                defaultValue = false
+                type = NavType.BoolType
+            })
+    ) {
+        Log.d(
+            TAG,
+            "graph: isEditable: ${it.arguments?.getBoolean("isEditable")} isUser: ${
+                it.arguments?.getBoolean("isUser")
+            }"
+        )
+        CourseScreen(
+            navController,
+            it.arguments?.getString("id") ?: "0",
+            authViewModel,
+            it.arguments?.getBoolean("isEditable") ?: true,
+            it.arguments?.getBoolean("isUser") ?: false
+        )
     }
 
     composable(Screen.Account.route) {
@@ -111,5 +154,17 @@ fun NavGraphBuilder.graph(
 
     composable(Screen.NoticeList.route) {
         NoticeListScreen(navController)
+    }
+
+    composable(Screen.InfoChange.route) {
+        InfoChangeScreen(navController, authViewModel)
+    }
+
+    composable(Screen.CourseRequest.route) {
+        CourseRequestScreen(navController)
+    }
+
+    composable(Screen.RecommendedCourse.route) {
+        RecommendedCourseScreen(navController)
     }
 }

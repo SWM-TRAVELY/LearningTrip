@@ -4,28 +4,56 @@ import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
+import com.leeseungyun1020.learningtrip.network.loadAuthRequiredNetworkData
 import com.leeseungyun1020.learningtrip.network.loadNetworkData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.leeseungyun1020.learningtrip.network.sendAuthRequiredData
 
 class CourseRepository {
     val searchedCourse = MutableLiveData<Course>()
     val storyCourses = MutableLiveData<List<SimpleCourse>>()
+    val recommendedCourses = MutableLiveData<List<SimpleCourse>>()
 
-    suspend fun searchById(id: Int) {
-        withContext(Dispatchers.IO) {
+    fun searchById(id: Int, isUser: Boolean, token: String? = null) {
+        if (!isUser)
             RetrofitClient.courseService.getCourse(id).loadNetworkData(
                 target = searchedCourse
             )
+        else if (token != null)
+            RetrofitClient.courseService.getUserCourse(id, token).loadAuthRequiredNetworkData(
+                target = searchedCourse
+            )
+    }
+
+    fun loadCourseList(token: String, onReloadRequired: () -> Unit) {
+        RetrofitClient.courseService.getUserCourseList(token).loadAuthRequiredNetworkData(
+            target = storyCourses,
+            null,
+            onReloadRequired
+        )
+    }
+
+    fun addCourse(course: Course, token: String) {
+        RetrofitClient.courseService.addCourse(course, token).sendAuthRequiredData {
+
         }
     }
 
-    suspend fun loadCourseList() {
-        // TODO: 사용자별 코스 리스트로 변경
-        withContext(Dispatchers.IO) {
-            RetrofitClient.homeService.getRecommendCourse().loadNetworkData(
-                target = storyCourses
-            )
+    fun updateCourse(course: Course, token: String) {
+        RetrofitClient.courseService.updateCourse(course, token).sendAuthRequiredData {
+
         }
+    }
+
+    fun deleteCourse(course: Course, token: String) {
+        RetrofitClient.courseService.deleteCourse(course, token).sendAuthRequiredData {
+
+        }
+    }
+
+    fun loadRecommendedCourseList() {
+        // TODO: 맞춤 코스 추천 API로 변경
+        RetrofitClient.homeService.getRecommendCourse().loadNetworkData(
+            target = recommendedCourses
+        )
     }
 }

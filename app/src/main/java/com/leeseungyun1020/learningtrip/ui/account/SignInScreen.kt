@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.ui.account
 
+import android.content.Intent
 import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -35,11 +36,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.data.AuthRepository
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.network.AUTH_KAKAO_URL
 import com.leeseungyun1020.learningtrip.network.AUTH_NAVER_URL
 import com.leeseungyun1020.learningtrip.network.BASE_URL
@@ -64,7 +67,7 @@ fun SignInScreen(
 ) {
     val type = rememberSaveable { mutableStateOf(SignInType.INIT) }
     when (type.value) {
-        SignInType.INIT -> SignInInitScreen(navController, authViewModel) {
+        SignInType.INIT -> SignInInitScreen(navController) {
             type.value = it
         }
         SignInType.EMAIL -> SignInEmailScreen(navController, authViewModel) {
@@ -82,7 +85,6 @@ fun SignInScreen(
 @Composable
 fun SignInInitScreen(
     navController: NavController,
-    viewModel: AuthViewModel,
     onClick: (SignInType) -> Unit
 ) {
     Column(
@@ -179,7 +181,7 @@ fun SignInEmailScreen(
     if (signInError) {
         AlertDialog(
             onDismissRequest = {
-                viewModel.signInError.value = false
+                viewModel.refreshSignInError()
             },
             title = {
                 Text(
@@ -197,7 +199,7 @@ fun SignInEmailScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        viewModel.signInError.value = false
+                        viewModel.refreshSignInError()
                     }
                 ) {
                     Text(
@@ -281,13 +283,18 @@ fun SignInOAuthScreen(
     BackHandler {
         onClick(SignInType.INIT)
     }
-    AndroidView(factory = {
-        WebView(it).apply {
-            settings.javaScriptEnabled = true
+    AndroidView(factory = { context ->
+        WebView(context).apply {
+            settings.run {
+                javaScriptEnabled = true
+                javaScriptCanOpenWindowsAutomatically = true
+                setSupportMultipleWindows(true)
+            }
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     Log.d("LSYD", "onPageFinished: $url")
                     if (url?.startsWith("${BASE_URL}login") == true) {
+                        Log.d("LSYD", "url: $url")
                         view?.evaluateJavascript(
                             """
                         function getHTML() {
@@ -322,17 +329,24 @@ fun SignInOAuthScreen(
                 }
 
                 override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
+                    view: WebView,
+                    request: WebResourceRequest
                 ): Boolean {
-                    Log.d("LSYD", "shouldOverrideUrlLoading: ${request?.url}")
+                    Log.d("LSYD", "shouldOverrideUrlLoading: ${request.url}")
+                    val intent = Intent.parseUri(request.url.toString(), Intent.URI_INTENT_SCHEME)
+                    Log.d(TAG, "shouldOverrideUrlLoading: $intent")
+                    if (intent.resolveActivity(context.packageManager) != null) {
+                        startActivity(context, intent, null)
+                        Log.d(TAG, "ACTIVITY: ${intent.`package`}")
+                        return true
+                    }
                     return super.shouldOverrideUrlLoading(view, request)
                 }
             }
             loadUrl(authURL)
         }
     }, update = {
-        it.loadUrl(authURL)
+
     })
 }
 

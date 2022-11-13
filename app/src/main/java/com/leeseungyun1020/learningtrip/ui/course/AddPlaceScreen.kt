@@ -13,39 +13,35 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.leeseungyun1020.learningtrip.R
-import com.leeseungyun1020.learningtrip.data.AppDatabase
-import com.leeseungyun1020.learningtrip.data.PlaceRepository
+import com.leeseungyun1020.learningtrip.model.toSimpleCoursePlace
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.ui.home.PlaceListView
 import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
-import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddPlaceScreen(
     navController: NavController,
-    viewModel: AddCourseViewModel = viewModel(
+    day: String,
+    sequence: String,
+    placeViewModel: PlaceViewModel,
+    addCourseViewModel: AddCourseViewModel = viewModel(
         viewModelStoreOwner = navController.previousBackStackEntry
             ?: LocalViewModelStoreOwner.current!!
     )
 ) {
-    val database = AppDatabase.getDatabase(LocalContext.current)
-    val repository = PlaceRepository(database.placeDao())
-    val placeViewModel: PlaceViewModel = viewModel(
-        factory = PlaceViewModelFactory(repository)
-    )
-
     var searchText by rememberSaveable { mutableStateOf("") }
     val placeList by placeViewModel.filteredPlaces.observeAsState()
 
@@ -94,20 +90,34 @@ fun AddPlaceScreen(
                 colors = TextFieldDefaults.textFieldColors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    containerColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.background,
                     placeholderColor = Gray3
                 ),
                 shape = RoundedCornerShape(10.dp)
             )
         }
     ) {
-        PlaceListView(
-            modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
-            innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
-            placeList = placeList ?: listOf(),
-            onPlaceClicked = {
-                viewModel.addPlace(it)
-                navController.popBackStack()
-            })
+        if (searchText.isNotEmpty())
+            PlaceListView(
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
+                placeList = placeList ?: listOf(),
+                onPlaceClicked = {
+                    val dayInt = day.toIntOrNull() ?: 0
+                    val sequenceInt = sequence.toIntOrNull() ?: 0
+                    addCourseViewModel.addPlace(it.toSimpleCoursePlace(dayInt, sequenceInt))
+                    navController.popBackStack()
+                })
+        else
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.desc_add_place),
+
+                    textAlign = TextAlign.Center
+                )
+            }
     }
 }

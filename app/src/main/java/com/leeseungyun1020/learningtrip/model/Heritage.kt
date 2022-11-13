@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Heritage(
     @SerializedName("id")
-    val id: Int,
+    val id: Long,
     @SerializedName("name")
     val name: String,
     @SerializedName("imageURL")
@@ -19,7 +19,7 @@ data class Heritage(
 
 data class SimpleHeritage(
     @SerializedName("id")
-    val id: Int,
+    val id: Long,
     @SerializedName("name")
     val name: String,
     @SerializedName("imageURL")
