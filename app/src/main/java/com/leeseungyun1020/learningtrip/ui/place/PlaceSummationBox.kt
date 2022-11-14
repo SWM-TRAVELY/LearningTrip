@@ -5,15 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -24,7 +21,6 @@ import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.Place
 import com.leeseungyun1020.learningtrip.model.PlaceReview
 import com.leeseungyun1020.learningtrip.ui.theme.LearningTripTheme
-import com.leeseungyun1020.learningtrip.ui.theme.Tertiary
 import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 
 @Composable
@@ -54,11 +50,11 @@ fun PlaceSummationBox(
                 onClick = onPlayClick
             )
 
-            SmallTextButton(
-                text = stringResource(id = R.string.action_sticker),
-                icon = painterResource(id = R.drawable.ic_sticker),
-                onClick = onStickerClick
-            )
+//            SmallTextButton(
+//                text = stringResource(id = R.string.action_sticker),
+//                icon = painterResource(id = R.drawable.ic_sticker),
+//                onClick = onStickerClick
+//            )
         }
 
         Column(
@@ -74,6 +70,7 @@ fun PlaceSummationBox(
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+            /*
             Row(modifier = Modifier.padding(top = 2.dp)) {
                 Icon(
                     imageVector = Icons.Default.Star,
@@ -96,7 +93,7 @@ fun PlaceSummationBox(
                     fontFamily = notoSansKRFamily
                 )
             }
-
+            */
         }
     }
 }
