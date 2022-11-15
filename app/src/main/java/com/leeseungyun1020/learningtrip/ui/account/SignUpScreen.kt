@@ -100,7 +100,7 @@ fun SignUpScreen(
                 hintId = R.string.hint_name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 32.dp, start = 16.dp, end = 16.dp),
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text, imeAction = ImeAction.Next
                 ),
@@ -322,7 +322,7 @@ fun SignUpScreen(
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 48.dp, start = 16.dp, end = 16.dp),
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 onClick = {
                     viewModel.onSignUp()
                     if (!viewModel.isNameError && !viewModel.isEmailError &&
