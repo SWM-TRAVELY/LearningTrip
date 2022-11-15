@@ -1,5 +1,8 @@
 package com.leeseungyun1020.learningtrip.ui.place
 
+import android.speech.tts.TextToSpeech
+import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -22,11 +25,13 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.PlaceReview
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.HeritageBox
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
+import java.util.*
 
 @Composable
 fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id: String) {
@@ -36,9 +41,25 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
     val nearbyPlaces by placeViewModel.nearbyPlaces.observeAsState()
     var isDescriptionOpen by remember { mutableStateOf(false) }
     var isReviewOpen by remember { mutableStateOf(false) }
+    var isPlaying by remember { mutableStateOf(false) }
+
+    lateinit var tts: TextToSpeech
+    fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts.setLanguage(Locale.KOREAN)
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.d(TAG, "onInit: TTS language not supported")
+            }
+        } else {
+            Log.d(TAG, "onInit: TTS initialization failed")
+        }
+    }
+    tts = TextToSpeech(LocalContext.current) { onInit(it) }
+
     if (id.isDigitsOnly()) {
         placeViewModel.loadPlaceSpecific(id.toInt())
     }
+
     LearningTripScaffold(
         title = stringResource(id = R.string.app_name),
         setDisplayHomeAsUpEnabled = true,
@@ -76,8 +97,17 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
                             .align(Alignment.BottomCenter)
                             .padding(top = 232.dp),
                         place = it,
-                        placeReview = PlaceReview(place!!.id, 0.0, 0),
-                        onPlayClick = { /*TODO*/ },
+                        placeReview = PlaceReview(it.id, 0.0, 0),
+                        onPlayClick = {
+                            if (isPlaying) {
+                                isPlaying = false
+                                tts.stop()
+                            } else {
+                                isPlaying = true
+                                tts.speak(it.overview, TextToSpeech.QUEUE_FLUSH, null, null)
+                            }
+
+                        },
                         onStickerClick = { /*TODO*/ })
                 }
             }
@@ -160,4 +190,16 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
             )
         }
     }
+    BackHandler {
+        if (isDescriptionOpen) {
+            isDescriptionOpen = false
+        } else {
+            if (isPlaying) {
+                tts.stop()
+            }
+            tts.shutdown()
+            navController.popBackStack()
+        }
+    }
+
 }

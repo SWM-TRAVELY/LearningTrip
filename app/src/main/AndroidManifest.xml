@@ -33,6 +33,9 @@
 
     <queries>
         <package android:name="com.kakao.talk" />
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
     </queries>
 
 </manifest>
