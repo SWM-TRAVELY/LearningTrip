@@ -6,7 +6,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-fun <T> Call<T>.loadNetworkData(target: MutableLiveData<T>, fallback: T? = null) {
+fun <T> Call<T>.loadNetworkData(
+    target: MutableLiveData<T>,
+    fallback: T? = null,
+    onSuccess: ((T?) -> Unit)? = null
+) {
     this.enqueue(
         object : Callback<T> {
             override fun onFailure(call: Call<T>, t: Throwable) {
@@ -20,6 +24,7 @@ fun <T> Call<T>.loadNetworkData(target: MutableLiveData<T>, fallback: T? = null)
             ) {
                 if (response.isSuccessful && response.code() == 200 && response.body() != null) {
                     target.postValue(response.body())
+                    onSuccess?.run { this(response.body()) }
                 } else if (fallback != null) {
                     target.postValue(fallback)
                 }
