@@ -81,8 +81,12 @@ fun CourseRequestScreen(
     ) { start, end ->
         courseRequestViewModel.onUpdateRange(start, end)
     }
-    // 지역
+    // 옵션
     val options by courseRequestViewModel.options.observeAsState()
+    if (options == null) {
+        courseRequestViewModel.loadOptions()
+    }
+    // 지역
     var locationExpanded by remember { mutableStateOf(false) }
     var locationOptionExpanded by remember { mutableStateOf(false) }
     // 학년
