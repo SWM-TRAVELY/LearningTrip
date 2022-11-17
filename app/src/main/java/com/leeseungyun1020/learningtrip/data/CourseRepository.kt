@@ -17,10 +17,7 @@ class CourseRepository {
     private val _options = MutableLiveData<CourseOptionResponse>()
     val options: LiveData<CourseOptionResponse>
         get() = _options
-
-    private val _searchedKeywordList = MutableLiveData<List<String>>()
-    val searchedKeywordList: LiveData<List<String>>
-        get() = _searchedKeywordList
+    val searchedKeywordList = MutableLiveData<List<String>>()
 
     fun searchById(id: Int, isUser: Boolean, token: String? = null) {
         if (!isUser)
@@ -75,7 +72,7 @@ class CourseRepository {
 
     fun loadSearchedKeywordList(keyword: String) {
         RetrofitClient.searchService.getSearchedCourseKeywordOptionList(keyword).loadNetworkData(
-            target = _searchedKeywordList
+            target = searchedKeywordList
         )
     }
 }
