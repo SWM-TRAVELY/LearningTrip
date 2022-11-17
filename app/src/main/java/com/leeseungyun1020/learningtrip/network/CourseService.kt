@@ -2,6 +2,7 @@ package com.leeseungyun1020.learningtrip.network
 
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
+import com.leeseungyun1020.learningtrip.model.course.CourseOptionResponse
 import com.leeseungyun1020.learningtrip.model.course.CourseResponse
 import retrofit2.http.*
 
@@ -42,4 +43,7 @@ interface CourseService {
         @Body course: Course,
         @Header("Authorization") token: String
     ): retrofit2.Call<CourseResponse>
+
+    @GET("/course/options")
+    fun getCourseOptions(): retrofit2.Call<CourseOptionResponse>
 }
