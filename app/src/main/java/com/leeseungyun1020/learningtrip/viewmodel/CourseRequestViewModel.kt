@@ -11,6 +11,11 @@ import com.leeseungyun1020.learningtrip.model.SimpleCourse
 
 class CourseRequestViewModel(private val repository: CourseRepository = CourseRepository()) :
     ViewModel() {
+    val options = repository.options
+    private val _searchedKeywordList = repository.searchedKeywordList
+    val searchedKeywordList: LiveData<List<String>>
+        get() = _searchedKeywordList
+
     private var _start by mutableStateOf(MaterialDatePicker.todayInUtcMilliseconds())
     val start: Long
         get() = _start
@@ -34,6 +39,10 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
     private var _gradeOption by mutableStateOf("")
     val gradeOption: String
         get() = _gradeOption
+
+    private var _keywordList by mutableStateOf(emptyList<String>())
+    val keywordList: List<String>
+        get() = _keywordList
 
     private val _courseList = repository.recommendedCourses
     val courseList: LiveData<List<SimpleCourse>>
@@ -64,8 +73,6 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
         _gradeOption = gradeOption
     }
 
-    val options = repository.options
-
     fun loadOptions() {
         repository.loadOptions { res ->
             res?.let {
@@ -77,10 +84,28 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
         }
     }
 
+    fun onKeywordChange(keyword: String) {
+        repository.loadSearchedKeywordList(keyword)
+    }
+
+    fun onKeywordAdd(keyword: String) {
+        _keywordList += keyword
+
+    }
+
+    fun onKeywordDelete(keyword: String) {
+        _keywordList -= keyword
+    }
+
+    fun onKeywordClear() {
+        _searchedKeywordList.value = emptyList()
+    }
+
     fun onRequestCourse(move: () -> Unit) {
         if (_locationOption.isNotEmpty() && _gradeOption.isNotEmpty()) {
             repository.loadRecommendedCourseList()
             move()
         }
     }
+
 }
