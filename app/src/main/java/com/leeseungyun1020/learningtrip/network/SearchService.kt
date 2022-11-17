@@ -14,4 +14,9 @@ interface SearchService {
     fun getSearchedPlaceList(
         @Path("keyword") keyword: String
     ): retrofit2.Call<List<SimplePlace>>
+
+    @GET("/course/options/keyword/{keyword}")
+    fun getSearchedCourseKeywordOptionList(
+        @Path("keyword") keyword: String
+    ): retrofit2.Call<List<String>>
 }
