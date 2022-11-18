@@ -167,4 +167,8 @@ fun NavGraphBuilder.graph(
     composable(Screen.RecommendedCourse.route) {
         RecommendedCourseScreen(navController)
     }
+
+    composable(Screen.KeywordSearchScreen.route) {
+        KeywordSearchScreen(navController)
+    }
 }
