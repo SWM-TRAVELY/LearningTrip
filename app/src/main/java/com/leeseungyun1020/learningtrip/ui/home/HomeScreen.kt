@@ -65,8 +65,10 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        if (searchText.isNotEmpty())
+                        if (searchText.isNotEmpty()) {
                             navController.navigate("${Screen.Search.root}/$searchText")
+                            searchText = ""
+                        }
                     },
                 ),
                 modifier = Modifier
@@ -225,7 +227,10 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                         .fillMaxWidth()
                         .padding(16.dp),
                     textList = searchedPlaceNames ?: listOf(),
-                    onTextClicked = { keyword -> navController.navigate("${Screen.Search.root}/$keyword") }
+                    onTextClicked = { keyword ->
+                        searchText = ""
+                        navController.navigate("${Screen.Search.root}/$keyword")
+                    }
                 )
             }
 
