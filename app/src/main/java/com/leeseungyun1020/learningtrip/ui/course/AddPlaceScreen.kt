@@ -1,8 +1,10 @@
 package com.leeseungyun1020.learningtrip.ui.course
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -14,8 +16,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,7 +34,7 @@ import com.leeseungyun1020.learningtrip.ui.theme.Gray3
 import com.leeseungyun1020.learningtrip.viewmodel.AddCourseViewModel
 import com.leeseungyun1020.learningtrip.viewmodel.PlaceViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun AddPlaceScreen(
     navController: NavController,
@@ -42,6 +46,7 @@ fun AddPlaceScreen(
             ?: LocalViewModelStoreOwner.current!!
     )
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     var searchText by rememberSaveable { mutableStateOf("") }
     val placeList by placeViewModel.filteredPlaces.observeAsState()
 
@@ -57,6 +62,7 @@ fun AddPlaceScreen(
                 keyboardActions = KeyboardActions(
                     onDone = {
                         placeViewModel.placeByKeyword(searchText)
+                        keyboardController?.hide()
                     },
                 ),
                 modifier = Modifier
@@ -98,16 +104,22 @@ fun AddPlaceScreen(
         }
     ) {
         if (searchText.isNotEmpty())
-            PlaceListView(
-                modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
-                innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
-                placeList = placeList ?: listOf(),
-                onPlaceClicked = {
-                    val dayInt = day.toIntOrNull() ?: 0
-                    val sequenceInt = sequence.toIntOrNull() ?: 0
-                    addCourseViewModel.addPlace(it.toSimpleCoursePlace(dayInt, sequenceInt))
-                    navController.popBackStack()
-                })
+            Column(
+                modifier = Modifier.verticalScroll(
+                    rememberScrollState()
+                )
+            ) {
+                PlaceListView(
+                    modifier = Modifier.padding(top = 8.dp, start = 16.dp, end = 16.dp),
+                    innerPadding = PaddingValues(top = 10.dp, start = 4.dp, end = 4.dp),
+                    placeList = placeList ?: listOf(),
+                    onPlaceClicked = {
+                        val dayInt = day.toIntOrNull() ?: 0
+                        val sequenceInt = sequence.toIntOrNull() ?: 0
+                        addCourseViewModel.addPlace(it.toSimpleCoursePlace(dayInt, sequenceInt))
+                        navController.popBackStack()
+                    })
+            }
         else
             Box(
                 modifier = Modifier.fillMaxSize(),
