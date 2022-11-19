@@ -46,47 +46,47 @@ fun HeritageScreen(navController: NavController, id: String) {
         setBodyContentInnerPadding = false,
     ) {
         Column(
-            modifier = Modifier.verticalScroll(
-                rememberScrollState()
-            )
-        ) {
-            Box {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(heritage?.imageURL)
-                        .crossfade(true)
-                        .build(),
-                    placeholder = painterResource(R.drawable.place_placeholder),
-                    error = painterResource(R.drawable.place_placeholder),
-                    fallback = painterResource(R.drawable.place_placeholder),
-                    contentDescription = heritage?.name,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.TopCenter)
+            modifier = Modifier
+                .verticalScroll(
+                    rememberScrollState()
                 )
+                .padding(top = 46.dp)
+        ) {
 
-                heritage?.let {
-                    Box(
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(heritage?.imageURL)
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.place_placeholder),
+                error = painterResource(R.drawable.place_placeholder),
+                fallback = painterResource(R.drawable.place_placeholder),
+                contentDescription = heritage?.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            heritage?.let {
+                Box(
+                    modifier = Modifier
+                        .height(96.dp)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp))
+                        .background(Color.White)
+                ) {
+                    Text(
+                        text = heritage?.name ?: "",
+                        fontSize = 20.sp,
+                        fontFamily = notoSansKRFamily,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier
-                            .height(96.dp)
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(topStart = 14.dp, topEnd = 14.dp))
-                            .background(Color.White)
-                            .align(Alignment.BottomCenter)
-                    ) {
-                        Text(
-                            text = heritage?.name ?: "",
-                            fontSize = 20.sp,
-                            fontFamily = notoSansKRFamily,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .align(Alignment.CenterStart)
-                                .padding(horizontal = 30.dp)
-                        )
-                    }
+                            .align(Alignment.CenterStart)
+                            .padding(horizontal = 30.dp)
+                    )
                 }
             }
+
 
             TopIndicatorTab(
                 titles = listOf(
