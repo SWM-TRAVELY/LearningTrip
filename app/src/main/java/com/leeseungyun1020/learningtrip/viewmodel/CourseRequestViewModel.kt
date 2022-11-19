@@ -89,8 +89,8 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
     }
 
     fun onKeywordAdd(keyword: String) {
-        _keywordList += keyword
-
+        if (keyword !in _keywordList)
+            _keywordList += keyword
     }
 
     fun onKeywordDelete(keyword: String) {
