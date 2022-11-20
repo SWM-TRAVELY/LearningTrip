@@ -1,5 +1,6 @@
 package com.leeseungyun1020.learningtrip.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.leeseungyun1020.learningtrip.data.CourseRepository
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
 
 class CourseRequestViewModel(private val repository: CourseRepository = CourseRepository()) :
@@ -102,8 +104,20 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
     }
 
     fun onRequestCourse(move: () -> Unit) {
+        Log.d(
+            TAG,
+            "onRequestCourse: $start, $end, $location, $locationOption, $grade, $gradeOption, $keywordList"
+        )
         if (_locationOption.isNotEmpty() && _gradeOption.isNotEmpty()) {
-            repository.loadRecommendedCourseList()
+            repository.loadRecommendedCourseList(
+                start,
+                end,
+                location,
+                locationOption,
+                grade,
+                gradeOption,
+                keywordList
+            )
             move()
         }
     }

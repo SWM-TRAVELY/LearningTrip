@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
 import com.leeseungyun1020.learningtrip.model.course.CourseOptionResponse
+import com.leeseungyun1020.learningtrip.model.course.CourseRequestOption
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import com.leeseungyun1020.learningtrip.network.loadAuthRequiredNetworkData
 import com.leeseungyun1020.learningtrip.network.loadNetworkData
@@ -56,9 +57,26 @@ class CourseRepository {
         }
     }
 
-    fun loadRecommendedCourseList() {
-        // TODO: 맞춤 코스 추천 API로 변경
-        RetrofitClient.homeService.getRecommendCourse().loadNetworkData(
+    fun loadRecommendedCourseList(
+        start: Long,
+        end: Long,
+        location: String,
+        locationOption: String,
+        grade: String,
+        gradeOption: String,
+        keyword: List<String>
+    ) {
+        RetrofitClient.courseService.requestRecommendCourse(
+            CourseRequestOption(
+                start,
+                end,
+                location,
+                locationOption,
+                grade,
+                gradeOption,
+                keyword
+            )
+        ).loadNetworkData(
             target = recommendedCourses
         )
     }
