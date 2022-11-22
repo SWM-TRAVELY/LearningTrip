@@ -44,7 +44,7 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
     var isPlaying by remember { mutableStateOf(false) }
 
     lateinit var tts: TextToSpeech
-    fun onInit(status: Int) {
+    fun onTTSInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             val result = tts.setLanguage(Locale.KOREAN)
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -54,7 +54,14 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
             Log.d(TAG, "onInit: TTS initialization failed")
         }
     }
-    tts = TextToSpeech(LocalContext.current) { onInit(it) }
+    tts = TextToSpeech(LocalContext.current) { onTTSInit(it) }
+    fun onTTSStop() {
+        if (isPlaying) {
+            tts.stop()
+        }
+        tts.shutdown()
+    }
+
 
     if (id.isDigitsOnly()) {
         placeViewModel.loadPlaceSpecific(id.toInt())
@@ -63,7 +70,10 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
     LearningTripScaffold(
         title = stringResource(id = R.string.app_name),
         setDisplayHomeAsUpEnabled = true,
-        onHomeAsUpClicked = { navController.popBackStack() },
+        onHomeAsUpClicked = {
+            onTTSStop()
+            navController.popBackStack()
+        },
         setBodyContentInnerPadding = false,
         topBarExtraContent = {
 
@@ -194,10 +204,7 @@ fun PlaceScreen(navController: NavController, placeViewModel: PlaceViewModel, id
         if (isDescriptionOpen) {
             isDescriptionOpen = false
         } else {
-            if (isPlaying) {
-                tts.stop()
-            }
-            tts.shutdown()
+            onTTSStop()
             navController.popBackStack()
         }
     }
