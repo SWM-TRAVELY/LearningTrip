@@ -117,25 +117,21 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     // Keyword List
                     val keywordList = recommendedKeywords ?: listOf(
                         Keyword(
-                            "신라",
-                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-
-                            ),
+                            "임진왜란",
+                            "http://tong.visitkorea.or.kr/cms/resource/78/2788878_image2_1.jpg",
+                        ),
                         Keyword(
-                            "백제",
-                            "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
-
-                            ),
+                            "명륜당",
+                            "http://tong.visitkorea.or.kr/cms/resource/01/1604401_image2_1.jpg",
+                        ),
                         Keyword(
-                            "액티비티",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
-
-                            ),
+                            "대원군",
+                            "http://tong.visitkorea.or.kr/cms/resource/71/924371_image2_1.jpg",
+                        ),
                         Keyword(
-                            "체험",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
-
-                            ),
+                            "갑오개혁",
+                            "http://tong.visitkorea.or.kr/cms/resource/41/1577341_image2_1.jpg",
+                        ),
                     )
                     if (keywordList.isNotEmpty()) {
                         Text(
