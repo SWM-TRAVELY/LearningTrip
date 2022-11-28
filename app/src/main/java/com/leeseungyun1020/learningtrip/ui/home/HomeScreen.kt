@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -163,12 +162,6 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                                     contentDescription = stringResource(id = R.string.desc_banner),
                                     modifier = Modifier.height(104.dp),
                                     contentScale = ContentScale.FillWidth,
-                                )
-                            } else {
-                                Text(
-                                    text = "Learning Trip - Page: $page",
-                                    modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center,
                                 )
                             }
                         }
