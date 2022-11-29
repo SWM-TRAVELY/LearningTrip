@@ -21,7 +21,6 @@ import coil.request.ImageRequest
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.model.SimpleHeritage
 
-//괴도 성민 왔다감
 @Composable
 fun HeritageBox(modifier: Modifier = Modifier, simpleHeritage: SimpleHeritage) {
     Box(modifier = modifier) {
