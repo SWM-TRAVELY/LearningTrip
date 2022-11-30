@@ -51,8 +51,10 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
         get() = _courseList
 
     fun onUpdateRange(start: Long, end: Long) {
-        _start = start
-        _end = end
+        if (start >= MaterialDatePicker.todayInUtcMilliseconds()) {
+            _start = start
+            _end = end
+        }
     }
 
     fun onUpdateLocation(location: String) {
