@@ -50,10 +50,16 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
     val courseList: LiveData<List<SimpleCourse>>
         get() = _courseList
 
+    private var _rangeError by mutableStateOf(false)
+    val rangeError: Boolean
+        get() = _rangeError
+
     fun onUpdateRange(start: Long, end: Long) {
         if (start >= MaterialDatePicker.todayInUtcMilliseconds()) {
             _start = start
             _end = end
+        } else {
+            _rangeError = true
         }
     }
 
