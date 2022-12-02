@@ -63,6 +63,10 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
         }
     }
 
+    fun onDismissRangeError() {
+        _rangeError = false
+    }
+
     fun onUpdateLocation(location: String) {
         _location = location
         _locationOption =
