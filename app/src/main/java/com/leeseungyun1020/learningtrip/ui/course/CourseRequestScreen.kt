@@ -22,6 +22,7 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.leeseungyun1020.learningtrip.R
 import com.leeseungyun1020.learningtrip.ui.Screen
 import com.leeseungyun1020.learningtrip.ui.common.LearningTripScaffold
+import com.leeseungyun1020.learningtrip.ui.theme.notoSansKRFamily
 import com.leeseungyun1020.learningtrip.viewmodel.CourseRequestViewModel
 import java.util.*
 
@@ -75,6 +76,7 @@ fun CourseRequestScreen(
     val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
     val start = courseRequestViewModel.start
     val end = courseRequestViewModel.end
+    val rangeError = courseRequestViewModel.rangeError
     val fragmentManager = rememberFragmentManager()
 
     val datePicker = rememberDatePickerDialog(
@@ -101,6 +103,39 @@ fun CourseRequestScreen(
     LearningTripScaffold(
         title = stringResource(id = R.string.title_request_course),
     ) {
+        if (rangeError) {
+            AlertDialog(
+                onDismissRequest = {
+                    courseRequestViewModel.onDismissRangeError()
+                },
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.title_select_date),
+                        fontFamily = notoSansKRFamily
+                    )
+                },
+                text = {
+                    Text(
+                        text = stringResource(id = R.string.error_select_range),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            courseRequestViewModel.onDismissRangeError()
+                        }
+                    ) {
+                        Text(
+                            stringResource(id = R.string.action_confirm),
+                            fontFamily = notoSansKRFamily
+                        )
+                    }
+                },
+            )
+        }
+
         Column(Modifier.padding(start = 16.dp, end = 16.dp)) {
             // 기간
             Text(
