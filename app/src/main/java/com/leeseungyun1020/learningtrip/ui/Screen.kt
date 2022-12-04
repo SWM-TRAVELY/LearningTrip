@@ -25,7 +25,10 @@ sealed class NavigationScreen(
             listOf(
                 "story",
                 Screen.AddCourse.route,
-                Screen.Course.route
+                Screen.Course.route,
+                Screen.CourseRequest.route,
+                Screen.RecommendedCourse.route,
+                Screen.KeywordSearchScreen.route,
             )
         )
 
@@ -62,6 +65,7 @@ sealed class NavigationScreen(
             Screen.Achievement.route,
             Screen.Sticker.route,
             Screen.NoticeList.route,
+            Screen.InfoChange.route
         )
     )
 }
@@ -86,4 +90,5 @@ sealed class Screen(val route: String, val root: String) {
     object InfoChange : Screen("infoChange", "infoChange")
     object CourseRequest : Screen("courseRequestScreen", "courseRequestScreen")
     object RecommendedCourse : Screen("recommendedCourse", "recommendedCourse")
+    object KeywordSearchScreen : Screen("keywordSearchScreen", "keywordSearchScreen")
 }

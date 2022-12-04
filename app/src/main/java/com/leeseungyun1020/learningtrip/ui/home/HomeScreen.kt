@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -65,8 +64,10 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        if (searchText.isNotEmpty())
+                        if (searchText.isNotEmpty()) {
                             navController.navigate("${Screen.Search.root}/$searchText")
+                            searchText = ""
+                        }
                     },
                 ),
                 modifier = Modifier
@@ -115,25 +116,21 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                     // Keyword List
                     val keywordList = recommendedKeywords ?: listOf(
                         Keyword(
-                            "신라",
-                            "https://img3.yna.co.kr/etc/inner/KR/2018/10/02/AKR20181002033500005_02_i_P4.jpg",
-
-                            ),
+                            "임진왜란",
+                            "http://tong.visitkorea.or.kr/cms/resource/78/2788878_image2_1.jpg",
+                        ),
                         Keyword(
-                            "백제",
-                            "https://www.heritage.go.kr/unisearch/images/national_treasure/thumb/2021102610465405.jpg",
-
-                            ),
+                            "명륜당",
+                            "http://tong.visitkorea.or.kr/cms/resource/01/1604401_image2_1.jpg",
+                        ),
                         Keyword(
-                            "액티비티",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c9a2e1e6-d7ee-4969-aa50-96091dea4790",
-
-                            ),
+                            "대원군",
+                            "http://tong.visitkorea.or.kr/cms/resource/71/924371_image2_1.jpg",
+                        ),
                         Keyword(
-                            "체험",
-                            "https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=66941cc3-b6aa-4418-8d35-687eaab8b8c5",
-
-                            ),
+                            "갑오개혁",
+                            "http://tong.visitkorea.or.kr/cms/resource/41/1577341_image2_1.jpg",
+                        ),
                     )
                     if (keywordList.isNotEmpty()) {
                         Text(
@@ -165,12 +162,6 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                                     contentDescription = stringResource(id = R.string.desc_banner),
                                     modifier = Modifier.height(104.dp),
                                     contentScale = ContentScale.FillWidth,
-                                )
-                            } else {
-                                Text(
-                                    text = "Learning Trip - Page: $page",
-                                    modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center,
                                 )
                             }
                         }
@@ -225,7 +216,10 @@ fun HomeScreen(navController: NavController, placeViewModel: PlaceViewModel) {
                         .fillMaxWidth()
                         .padding(16.dp),
                     textList = searchedPlaceNames ?: listOf(),
-                    onTextClicked = { keyword -> navController.navigate("${Screen.Search.root}/$keyword") }
+                    onTextClicked = { keyword ->
+                        searchText = ""
+                        navController.navigate("${Screen.Search.root}/$keyword")
+                    }
                 )
             }
 

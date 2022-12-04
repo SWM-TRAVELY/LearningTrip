@@ -129,4 +129,5 @@
     <string name="title_select_keyword">Keyword</string>
     <string name="title_request_course">View recommended course</string>
     <string name="action_recommend_course">Get course</string>
+    <string name="error_select_range">You can\'t select a date before today</string>
 </resources>

@@ -1,8 +1,11 @@
 package com.leeseungyun1020.learningtrip.data
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leeseungyun1020.learningtrip.model.Course
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
+import com.leeseungyun1020.learningtrip.model.course.CourseOptionResponse
+import com.leeseungyun1020.learningtrip.model.course.CourseRequestOption
 import com.leeseungyun1020.learningtrip.network.RetrofitClient
 import com.leeseungyun1020.learningtrip.network.loadAuthRequiredNetworkData
 import com.leeseungyun1020.learningtrip.network.loadNetworkData
@@ -12,6 +15,10 @@ class CourseRepository {
     val searchedCourse = MutableLiveData<Course>()
     val storyCourses = MutableLiveData<List<SimpleCourse>>()
     val recommendedCourses = MutableLiveData<List<SimpleCourse>>()
+    private val _options = MutableLiveData<CourseOptionResponse>()
+    val options: LiveData<CourseOptionResponse>
+        get() = _options
+    val searchedKeywordList = MutableLiveData<List<String>>()
 
     fun searchById(id: Int, isUser: Boolean, token: String? = null) {
         if (!isUser)
@@ -50,10 +57,40 @@ class CourseRepository {
         }
     }
 
-    fun loadRecommendedCourseList() {
-        // TODO: 맞춤 코스 추천 API로 변경
-        RetrofitClient.homeService.getRecommendCourse().loadNetworkData(
+    fun loadRecommendedCourseList(
+        start: Long,
+        end: Long,
+        location: String,
+        locationOption: String,
+        grade: String,
+        gradeOption: String,
+        keyword: List<String>
+    ) {
+        RetrofitClient.courseService.requestRecommendCourse(
+            CourseRequestOption(
+                start,
+                end,
+                location,
+                locationOption,
+                grade,
+                gradeOption,
+                keyword
+            )
+        ).loadNetworkData(
             target = recommendedCourses
+        )
+    }
+
+    fun loadOptions(init: (CourseOptionResponse?) -> Unit) {
+        RetrofitClient.courseService.getCourseOptions().loadNetworkData(
+            target = _options,
+            onSuccess = init
+        )
+    }
+
+    fun loadSearchedKeywordList(keyword: String) {
+        RetrofitClient.searchService.getSearchedCourseKeywordOptionList(keyword).loadNetworkData(
+            target = searchedKeywordList
         )
     }
 }

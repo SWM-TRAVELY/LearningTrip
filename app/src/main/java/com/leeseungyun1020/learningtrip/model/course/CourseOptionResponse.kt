@@ -7,6 +7,4 @@ data class CourseOptionResponse(
     val locations: List<GroupItem>,
     @SerializedName("grade")
     val grades: List<GroupItem>,
-    @SerializedName("keyword")
-    val keywords: List<String>
 )

@@ -128,4 +128,5 @@
     <string name="title_select_keyword">키워드</string>
     <string name="title_request_course">추천 코스 보기</string>
     <string name="action_recommend_course">코스 추천 받기</string>
+    <string name="error_select_range">오늘 이전 날짜를 선택할 수 없습니다.</string>
 </resources>

@@ -34,4 +34,8 @@ object RetrofitClient {
     val authService: AuthService by lazy {
         retrofit.create(AuthService::class.java)
     }
+
+    val categoryService: CategoryService by lazy {
+        retrofit.create(CategoryService::class.java)
+    }
 }

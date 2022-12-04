@@ -34,7 +34,8 @@ class HomeRepository {
 
     private fun loadRecommendedCourses() {
         RetrofitClient.homeService.getRecommendCourse().loadNetworkData(
-            target = recommendedCourses
+            target = recommendedCourses,
+            printLog = true
         )
     }
 

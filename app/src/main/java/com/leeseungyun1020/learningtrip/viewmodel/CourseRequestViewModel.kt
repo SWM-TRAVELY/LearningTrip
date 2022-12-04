@@ -1,19 +1,23 @@
 package com.leeseungyun1020.learningtrip.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.leeseungyun1020.learningtrip.data.CourseRepository
+import com.leeseungyun1020.learningtrip.data.TAG
 import com.leeseungyun1020.learningtrip.model.SimpleCourse
-import com.leeseungyun1020.learningtrip.model.course.CourseOptionResponse
-import com.leeseungyun1020.learningtrip.model.course.GroupItem
 
 class CourseRequestViewModel(private val repository: CourseRepository = CourseRepository()) :
     ViewModel() {
+    val options = repository.options
+    private val _searchedKeywordList = repository.searchedKeywordList
+    val searchedKeywordList: LiveData<List<String>>
+        get() = _searchedKeywordList
+
     private var _start by mutableStateOf(MaterialDatePicker.todayInUtcMilliseconds())
     val start: Long
         get() = _start
@@ -38,13 +42,29 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
     val gradeOption: String
         get() = _gradeOption
 
+    private var _keywordList by mutableStateOf(emptyList<String>())
+    val keywordList: List<String>
+        get() = _keywordList
+
     private val _courseList = repository.recommendedCourses
     val courseList: LiveData<List<SimpleCourse>>
         get() = _courseList
 
+    private var _rangeError by mutableStateOf(false)
+    val rangeError: Boolean
+        get() = _rangeError
+
     fun onUpdateRange(start: Long, end: Long) {
-        _start = start
-        _end = end
+        if (start >= MaterialDatePicker.todayInUtcMilliseconds()) {
+            _start = start
+            _end = end
+        } else {
+            _rangeError = true
+        }
+    }
+
+    fun onDismissRangeError() {
+        _rangeError = false
     }
 
     fun onUpdateLocation(location: String) {
@@ -67,34 +87,51 @@ class CourseRequestViewModel(private val repository: CourseRepository = CourseRe
         _gradeOption = gradeOption
     }
 
-    private var _options = MutableLiveData<CourseOptionResponse>()
-    val options: LiveData<CourseOptionResponse>
-        get() = _options
-
     fun loadOptions() {
-        val result = CourseOptionResponse(
-            locations = listOf(
-                GroupItem("서울", listOf("서울 전체")),
-                GroupItem("부산", listOf("부산 전체")),
-            ),
-            grades = listOf(
-                GroupItem("초등", listOf("초등 1학년", "초등 2학년", "초등 3학년")),
-                GroupItem("중등", listOf("중등 1학년", "중등 2학년", "중등 3학년")),
-                GroupItem("고등", listOf("고등 1학년", "고등 2학년", "고등 3학년")),
-            ),
-            keywords = listOf("키워드1", "키워드2", "키워드3", "키워드4")
-        )
-        _options.value = result
-        _location = result.locations.firstOrNull()?.name ?: _location
-        _locationOption = result.locations.firstOrNull()?.options?.firstOrNull() ?: ""
-        _grade = result.grades.firstOrNull()?.name ?: _grade
-        _gradeOption = result.grades.firstOrNull()?.options?.firstOrNull() ?: ""
+        repository.loadOptions { res ->
+            res?.let {
+                _location = it.locations.firstOrNull()?.name ?: _location
+                _locationOption = it.locations.firstOrNull()?.options?.firstOrNull() ?: ""
+                _grade = it.grades.firstOrNull()?.name ?: _grade
+                _gradeOption = it.grades.firstOrNull()?.options?.firstOrNull() ?: ""
+            }
+        }
+    }
+
+    fun onKeywordChange(keyword: String) {
+        repository.loadSearchedKeywordList(keyword)
+    }
+
+    fun onKeywordAdd(keyword: String) {
+        if (keyword !in _keywordList)
+            _keywordList += keyword
+    }
+
+    fun onKeywordDelete(keyword: String) {
+        _keywordList -= keyword
+    }
+
+    fun onKeywordClear() {
+        _searchedKeywordList.value = emptyList()
     }
 
     fun onRequestCourse(move: () -> Unit) {
+        Log.d(
+            TAG,
+            "onRequestCourse: $start, $end, $location, $locationOption, $grade, $gradeOption, $keywordList"
+        )
         if (_locationOption.isNotEmpty() && _gradeOption.isNotEmpty()) {
-            repository.loadRecommendedCourseList()
+            repository.loadRecommendedCourseList(
+                start,
+                end,
+                location,
+                locationOption,
+                grade,
+                gradeOption,
+                keywordList
+            )
             move()
         }
     }
+
 }
